@@ -7,7 +7,9 @@ import {
   Share2,
   ArrowDown,
   ArrowUp,
+  Image,
   Copy,
+  ImageDownIcon,
 } from "lucide-vue-next";
 import axios from "axios";
 import { toTypedSchema } from "@vee-validate/zod";
@@ -18,6 +20,7 @@ const BASE_URL = useRuntimeConfig().public.backendAPI;
 const tab1 = ref(false);
 const tab2 = ref(true);
 const tab3 = ref(false);
+const tab4 = ref(false);
 
 const route = useRoute();
 
@@ -44,7 +47,7 @@ const formSchema = toTypedSchema(
 );
 const language = ref<string>("");
 const props = defineProps<{ templateId: string | string[] }>();
-const typeBinding = ref<string>("DOCX");
+const typeBinding = ref<string>("PDF");
 const currentLanguage = ref<string>("en");
 
 const defaultValues = ref<any>({
@@ -191,7 +194,9 @@ const submitCV = async () => {
         website: etape1.website,
         objective: etape1.objective,
       }),
-      educations: JSON.stringify(educations),
+      educations:
+        JSON.stringify(educations) ??
+        `[{"institution":" ","degree":"","yearOfGraduation":"","grade":""}]`,
       references: JSON.stringify(references),
       personalSkills: etape2[1].data.toString(),
       professionalSkills: etape2[2].data.toString(),
@@ -217,6 +222,8 @@ const submitCV = async () => {
     }
   }
 };
+const optionBackground = ref<string>("");
+const optionBackgroundPosition = ref<string>("");
 
 const print = async () => {
   if (typeBinding.value == "pdf") {
@@ -274,7 +281,18 @@ onMounted(() => {
     return false;
   });
 });
-
+const backgroundOptionPosition = () => {
+  const image_profil = document.getElementById("image_profil");
+  if (image_profil) {
+    image_profil.style.backgroundPosition = optionBackgroundPosition.value;
+  }
+};
+const backgroundOption = () => {
+  const image_profil = document.getElementById("image_profil");
+  if (image_profil) {
+    image_profil.style.backgroundSize = optionBackground.value;
+  }
+};
 const navigatorGet = (textToCopy: string) => {
   navigator.clipboard
     .writeText(textToCopy)
@@ -323,6 +341,7 @@ const navigatorGet = (textToCopy: string) => {
                 tab2 = false;
                 tab1 = true;
                 tab3 = false;
+                tab4 = false;
               }
             "
             variant="ghost"
@@ -340,6 +359,7 @@ const navigatorGet = (textToCopy: string) => {
                 tab2 = true;
                 tab1 = false;
                 tab3 = false;
+                tab4 = false;
               }
             "
             variant="ghost"
@@ -356,12 +376,30 @@ const navigatorGet = (textToCopy: string) => {
                 tab2 = false;
                 tab3 = true;
                 tab1 = false;
+                tab4 = false;
               }
             "
             variant="ghost"
             size="icon"
           >
             <Share2 :size="20" />
+          </Button>
+        </li>
+        <li class="flex justify-center py-1 basis-1/3">
+          <Button
+            :class="tab4 ? '' : 'text-stone-400'"
+            @click="
+              () => {
+                tab2 = false;
+                tab3 = false;
+                tab1 = false;
+                tab4 = true;
+              }
+            "
+            variant="ghost"
+            size="icon"
+          >
+            <Image :size="20" />
           </Button>
         </li>
       </ul>
@@ -379,6 +417,10 @@ const navigatorGet = (textToCopy: string) => {
         <div
           class="h-1 basis-1/3 rounded-2xl"
           :class="tab3 ? 'bg-pink-800' : 'bg-stone-200'"
+        ></div>
+        <div
+          class="h-1 basis-1/3 rounded-2xl"
+          :class="tab4 ? 'bg-pink-800' : 'bg-stone-200'"
         ></div>
       </div>
     </div>
@@ -493,6 +535,37 @@ const navigatorGet = (textToCopy: string) => {
             ></a>
           </div>
         </div>
+      </div>
+      <div v-if="tab4">
+        <div>
+          <label for="optionBackground">Size</label>
+          <select
+          class="w-full p-2 mt-2 text-sm rounded-md focus-visible:outline-none focus-visible:ring-2 ring-pink-900"
+          v-model="optionBackground"
+          @change="backgroundOption"
+          name="optionBackground"
+        >
+          <option value="cover">Cover</option>
+          <option value="contain">Contain</option>
+          <!-- <option value="en">English</option> -->
+        </select>
+        </div>
+      <div>
+        <label for="optionBackgroundPosition">Position</label>
+        <select
+          class="w-full p-2 mt-2 text-sm rounded-md focus-visible:outline-none focus-visible:ring-2 ring-pink-900"
+          v-model="optionBackgroundPosition"
+          @change="backgroundOptionPosition"
+          name="optionBackgroundPosition"
+        >
+          <option value="top">Top</option>
+          <option value="left">Left</option>
+          <option value="center">Center</option>
+          <option value="right">Right</option>
+          <option value="bottom">Bottom</option>
+          <!-- <option value="en">English</option> -->
+        </select>
+      </div>
       </div>
     </div>
   </div>

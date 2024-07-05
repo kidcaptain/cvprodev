@@ -1,53 +1,36 @@
-<script setup>
+<script setup lang="ts">
 import { Plus } from "lucide-vue-next";
 import { useForm } from "vee-validate";
 import { toTypedSchema } from "@vee-validate/zod";
 import { Textarea } from "@/components/ui/textarea";
 
-import * as z from "zod";
-
-const formSchema = toTypedSchema(
-  z.object({
-    title: z.string().min(2).max(255),
-    company: z.string().min(2).max(255),
-  })
-);
-
-const { handleSubmit } = useForm({
-  validationSchema: formSchema,
-});
-
 const emit = defineEmits(["submit"]);
-const props = defineProps({
-  item: {
-    type: Object,
-  },
-});
-const defaultValues = ref({
-  title: props.item?.title,
-  company: props.item?.company,
-  start_date: props.item?.start_date,
-  end_date: props.item?.end_date,
-  experience: props.item?.experience,
-});
 
-const onSubmit = handleSubmit((values) => {
-  const titleExperience = document.getElementById("titleExperience").value;
-  const companyExperience = document.getElementById("companyExperience").value;
+const onSubmit = (e: Event) => {
+  e.preventDefault();
+  const titleExperience = document.getElementById("titleExperienceEdit");
+  const companyExperience = document.getElementById("companyExperienceEdit");
   const startDateExperience = document.getElementById(
-    "startDateExperience"
-  ).value;
-  const endDateExperience = document.getElementById("endDateExperience").value;
+    "startDateExperienceEdit"
+  );
+  const endDateExperience = document.getElementById("endDateExperienceEdit");
   const experienceExperience = document.getElementById(
-    "experienceExperience"
-  ).value;
+    "experienceExperienceEdit"
+  );
+
+
+  const jobTitle = titleExperience.value;
+  const company = companyExperience.value;
+  const startDate = startDateExperience.value;
+  const endDate = endDateExperience.value;
+  const professionalTasksPerformed = experienceExperience.value;
 
   emit("submit", {
-    title: titleExperience,
-    company: companyExperience,
-    start_date: startDateExperience,
-    end_date: endDateExperience,
-    experience: experienceExperience,
+    jobTitle: jobTitle,
+    company: company,
+    startDate: startDate,
+    endDate: endDate,
+    professionalTasksPerformed: professionalTasksPerformed,
   });
   if (
     titleExperience &&
@@ -56,18 +39,16 @@ const onSubmit = handleSubmit((values) => {
     endDateExperience &&
     experienceExperience
   ) {
-    titleExperience.value = "";
-    companyExperience.value = "";
-    startDateExperience.value = "";
-    endDateExperience.value = "";
-    experienceExperience.value = "";
+    (titleExperience as HTMLInputElement).value = "";
+    (companyExperience as HTMLInputElement).value = "";
+    (startDateExperience as HTMLInputElement).value = "";
+    (endDateExperience as HTMLInputElement).value = "";
+    (experienceExperience as HTMLInputElement).value = "";
   }
-  z;
-
   // values.start_date = "";
   // values.end_date = "";
   // values.experience = "";
-});
+};
 
 const experience_fields = [
   {
@@ -112,42 +93,82 @@ const experience_fields = [
 
 <template>
   <form @submit="onSubmit">
-    <div
-      class="w-full gap-6 p-2 space-y-6 border-l-2 md:grid md:grid-cols-2 md:space-y-0 border-secondary/50"
-    >
-      <template v-for="field in experience_fields">
-        <FormField
-          v-slot="{ componentField }"
-          :name="field.name"
-          :class="field.class"
-          :value="defaultValues[field.name]"
-        >
-          <FormItem :class="field.class">
-            <FormLabel>{{ field.label }}</FormLabel>
+    <div class="w-full p-2 space-y-6 border-l-2 border-secondary/50">
+      <div class="gap-6 md:grid md:grid-cols-2 md:space-y-0">
+        <FormField name="company">
+          <FormItem>
+            <FormLabel>Job Title</FormLabel>
             <FormControl>
-              <Textarea
-                v-if="field.type == 'textarea'"
-                class="w-full"
-                v-bind="componentField"
-                :placeholder="field.placeholder"
-                :id="field.id"
-              />
               <Input
-                v-else
-                :require="field.require"
-                :id="field.id"
-                :type="field.type ? field.type : 'text'"
-                :placeholder="field.placeholder"
-                v-bind="componentField"
+                id="titleExperienceEdit"
+                type="text"
+                placeholder="Accountant"
+                required
               />
             </FormControl>
             <FormMessage class="text-xs" />
           </FormItem>
         </FormField>
-      </template>
+        <FormField name="company">
+          <FormItem>
+            <FormLabel>Company Name</FormLabel>
+            <FormControl>
+              <Input
+                id="companyExperienceEdit"
+                type="text"
+                name="companyExperienceEdit"
+                placeholder="Exco cmr"
+                required
+              />
+            </FormControl>
+            <FormMessage class="text-xs" />
+          </FormItem>
+        </FormField>
+        <FormField name="startDateExperienceEdit">
+          <FormItem>
+            <FormLabel>Starting Date</FormLabel>
+            <FormControl>
+              <Input
+                id="startDateExperienceEdit"
+                required
+                name="startDateExperienceEdit"
+                type="month"
+              />
+            </FormControl>
+            <FormMessage class="text-xs" />
+          </FormItem>
+        </FormField>
+        <FormField name="endDateExperienceEdit">
+          <FormItem>
+            <FormLabel>Ending Date</FormLabel>
+            <FormControl>
+              <Input
+                id="endDateExperienceEdit"
+                required
+                name="endDateExperienceEdit"
+                type="month"
+              />
+            </FormControl>
+            <FormMessage class="text-xs" />
+          </FormItem>
+        </FormField>
+        <FormField name="experienceExperienceEdit" class="col-span-2">
+          <FormItem class="col-span-2">
+            <FormLabel>Tasks & Job description</FormLabel>
+            <FormControl>
+              <textarea
+                class="w-full col-span-2 p-2 border border-black focus-within:bg-slate-100 focus-within:outline-none focus:outline-none"
+                id="experienceExperienceEdit"
+                name="experienceExperienceEdit"
+              ></textarea>
+            </FormControl>
+            <FormMessage class="text-xs" />
+          </FormItem>
+        </FormField>
+      </div>
       <div>
         <Button type="submit" class="px-6 space-x-3">
-          <Plus /> <span>Add expérience</span>
+          <Plus /> <span>Add</span>
         </Button>
       </div>
     </div>

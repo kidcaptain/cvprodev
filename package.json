@@ -12,6 +12,7 @@
   "dependencies": {
     "@vee-validate/zod": "^4.12.5",
     "@vueuse/core": "^10.9.0",
+    "axios": "^1.7.2",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
     "embla-carousel": "^8.0.2",

@@ -65,24 +65,17 @@ const removeSaved = (item: number, index: number) => {
   accordionItems.value[item]?.datas.splice(index, 1);
 };
 
-const editSave = (item: number, index: number, title: string) => {
+const editSave = (item: number, index: number) => {
 
   console.log(accordionItems.value[item]?.datas[index])
-  switch (title) {
-    case "item-1":
-    accordionItems.value[0  ]
-        break;
-  
-    default:
-        break;
-  }
+ 
 };
 </script>
 
 <template>
-  <div style="position: fixed; z-index: 101; width: 400px; min-width: 250; min-height: 500px;">
+  <!-- <div style="position: fixed; z-index: 101; width: 400px; min-width: 250; min-height: 500px;">
     <input type="text" v-for="">
-  </div>
+  </div> -->
   <form @submit="onSubmit" class="text-foreground">
     <Accordion
       type="single"
@@ -117,7 +110,7 @@ const editSave = (item: number, index: number, title: string) => {
               <div class="flex items-center justify-end gap-5 text-end">
               
                 <Button
-                  @click="editSave(itemIndex, index, accordionItems.title)"
+                  @click="editSave(itemIndex, index)"
                   variant="outline"
                   class="p-1 border-none h-fit hover:text-secondary"
                   type="button"

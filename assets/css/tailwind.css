@@ -1,0 +1,57 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+ 
+
+@layer base {
+    
+  .teste {
+    background-color: hsl(0, 0%, 13%);
+  }
+  :root  {
+    --background: 0 41% 97%;
+    --foreground: 0 0% 13%;
+    --card: 347 10% 90%;
+    --card-foreground: 347 5% 11%;
+    --popover: 347 10% 95%;
+    --popover-foreground: 347 95% 10%;
+    --primary: 347 40.8% 27.8%;
+    --primary-foreground: 0 0% 100%;
+    --ternary: 49 79% 55%;
+    --ternary-foreground: 0 0% 12%;
+    --secondary: 344 41% 49%;
+    --secondary-foreground: 0 0% 0%;
+    --muted: 309 10% 85%;
+    --muted-foreground: 347 5% 35%;
+    --accent: 0 41% 97%;
+    --accent-foreground: 347 5% 11%;
+    --destructive: 0 50% 30%;
+    --destructive-foreground: 347 5% 90%;
+    --border: 347 20% 50%;
+    --input: 347 20% 18%;
+    --ring: 347 40.8% 27.8%;
+    --radius: 0.5rem;
+  }
+
+  }
+  
+.container {
+  @apply max-w-4xl xl:max-w-6xl 2xl:max-w-7xl
+}
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+@media print {
+  .no-printme {
+ display: none !important;
+}
+.printme {
+ display: block;
+}
+}

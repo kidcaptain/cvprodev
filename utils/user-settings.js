@@ -1,0 +1,2 @@
+export const userAggreedPrivacies = () => process.client ? JSON.parse(localStorage.getItem('privacies_policies-accepted')) : false
+export const setPrivaciesAggrement = (value) => localStorage.setItem('privacies_policies-accepted', JSON.stringify(value)) 

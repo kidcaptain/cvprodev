@@ -10,6 +10,8 @@ import * as z from 'zod'
 const formSchema = toTypedSchema(z.object({
     title: z.string().min(2).max(255),
     grade: z.string().min(2).max(255),
+    start_date: z.string().date(),
+    end_date: z.string().date(),
 }))
 
 const { handleSubmit } = useForm({
@@ -31,10 +33,11 @@ const defaultValues = ref({
 
 const onSubmit = handleSubmit((values) => {
     emit('submit', values)
-    values.title = ""
-    values.grade = ""
-    values.start_date = ""
-    values.end_date = ""
+
+    defaultValues.value.title = null
+    defaultValues.value.grade = null
+    defaultValues.value.start_date = null
+    defaultValues.value.end_date = null
 })
 
 const experience_fields = [
@@ -43,27 +46,23 @@ const experience_fields = [
         label: "Institution",
         placeholder: "University of XXXXX",
         type: 'text',
-        class:"col-span-2",
-        id: "titleEducation"
+        class:"col-span-2"
     },
     {
         name: "grade",
         label: "Degree obtained and grade",
         placeholder: "XXXXXX degree in XXXXXXXX",
-        class:"col-span-2",
-        id: "gradeEducation"
+        class:"col-span-2"
     },
     {
         name: "start_date",
         label: "Starting Date",
-        type: 'month',
-        id: "startDateEducation"
+        type: 'date',
     },
     {
         name: "end_date",
         label: "Ending Date",
-        type: 'month',
-        id: "endDateEducation"
+        type: 'date',
     },
 
 ]
@@ -71,7 +70,7 @@ const experience_fields = [
 
 <template>
     <form @submit="onSubmit">
-        <div class="w-full gap-6 p-2 space-y-6 border-l-2 md:grid md:grid-cols-2 md:space-y-0 border-secondary/50 ">
+        <div class="p-2 w-full md:grid md:grid-cols-2 gap-6 space-y-6 md:space-y-0  border-l-2 border-secondary/50 ">
             <template v-for="field in experience_fields">
                 <FormField v-slot="{ componentField }" :name="field.name" :class="field.class"
                     :value="defaultValues[field.name]">
@@ -80,7 +79,7 @@ const experience_fields = [
                         <FormControl>
                             <Textarea v-if="field.type == 'textarea'" class="w-full" v-bind="componentField"
                                 :placeholder="field.placeholder" />
-                            <Input :id="id" v-else :type="field.type ? field.type : 'text'" :placeholder="field.placeholder"
+                            <Input v-else :type="field.type ? field.type : 'text'" :placeholder="field.placeholder"
                                 v-bind="componentField" />
                         </FormControl>
                         <FormMessage class='text-xs' />
@@ -88,6 +87,7 @@ const experience_fields = [
                 </FormField>
             </template>
             <div>
+
                 <Button class="px-6 space-x-3">
                     <Plus /> <span>Add </span>
                 </Button>

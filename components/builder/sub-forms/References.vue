@@ -10,7 +10,7 @@ const formSchema = toTypedSchema(z.object({
     title: z.string().min(2).max(255),
     position: z.string().min(2).max(255),
     references_name: z.string(),
-    references_phone: z.string(),
+    refenreces_name: z.string(),
     email: z.string().email()
 }))
 
@@ -30,7 +30,7 @@ const defaultValues = ref({
     title: props.item?.title,
     position: props.item?.position,
     references_name: props.item?.references_name,
-    references_phone: props.item?.references_phone,
+    refenreces_name: props.item?.refenreces_name,
     email: props.item?.email,
 })
 
@@ -40,7 +40,7 @@ const onSubmit = handleSubmit((values) => {
     defaultValues.value.title = null
     defaultValues.value.position = null
     defaultValues.value.references_name = null
-    defaultValues.value.references_phone = null
+    defaultValues.value.refenreces_name = null
     defaultValues.value.email = null
     
 })
@@ -63,7 +63,7 @@ const references_fields = [
         placeholder: "John Doe",
     },
     {
-        name: "references_phone",
+        name: "refenreces_name",
         placeholder: "+237 12345679",
         label: "Reference's phone",
     },
@@ -79,12 +79,12 @@ const references_fields = [
 
 <template>
     <form @submit="onSubmit">
-        <div class="w-full gap-6 p-2 space-y-6 border-l-2 md:grid md:grid-cols-2 md:space-y-0 border-secondary/50 ">
+        <div class="p-2 w-full md:grid md:grid-cols-2 gap-6 space-y-6 md:space-y-0 border-l-2 border-secondary/50 ">
             <template v-for="field in references_fields">
                 <FormField v-slot="{ componentField }" :name="field.name" :class="field.class"
                     :value="defaultValues[field.name]">
                     <FormItem :class="field.class">
-                        <FormLabel class="capitalize ">{{ field.label }}</FormLabel>
+                        <FormLabel class=" capitalize">{{ field.label }}</FormLabel>
                         <FormControl>
                             <Textarea v-if="field.type == 'textarea'" class="w-full" v-bind="componentField"
                                 :placeholder="field.placeholder" />

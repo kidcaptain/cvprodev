@@ -9,7 +9,6 @@ export default defineNuxtConfig({
       enabled: true
     }
   },
-
   modules: [
     "@nuxtjs/tailwindcss",
     "@nuxt/image",
@@ -19,22 +18,9 @@ export default defineNuxtConfig({
     "@nuxtjs/i18n",
     "@nuxtjs/color-mode",
     "nuxt-swiper",
-    "nuxt-time",
-    '@sidebase/nuxt-pdf',
-    'nuxt-pdfeasy',
-    "@nuxthub/core"
+    "nuxt-time"
   ],
-  hub: {
-    blob: true,
-    kv: true
-  },
-  app: {
-    head: {
-      script: [{ src: 'https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.js' }, { src: "https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"},
-        { src: "https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js" }
-      ],
-    },
-  },
+
   shadcn: {
     /**
      * Prefix for all the imported component

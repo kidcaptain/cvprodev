@@ -102,15 +102,15 @@ const sections = [
 </script>
 
 <template>
-  <section class="relative w-full ">
-    <img src="assets/img/shapes/home-shape-back.png" alt="" class="absolute object-contain opacity-20 md:opacity-100"
-     srcset="">
-    <img src="assets/img/shapes/home-shape-front.png" alt="" class="absolute object-contain -top-20" srcset="">
+  <section class="w-full relative ">
+    <img src="assets/img/shapes/home-shape-back.png" alt="" class="absolute opacity-20 md:opacity-100 object-contain"
+      rcset="">
+    <img src="assets/img/shapes/home-shape-front.png" alt="" class="absolute -top-20 object-contain" srcset="">
     <div
       class=" container max-w-screen-2xl home-banner min-h-[calc(100dvh-90px)] grid grid-cols-1 md:grid-cols-5 pt-10 relative">
-      <div class="max-w-xl col-span-3 pt-8">
+      <div class="pt-8 max-w-xl  col-span-3">
         <h5 class="mb-3 font">Build your future with ease!</h5>
-        <h1 class="text-3xl font-bold text-pretty">Welcome to our CV PRO application, where
+        <h1 class="font-bold text-3xl text-pretty">Welcome to our CV PRO application, where
           your career path is just a click away. </h1>
         <p class="mt-3">
           Design stunning CVs that stand out, effortlessly.
@@ -120,13 +120,13 @@ const sections = [
             <Button class="w-full">Create CV</Button>
           </nuxt-link>
           <nuxt-link class="flex-1" to="/templates">
-            <Button class="w-full " variant="outline"> Get Templates </Button>
+            <Button class=" w-full" variant="outline"> Get Templates </Button>
           </nuxt-link>
         </div>
       </div>
-      <div class="my-10 md:col-span-2 md:m-0">
+      <div class="md:col-span-2 my-10 md:m-0">
         <div class="md:aspect-[210/297] mx-auto max-w-lg rounded-sm shadow-primary shadow-lg">
-          <img src="@/assets/img/pics/cv-template.png" class="object-cover w-full h-full" alt="">
+          <img src="@/assets/img/pics/cv-template.png" class="w-full h-full object-cover" alt="">
         </div>
       </div>
     </div>

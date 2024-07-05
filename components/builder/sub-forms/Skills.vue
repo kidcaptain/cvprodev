@@ -42,7 +42,7 @@ const experience_fields = [
 
 <template>
     <form @submit="onSubmit">
-        <div class="flex w-full gap-6 p-2 border-l-2 bg- border-secondary/50 ">
+        <div class="p-2 w-full flex gap-6 bg-  border-l-2 border-secondary/50 ">
             <template v-for="field in experience_fields">
                 <FormField v-slot="{ componentField }" :name="field.name" :class="field.class"
                     :value="defaultValues[field.name]">

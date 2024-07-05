@@ -1,135 +1,105 @@
 <script setup lang="ts">
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
-import { ArrowRight, ArrowLeft, Trash } from "lucide-vue-next";
-import { useForm } from "vee-validate";
-import { toTypedSchema } from "@vee-validate/zod";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion'
+import { ArrowRight, ArrowLeft, Trash } from 'lucide-vue-next'
+import { useForm } from 'vee-validate'
+import { toTypedSchema } from '@vee-validate/zod'
 
-import * as z from "zod";
-import Project from "@/components/builder/sub-forms/Project.vue";
-import References from "@/components/builder/sub-forms/References.vue";
-import Network from "./sub-forms/Network.vue";
+import * as z from 'zod'
+import Project from '@/components/builder/sub-forms/Project.vue'
+import References from '@/components/builder/sub-forms/References.vue'
 
-const { handleSubmit } = useForm({});
+const formSchema = toTypedSchema(z.object({
+    firstname: z.string().min(2).max(50),
+    lastname: z.string().min(2).max(50),
+    title: z.string().min(2).max(50),
+    experience: z.number().min(1).max(30),
+    address: z.string().min(2).max(255),
+    phone: z.string().min(8).max(9),
+    email: z.string().min(8).max(255),
+    website: z.string().min(0).max(255),
+}))
 
-const emit = defineEmits(["submit"]);
+const { handleSubmit } = useForm({
+    validationSchema: formSchema,
+})
 
-const onSubmit = handleSubmit(() => {
-  const values: any[] = [];
-  accordionItems.value.forEach((element) => {
-    values.push({ title: element.title, data: element.datas });
-  });
-  window.localStorage.setItem("step_4", JSON.stringify(values));
-  emit("submit");
-});
+const onSubmit = handleSubmit((values) => {
+    //on sauvegarde les données ici
+    // et on passe à l'étape suivante.
+    router.push({ query: { template_id: route.query.template_id, step: 1 + Number(route.query.step) } })
+    //   toast({
+    //     title: 'You submitted the following values:',
+    //     description: h('pre', { class: 'mt-2 w-[340px] rounded-md bg-slate-950 p-4' }, h('code', { class: 'text-white' }, JSON.stringify(values, null, 2))),
+    //   })
 
-const defaultValue = "item-1";
+})
+
+
+const defaultValue = 'item-1'
 
 const accordionItems = ref([
-  {
-    value: "item-1",
-    title: "REFEREnces",
-    datas: Array<any>(),
-    form: References,
-  },
-  {
-    value: "item-2",
-    title: "Project",
-    datas: Array<any>(),
-    form: Project,
-  },
-  {
-    value: "item-3",
-    title: "Social network",
-    datas: Array<any>(),
-    form: Network,
-  },
-]);
+    {
+        value: 'item-1',
+        title: 'REFEREnces',
+        datas: Array<any>(),
+        form: References
+    },
+    {
+        value: 'item-2',
+        title: 'Project',
+        datas: Array<any>(),
+        form: Project
+    },
 
-const removeSaved = (item: number, index: number) => {
-  accordionItems.value[item]?.datas.splice(index, 1);
-};
+])
+
+const removeSaved = (item, index) => {
+    accordionItems.value[item]?.datas.splice(index, 1)
+}
+
 </script>
 
+
 <template>
-  <form @submit="onSubmit" class="text-foreground">
-    <Accordion
-      type="single"
-      class="w-full"
-      collapsible
-      :default-value="defaultValue"
-    >
-      <AccordionItem
-        v-for="(item, itemIndex) in accordionItems"
-        :key="item.value"
-        :value="item.value"
-      >
-        <AccordionTrigger class="sticky font-bold uppercase">{{
-          item.title
-        }}</AccordionTrigger>
-        <AccordionContent class="md:pl-5">
-          <div class="space-y-2">
-            <div
-              v-for="(save, index) in item.datas"
-              class="grid grid-cols-3 gap-5 p-2 border-l-2 cursor-pointer border-secondary bg-secondary/5 hover:bg-secondary/10"
-            >
-              <h3 class="font-semibold border-r border-secondary/50">
-                {{ save.title }}
-              </h3>
-              <div
-                class="flex items-center justify-end px-2 border-r text-end border-secondary/50"
-              >
-                <span>{{ save.company || save.grade }}</span>
-              </div>
-              <div class="flex items-center justify-end gap-5 text-end">
-                <NuxtTime
-                  v-if="save.start_date"
-                  data-testid="present"
-                  :datetime="save.start_date"
-                  second="numeric"
-                  month="long"
-                  day="numeric"
-                />
-                <Button
-                  @click="removeSaved(itemIndex, index)"
-                  variant="outline"
-                  class="p-1 border-none h-fit hover:text-secondary"
-                  type="button"
-                >
-                  <Trash class="size-4" />
+    <form @submit="onSubmit" class="text-foreground">
+        <Accordion type="single" class="w-full" collapsible :default-value="defaultValue">
+            <AccordionItem v-for="(item, itemIndex) in accordionItems" :key="item.value" :value="item.value">
+                <AccordionTrigger class="font-bold sticky uppercase">{{ item.title }}</AccordionTrigger>
+                <AccordionContent class=" md:pl-5 ">
+                    <div class="space-y-2 ">
+                        <div v-for="(save, index) in item.datas"
+                            class="cursor-pointer border-secondary border-l-2 bg-secondary/5 hover:bg-secondary/10 p-2 grid grid-cols-3 gap-5 ">
+                            <h3 class="border-r border-secondary/50 font-semibold"> {{ save.title }} </h3>
+                            <div class="text-end flex items-center justify-end border-r border-secondary/50 px-2">
+                                <span>{{ save.company || save.grade }}</span>
+                            </div>
+                            <div class="text-end flex justify-end items-center gap-5">
+                                <NuxtTime v-if="save.start_date" data-testid="present" :datetime="save.start_date"
+                                    second="numeric" month="long" day="numeric" />
+                                <Button @click="removeSaved(itemIndex, index)" variant="outlin"
+                                    class="p-1 h-fit border-none hover:text-secondary" type="button">
+                                    <Trash class="size-4" />
+                                </Button>
+                            </div>
+                        </div>
+                        <component :is="item.form" @submit="(value: any) => item?.datas?.push(value)"
+                            :datas="item.datas" />
+                    </div>
+                </AccordionContent>
+            </AccordionItem>
+        </Accordion>
+        <div class="flex justify-between mt-5">
+            <nuxt-link
+                :to="{ name: `app-cv-builder-step-id`, params: { id: ($route.params.id - 1) }, query: { template_id: $route.query.template_id } }">
+                <Button variant="outline" type="button" class="  px-8 space-x-4" title="share">
+                    <ArrowLeft />
+                    <span>Previous</span>
                 </Button>
-              </div>
-            </div>
-            <component
-              :is="item.form"
-              @submit="(value: any) => item?.datas?.push(value)"
-              :datas="item.datas"
-            />
-          </div>
-        </AccordionContent>
-      </AccordionItem>
-    </Accordion>
-    <div class="flex justify-between mt-5">
-        <nuxt-link
-        :to="{ name: `app-cv-builder-step-id`, params: { id: parseInt(`${$route.params.id}`)  - 1 }, query: { template_id: $route.query.template_id } }">
-        <Button
-          variant="outline"
-          type="button"
-          class="px-8 space-x-4"
-          title="share"
-        >
-          <ArrowLeft />
-          <span>Previous</span>
-        </Button>
-      </nuxt-link>
-      <Button type="submit" class="px-12 space-x-4">
-        <span>Done</span>
-        <ArrowRight />
-      </Button>
-    </div>
-  </form>
+            </nuxt-link>
+            <Button type="submit" class="px-12 space-x-4">
+                <span>Done</span>
+                <ArrowRight />
+            </Button>
+        </div>
+    </form>
 </template>

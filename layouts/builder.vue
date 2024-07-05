@@ -34,46 +34,39 @@ const steps = [
         id: 4,
         title: "Reference...",
         icon: Cable
-    },
-    {
-        id: 5,
-        title: "Preview",
-        icon: View
-    },
+    }
 ]
-const current_state = computed(() => route.params.id)
+const current_state  = computed(() => route.params.id)
 
 </script>
 
 <template>
-    <div class=" min-h- overflow- text-white flex flex-col">
-        <header class=" z-10 sticky top-0 bg-gradient-to-l bg-background">
-            <div class="container max-w-screen-2xl mx-auto">
-                <header class=" justify- items-center pt-4 relative">
-                    <div>
-                        <Button variant="outline" @click="$router.back()" class="absolute rounded-full space-x-2">
-                            <ArrowLeft />
-                            <span class="font-bold">Back</span>
+    <div class="flex flex-col text-white min-h- overflow-">
+        <header class="sticky top-0 z-10 bg-gradient-to-l bg-background">
+            <div class="container mx-auto max-w-screen-2xl">
+                <header class="relative items-center pt-4">
+                    <ScrollArea class="max-w-3xl p-3 mx-auto bg-white shadow-lg md:p-8 rounded-xl">
+                        <Button variant="outline" size="sm" @click="$router.back()" class="mb-4 space-x-2 bg-white rounded-full shadow-sm border-stone-100 shadow-primary/20 hover:text-white hover:bg-primary">
+                            <ArrowLeft  />
+                            <!-- <span class="font-thin">Back</span> -->
                         </Button>
-                    </div>
-                    <ScrollArea class="p-3 mx-auto max-w-3xl md:p-8 bg-white  rounded-xl shadow-lg">
-                        <div class=" w-full flex justify-between gap-3 ">
+                        <div class="flex justify-between w-full gap-3 ">
                             <template v-for="step in steps">
                                 <nuxt-link
-                                    :to="current_state < step.id ? false : { name: `app-cv-builder-step-id`, params: { id: step.id }, query: { template_id: template_id } }"
+                                    :to="parseInt(current_state.toString()) < step.id ? false : { name: `app-cv-builder-step-id`, params: { id: step.id }, query: { template_id: template_id } }"
                                     class="group" :class="`
-                                            ${current_state == step.id ? 'text-secondary' : 'text-gray-400'}
-                                            ${current_state > step.id ? '!text-primary' : ''}
+                                            ${parseInt(current_state.toString()) == step.id ? 'text-secondary' : 'text-gray-400'}
+                                            ${parseInt(current_state.toString()) > step.id ? '!text-primary' : ''}
                                         `">
-                                    <div class="size-20 rounded-full border p-1 group-hover:scale-105 transition-transform duration-200"
+                                    <div class="p-1 transition-transform duration-200 border rounded-full size-20 group-hover:scale-105"
                                         :class="`
-                                            ${current_state == step.id ? 'border-secondary' : 'border-gray-200'}
-                                            ${current_state > step.id ? '!border-primary' : ''}
+                                            ${parseInt(current_state.toString()) == step.id ? 'border-secondary' : 'border-gray-200'}
+                                            ${parseInt(current_state.toString()) > step.id ? '!border-primary' : ''}
                                         `">
-                                        <div class=" rounded-full h-full w-full p-3 grid place-content-center border"
+                                        <div class="grid w-full h-full p-3 border rounded-full place-content-center"
                                             :class="`
-                                            ${current_state == step.id ? 'bg-secondary border-secondary text-white' : 'bg-transparent border-gray-200'}
-                                            ${current_state > step.id ? '!bg-primary !border-primary text-white' : ''}
+                                            ${parseInt(current_state.toString()) == step.id ? 'bg-secondary border-secondary text-white' : 'bg-transparent border-gray-200'}
+                                            ${parseInt(current_state.toString()) > step.id ? '!bg-primary !border-primary text-white' : ''}
                                         `">
                                             <component :is="step.icon" />
                                         </div>
@@ -84,21 +77,22 @@ const current_state = computed(() => route.params.id)
                                     </div>
                                 </nuxt-link>
                                 <div class="flex-1 h-1.5 rounded-full bg-gray-200 mt-9"
-                                    :class="`${current_state > step.id ? '!bg-primary' : ''}`"
+                                    :class="`${parseInt(current_state.toString()) > step.id ? '!bg-primary' : ''}`"
                                     v-if="step.id != steps.length">
-                                    <div class="bg-secondary h-full rounded-full"
-                                        :class="`${current_state == step.id ? 'w-1/2' : 'w-0'}`"></div>
+                                    <div class="h-full rounded-full bg-secondary"
+                                        :class="`${parseInt(current_state.toString()) == step.id ? 'w-1/2' : 'w-0'}`"></div>
                                 </div>
                             </template>
                             <ScrollBar orientation="horizontal" />
                         </div>
+                        
                     </ScrollArea>
                 </header>
             </div>
         </header>
         <main class="bg-background">
             <div class="container py-5">
-                <div class="mx-auto max-w-3xl bg-white p-8 rounded-xl shadow-lg text-foreground">
+                <div class="max-w-3xl p-8 mx-auto bg-white shadow-lg rounded-xl text-foreground">
                     <slot></slot>
                 </div>
             </div>

@@ -5,6 +5,7 @@ import { toTypedSchema } from "@vee-validate/zod";
 import { Textarea } from "@/components/ui/textarea";
 
 import * as z from "zod";
+import { type } from "os";
 
 const formSchema = toTypedSchema(
   z.object({
@@ -23,13 +24,7 @@ const props = defineProps({
     type: Object,
   },
 });
-const defaultValues = ref({
-  title: props.item?.title,
-  company: props.item?.company,
-  start_date: props.item?.start_date,
-  end_date: props.item?.end_date,
-  experience: props.item?.experience,
-});
+
 
 const onSubmit = handleSubmit((values) => {
   const titleExperience = document.getElementById("titleExperience").value;
@@ -120,7 +115,7 @@ const experience_fields = [
           v-slot="{ componentField }"
           :name="field.name"
           :class="field.class"
-          :value="defaultValues[field.name]"
+          
         >
           <FormItem :class="field.class">
             <FormLabel>{{ field.label }}</FormLabel>
@@ -146,8 +141,11 @@ const experience_fields = [
         </FormField>
       </template>
       <div>
-        <Button type="submit" class="px-6 space-x-3">
+        <Button v-if="!props.item?.isactived" type="submit" class="px-6 space-x-3">
           <Plus /> <span>Add expérience</span>
+        </Button>
+        <Button v-else class="px-6 space-x-3">
+          <span>Save</span>
         </Button>
       </div>
     </div>

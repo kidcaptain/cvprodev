@@ -27,6 +27,7 @@ export const authOptions: AuthConfig = {
       credentials: {
         email: {},
         password: {},
+        
       },
       authorize: async (credentials) => {
         // logic to verify if user exists
@@ -43,6 +44,25 @@ export const authOptions: AuthConfig = {
       },
     }),
   ],
+  callbacks: {
+    // Callback when the JWT is created / updated, see https://next-auth.js.org/configuration/callbacks#jwt-callback
+    jwt: async ({token, user}) => {
+      const isSignIn = user ? true : false;
+      if (isSignIn) {
+        token.jwt = user ? (user as any).access_token || '' : '';
+        token.id = user ? user.userId || '' : '';
+        token.role = user ? (user as any).role || '' : '';
+        token.uuid = user ? (user as any).id || '' : '';
+      }
+      return Promise.resolve(token);
+    },
+    // Callback whenever session is checked, see https://next-auth.js.org/configuration/callbacks#session-callback
+    session: async ({session, token}) => {
+      // (session as any).role = token.role;
+      (session as any).uid = token.id;
+      return Promise.resolve(session);
+    },
+  },
 
 }
 

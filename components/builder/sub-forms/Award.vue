@@ -1,4 +1,5 @@
 <script setup >
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion'
 import { Plus } from 'lucide-vue-next'
 import { useForm } from 'vee-validate'
 import { toTypedSchema } from '@vee-validate/zod'
@@ -8,17 +9,13 @@ import * as z from 'zod'
 
 const formSchema = toTypedSchema(z.object({
     title: z.string().min(2).max(255),
-    position: z.string().min(2).max(255),
-    references_name: z.string(),
-    references_phone: z.string(),
-    email: z.string().email()
+    award: z.string().min(2).max(255),
+    start_date: z.string().date(),
 }))
 
 const { handleSubmit } = useForm({
     validationSchema: formSchema,
 })
-
-
 
 const emit = defineEmits(['submit'])
 const props = defineProps({
@@ -28,63 +25,51 @@ const props = defineProps({
 })
 const defaultValues = ref({
     title: props.item?.title,
-    position: props.item?.position,
-    references_name: props.item?.references_name,
-    references_phone: props.item?.references_phone,
-    email: props.item?.email,
+    award: props.item?.award,
+    start_date: props.item?.start_date,
 })
 
 const onSubmit = handleSubmit((values) => {
     emit('submit', values)
 
     defaultValues.value.title = null
-    defaultValues.value.position = null
-    defaultValues.value.references_name = null
-    defaultValues.value.references_phone = null
-    defaultValues.value.email = null
-    
+    defaultValues.value.award = null
+    defaultValues.value.start_date = null
 })
 
-const references_fields = [
+const experience_fields = [
     {
         name: "title",
-        label: "Institution Name",
-        placeholder: "Dev",
+        label: "Institution or Company",
+        placeholder: "Company name",
         type: 'text',
+        class:"col-span-1"
     },
     {
-        name: "position",
-        label: "position Occupied",
-        placeholder: "Doe",
+        name: "start_date",
+        label: "Date",
+        type: 'date',
+         class:"col-span-1"
     },
     {
-        name: "references_name",
-        label: "references's  name",
-        placeholder: "John Doe",
+        name: "award",
+        label: "Award or honor obtained",
+        placeholder: "Best employee of the year",
+        class:"col-span-2"
     },
-    {
-        name: "references_phone",
-        placeholder: "+237 12345679",
-        label: "Reference's phone",
-    },
-    {
-        name: "email",
-        label: "reference's Email",
-        placeholder: "John@company.com",
-        type: 'email',
-        class: "",
-    },
+ 
+
 ]
 </script>
 
 <template>
     <form @submit="onSubmit">
-        <div class="w-full gap-6 p-2 space-y-6 border-l-2 md:grid md:grid-cols-2 md:space-y-0 border-secondary/50 ">
-            <template v-for="field in references_fields">
+        <div class="grid w-full grid-cols-2 gap-6 p-2 border-l-2 bg- border-secondary/50 ">
+            <template v-for="field in experience_fields">
                 <FormField v-slot="{ componentField }" :name="field.name" :class="field.class"
                     :value="defaultValues[field.name]">
                     <FormItem :class="field.class">
-                        <FormLabel class="capitalize ">{{ field.label }}</FormLabel>
+                        <FormLabel>{{ field.label }}</FormLabel>
                         <FormControl>
                             <Textarea v-if="field.type == 'textarea'" class="w-full" v-bind="componentField"
                                 :placeholder="field.placeholder" />
@@ -95,9 +80,9 @@ const references_fields = [
                     </FormItem>
                 </FormField>
             </template>
-            <div class="col-span-2">
+            <div>
                 <Button class="px-6 space-x-3">
-                    <Plus /> <span>Add expérience</span>
+                    <Plus /> <span>Add </span>
                 </Button>
             </div>
         </div>

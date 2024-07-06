@@ -18,20 +18,6 @@ const onSubmit = (e: Event) => {
     "experienceExperienceEdit"
   );
 
-
-  const jobTitle = titleExperience.value;
-  const company = companyExperience.value;
-  const startDate = startDateExperience.value;
-  const endDate = endDateExperience.value;
-  const professionalTasksPerformed = experienceExperience.value;
-
-  emit("submit", {
-    jobTitle: jobTitle,
-    company: company,
-    startDate: startDate,
-    endDate: endDate,
-    professionalTasksPerformed: professionalTasksPerformed,
-  });
   if (
     titleExperience &&
     companyExperience &&
@@ -39,15 +25,27 @@ const onSubmit = (e: Event) => {
     endDateExperience &&
     experienceExperience
   ) {
+    const jobTitle = (titleExperience as HTMLInputElement).value;
+    const company = (companyExperience as HTMLInputElement).value;
+    const startDate = (startDateExperience as HTMLInputElement).value;
+    const endDate = (endDateExperience as HTMLInputElement).value;
+    const professionalTasksPerformed = (
+      experienceExperience as HTMLInputElement
+    ).value;
+
+    emit("submit", {
+      jobTitle: jobTitle,
+      company: company,
+      startDate: startDate,
+      endDate: endDate,
+      professionalTasksPerformed: professionalTasksPerformed,
+    });
     (titleExperience as HTMLInputElement).value = "";
     (companyExperience as HTMLInputElement).value = "";
     (startDateExperience as HTMLInputElement).value = "";
     (endDateExperience as HTMLInputElement).value = "";
     (experienceExperience as HTMLInputElement).value = "";
   }
-  // values.start_date = "";
-  // values.end_date = "";
-  // values.experience = "";
 };
 
 const experience_fields = [

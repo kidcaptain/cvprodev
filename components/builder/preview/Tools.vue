@@ -540,32 +540,32 @@ const navigatorGet = (textToCopy: string) => {
         <div>
           <label for="optionBackground">Size</label>
           <select
-          class="w-full p-2 mt-2 text-sm rounded-md focus-visible:outline-none focus-visible:ring-2 ring-pink-900"
-          v-model="optionBackground"
-          @change="backgroundOption"
-          name="optionBackground"
-        >
-          <option value="cover">Cover</option>
-          <option value="contain">Contain</option>
-          <!-- <option value="en">English</option> -->
-        </select>
+            class="w-full p-2 mt-2 text-sm rounded-md focus-visible:outline-none focus-visible:ring-2 ring-pink-900"
+            v-model="optionBackground"
+            @change="backgroundOption"
+            name="optionBackground"
+          >
+            <option value="cover">Cover</option>
+            <option value="contain">Contain</option>
+            <!-- <option value="en">English</option> -->
+          </select>
         </div>
-      <div>
-        <label for="optionBackgroundPosition">Position</label>
-        <select
-          class="w-full p-2 mt-2 text-sm rounded-md focus-visible:outline-none focus-visible:ring-2 ring-pink-900"
-          v-model="optionBackgroundPosition"
-          @change="backgroundOptionPosition"
-          name="optionBackgroundPosition"
-        >
-          <option value="top">Top</option>
-          <option value="left">Left</option>
-          <option value="center">Center</option>
-          <option value="right">Right</option>
-          <option value="bottom">Bottom</option>
-          <!-- <option value="en">English</option> -->
-        </select>
-      </div>
+        <div>
+          <label for="optionBackgroundPosition">Position</label>
+          <select
+            class="w-full p-2 mt-2 text-sm rounded-md focus-visible:outline-none focus-visible:ring-2 ring-pink-900"
+            v-model="optionBackgroundPosition"
+            @change="backgroundOptionPosition"
+            name="optionBackgroundPosition"
+          >
+            <option value="top">Top</option>
+            <option value="left">Left</option>
+            <option value="center">Center</option>
+            <option value="right">Right</option>
+            <option value="bottom">Bottom</option>
+            <!-- <option value="en">English</option> -->
+          </select>
+        </div>
       </div>
     </div>
   </div>

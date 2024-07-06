@@ -37,6 +37,13 @@ const defaultValues = ref({
 
 const onSubmit = handleSubmit((values) => {
   emit("submit", values);
+  const titleLanguage = document.getElementById("titleLanguage");
+  titleLanguage.value = "";
+  const type = document.querySelectorAll(".type");
+  type.forEach((e) => {
+    console.log(e);
+    e.checked = false;
+  });
   defaultValues.value.title = null;
 });
 
@@ -46,6 +53,7 @@ const experience_fields = [
     label: "Language",
     placeholder: "Type your skill here",
     type: "text",
+    id: "titleLanguage",
   },
   {
     name: "type",
@@ -53,6 +61,7 @@ const experience_fields = [
     placeholder: "Type your skill here",
     type: "radio",
     value: "Elementary level",
+    id: "typeElementary",
   },
   {
     name: "type",
@@ -60,6 +69,7 @@ const experience_fields = [
     placeholder: "Type your skill here",
     type: "radio",
     value: "Independent level",
+    id: "typeIndependent",
   },
   {
     name: "type",
@@ -67,6 +77,7 @@ const experience_fields = [
     placeholder: "Type your skill here",
     type: "radio",
     value: "Experienced level",
+    id: "typeExperienced",
   },
 ];
 </script>
@@ -104,6 +115,8 @@ const experience_fields = [
                 :type="field.type ? field.type : 'text'"
                 :placeholder="field.placeholder"
                 v-bind="componentField"
+                :id="field.id"
+                :name="field.name"
               />
               <Input
                 required
@@ -112,6 +125,8 @@ const experience_fields = [
                 :type="field.type ? field.type : 'text'"
                 :placeholder="field.placeholder"
                 v-bind="componentField"
+                :id="field.id"
+                :name="field.name"
               />
             </FormControl>
             <FormMessage class="text-xs" />
@@ -119,7 +134,7 @@ const experience_fields = [
         </FormField>
       </template>
       <div class="flex items-end">
-        <Button type="submit" class="px-6 space-x-3">
+        <Button size="sm" type="submit" class="px-3">
           <Plus /> <span>Add</span>
         </Button>
       </div>

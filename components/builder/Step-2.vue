@@ -11,7 +11,7 @@ import { useForm } from "vee-validate";
 import { toTypedSchema } from "@vee-validate/zod";
 
 import Experience from "@/components/builder/sub-forms/Experience.vue";
-import ExperienceEdit from "@/components/builder/sub-forms/ExperienceEdit.vue";
+
 import Skills from "@/components/builder/sub-forms/Skills.vue";
 import Education from "@/components/builder/sub-forms/Education.vue";
 
@@ -23,15 +23,16 @@ const onSubmit = handleSubmit(() => {
   const values: any[] = [];
   accordionItems.value.forEach((element) => {
     if (element.title == "PROFESSIONAL EXPERIENCE") {
-      element.data = itemsEditable.value;
+      element.datas = itemsEditable.value;
     }
     values.push({ title: element.title, data: element.datas });
   });
-  window.localStorage.setItem("step_2", JSON.stringify(values));
+  console.log(values);
+  // window.localStorage.setItem("step_2", JSON.stringify(values));
   emit("submit");
 });
 
-const onEdit = (e) => {
+const onEdit = (e: Event) => {
   e.preventDefault();
   const data = {
     jobTitle: jobTitle.value,
@@ -85,9 +86,13 @@ const removeSaved = (item: number, index: number) => {
   accordionItems.value[item]?.datas.splice(index, 1);
 };
 
-const itemsEditable = ref([]);
+const removeSavedExperience = (index: number) => {
+  itemsEditable.value.splice(index, 1);
+};
 
-const itemEditable = ref<number>();
+const itemsEditable = ref<any[]>([]);
+
+const itemEditable = ref<number>(0);
 const booll = ref<boolean>(false);
 const jobTitle = ref<string>();
 const company = ref<string>();
@@ -126,11 +131,11 @@ const editSave = (item: any, index: number) => {
           <AccordionContent class="md:pl-5">
             <div class="space-y-2">
               <div>
-                <div v-if="itemIndex == 0" class="overflow-y-auto max-h-52">
+                <div v-if="itemIndex == 0" class="overflow-y-auto max-h-62 flex-col-reverse flex">
                   <div
                     v-for="(save, index) in itemsEditable"
                     :key="index"
-                    class="border-b bg-secondary/5 "
+                    class="border-b bg-secondary/5"
                   >
                     <div class="p-4">
                       <h2 class="my-2 text-md">
@@ -152,40 +157,81 @@ const editSave = (item: any, index: number) => {
                       </h2>
                       <p class="p-1">{{ save.professionalTasksPerformed }}</p>
                     </div>
-                    <Button
-                      @click="editSave(save, index)"
-                      variant="outline"
-                      class="p-1 border-none h-fit hover:text-secondary"
-                      type="button"
-                    >
-                      <Edit class="size-4"
-                    /></Button>
+                    <div class="flex gap-2 pl-4 pb-4">
+                      <Button
+                        @click="editSave(save, index)"
+                        variant="outline"
+                        class="p-1 bg-secondary hover:border-secondary h-fit hover:text-secondary"
+                        type="button"
+                      >
+                        <Edit class="size-4 text-white hover:text-secondary"
+                      /></Button>
+                      <Button
+                        @click="removeSavedExperience(index)"
+                        variant="outline"
+                        class="p-1 bg-secondary hover:border-secondary h-fit hover:text-secondary"
+                        type="button"
+                      >
+                        <Trash class="size-4 text-white hover:text-secondary" />
+                      </Button>
+                    </div>
                   </div>
                 </div>
-                <div
-                  v-for="(save, index) in item.datas"
-                  :key="index"
-                  class="grid grid-cols-3 gap-5 p-3 border-l-2 cursor-pointer border-secondary bg-secondary/5 hover:bg-secondary/10"
-                >
-                  <h3 class="font-semibold border-r border-secondary/50">
-                    {{ save.title }}
-                  </h3>
+                <div class="overflow-y-auto max-h-52 flex-col-reverse flex">
                   <div
-                    class="flex items-center justify-end px-2 border-r text-end border-secondary/50"
+                    v-for="(save, index) in item.datas"
+                    :key="index"
+                    class="gap-5 border-b border-l-2 cursor-pointer border-secondary bg-secondary/5 hover:bg-secondary/10"
                   >
-                    <span
-                      >{{ save.company ?? " " }} {{ save.grade ?? " " }}</span
+                    <div
+                      v-if="itemIndex > 1"
+                      class="px-3 border-t-8 border-white"
                     >
-                  </div>
-                  <div class="flex items-center justify-end gap-3 text-end">
-                    <Button
-                      @click="removeSaved(itemIndex, index)"
-                      variant="outline"
-                      class="p-1 border-none h-fit hover:text-secondary"
-                      type="button"
-                    >
-                      <Trash class="size-4" />
-                    </Button>
+                      <h3 class="my-2 font-semibold">
+                        <span class="font-bold uppercase">Skill:</span>
+                        {{ save.title }}
+                      </h3>
+                    </div>
+
+                    <div v-if="itemIndex == 1" class="p-3">
+                      <h3
+                        class="my-2 font-semibold border-r border-secondary/50"
+                      >
+                        <span class="font-bold uppercase">Institution:</span>
+                        Skill {{ save.title }}
+                      </h3>
+                      <h3
+                        class="my-2 font-semibold border-r border-secondary/50"
+                      >
+                        <span class="font-bold uppercase"
+                          >Degree obtained and grade:</span
+                        >
+                        {{ save.grade }}
+                      </h3>
+                      <h3
+                        class="my-2 font-semibold border-r border-secondary/50"
+                      >
+                        <span class="font-bold uppercase">Starting Date:</span>
+                        {{ save.start_date }}
+                      </h3>
+                      <h3
+                        class="my-2 font-semibold border-r border-secondary/50"
+                      >
+                        <span class="font-bold uppercase">Ending Date:</span>
+                        {{ save.end_date }}
+                      </h3>
+                    </div>
+
+                    <div class="flex p-4 items-center justify-start gap-3 text-end">
+                      <Button
+                        @click="removeSaved(itemIndex, index)"
+                        variant="outline"
+                         class="p-1 bg-secondary hover:border-secondary h-fit hover:text-secondary"
+                        type="button"
+                      >
+                        <Trash class="size-4 text-white hover:text-secondary" />
+                      </Button>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -252,9 +298,9 @@ const editSave = (item: any, index: number) => {
               <label>Company Name</label>
 
               <Input
-                :id="companyExperienceEdit"
+                id="companyExperienceEdit"
                 type="text"
-                :name="companyExperienceEdit"
+                name="companyExperienceEdit"
                 placeholder="Exco cmr"
                 v-model="company"
               />
@@ -285,8 +331,8 @@ const editSave = (item: any, index: number) => {
               <label>Tasks & Job description</label>
 
               <textarea
-                :name="experienceExperienceEdit"
-                :id="experienceExperienceEdit"
+                name="experienceExperienceEdit"
+                id="experienceExperienceEdit"
                 class="w-full col-span-2 p-1 border border-black rounded-md focus-within:outline-none focus-within:border"
                 v-model="professionalTasksPerformed"
               ></textarea>
@@ -298,7 +344,7 @@ const editSave = (item: any, index: number) => {
               class="px-6 space-x-3 bg-stone-500 border-stone-300"
               size="sm"
             >
-              <span>Save</span>
+              <span><Edit /></span>
             </Button>
             <Button
               type="button"

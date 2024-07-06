@@ -80,37 +80,48 @@ const removeSaved = (item: number, index: number) => {
         }}</AccordionTrigger>
         <AccordionContent class="md:pl-5">
           <div class="space-y-2">
-            <div
-              v-for="(save, index) in item.datas"
-              class="grid grid-cols-3 gap-5 p-2 border-l-2 cursor-pointer border-secondary bg-secondary/5 hover:bg-secondary/10"
-            >
-              <h3 :class="save.company || save.grade || save.type  ? 'border-r' : '' " class="font-semibold border-secondary/50">
-                {{ save.title }}
-              </h3>
-              <div :class="save.company || save.grade || save.type ? 'border-r' : '' "
-                class="flex items-center justify-end px-2 text-end border-secondary/50"
+            <div class="overflow-y-auto max-h-62 flex-col-reverse flex">
+              <div
+                v-for="(save, index) in item.datas"
+                class="grid my-2 border-b grid-cols-3 gap-5 p-2 cursor-pointer border-secondary bg-secondary/5 hover:bg-secondary/10"
               >
-                <span>{{ save.company || save.grade || save.type }}</span>
-              </div>
-              <div class="flex items-center justify-end gap-5 text-end">
-                <NuxtTime
-                  v-if="save.start_date"
-                  data-testid="present"
-                  :datetime="save.start_date"
-                  second="numeric"
-                  month="long"
-                  day="numeric"
-                />
-                <Button
-                  @click="removeSaved(itemIndex, index)"
-                  variant="outline"
-                  class="p-1 border-none h-fit hover:text-secondary"
-                  type="button"
+                <h3
+                  :class="
+                    save.company || save.grade || save.type ? 'border-r' : ''
+                  "
+                  class="font-semibold border-secondary/50"
                 >
-                  <Trash class="size-4" />
-                </Button>
+                  {{ save.title }}
+                </h3>
+                <div
+                  :class="
+                    save.company || save.grade || save.type ? 'border-r' : ''
+                  "
+                  class="flex items-center justify-end px-2 text-end border-secondary/50"
+                >
+                  <span>{{ save.company || save.grade || save.type }}</span>
+                </div>
+                <div class="flex items-center justify-end gap-5 text-end">
+                  <NuxtTime
+                    v-if="save.start_date"
+                    data-testid="present"
+                    :datetime="save.start_date"
+                    second="numeric"
+                    month="long"
+                    day="numeric"
+                  />
+                  <Button
+                    @click="removeSaved(itemIndex, index)"
+                    variant="outline"
+                     class="p-1 bg-secondary hover:border-secondary h-fit hover:text-secondary"
+                    type="button"
+                  >
+                    <Trash class="size-4 text-white hover:text-secondary" />
+                  </Button>
+                </div>
               </div>
             </div>
+
             <component
               :is="item.form"
               @submit="(value: any) => item?.datas?.push(value)"

@@ -4,11 +4,13 @@ import { useForm } from "vee-validate";
 import { toTypedSchema } from "@vee-validate/zod";
 import { Textarea } from "@/components/ui/textarea";
 interface ItemExperience {
-  jobTitle: string, company: company, startDate: string, endDate: string 
+  jobTitle: string;
+  company: company;
+  startDate: string;
+  endDate: string;
 }
 const emit = defineEmits(["submit"]);
 const props = defineProps<{ experience: ItemExperience }>();
-
 
 const onSubmit = () => {
   const titleExperience = document.getElementById("titleExperienceEdit");
@@ -86,6 +88,4 @@ const experience_fields = [
 ];
 </script>
 
-<template>
-
-</template>
+<template></template>

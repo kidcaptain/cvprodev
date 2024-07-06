@@ -209,15 +209,20 @@ onMounted(() => {
               <DrawerHeader
                 class="items-center gap-10 pt-10 font-semibold capitalize"
               >
-                <DrawerTitle v-for="link in FooterLink">
-                  <!-- <nuxt-link :to="link" class="hover:text-secondary">
-                    {{ link.text }}
-                  </nuxt-link> -->
+                <DrawerTitle class="flex flex-col gap-3">
+                  <NuxtLink to="/templates"
+                    ><Button class="w-full bg-primary/90 border-none">Create CV</Button></NuxtLink
+                  >
+              
+                  <NuxtLink to="/pricing"><Button class="w-full bg-primary/90 border-none">Pricing</Button></NuxtLink>
+             
+                <NuxtLink to="/about-us"><Button class="w-full bg-primary/90 border-none">About Us</Button></NuxtLink>
                 </DrawerTitle>
+             
+              
               </DrawerHeader>
-              <DrawerFooter>
-                <Button>Create CV</Button>
-              </DrawerFooter>
+
+              <DrawerFooter> </DrawerFooter>
             </DrawerContent>
           </Drawer>
         </div>
@@ -228,7 +233,14 @@ onMounted(() => {
     <slot></slot>
   </main>
   <footer class="relative bg-[#E7C531]">
-    <nuxtImg src="img/shapes/prefooter.png" alt="" class="w-full" rcset="" />
+    <div class="bg-white">
+      <nuxtImg
+        src="img/shapes/prefooter-removebg-preview.png"
+        alt=""
+        class="w-full"
+        rcset=""
+      />
+    </div>
     <div
       class="container relative mx-auto my-auto text-center place-content-center md:text-start md:grid"
     >
@@ -240,17 +252,17 @@ onMounted(() => {
           srcset=""
         />
         <p class="p-4 text-xl font-semibold text-black/50">
-          CV Pro includes a robust Translation Module designed to enhance 
-          accessibility and global reach for our users. This feature allows 
-          seamless translation of CV content between English and French, 
-          catering to diverse linguistic preferences and facilitating broader 
+          CV Pro includes a robust Translation Module designed to enhance
+          accessibility and global reach for our users. This feature allows
+          seamless translation of CV content between English and French,
+          catering to diverse linguistic preferences and facilitating broader
           career opportunities
         </p>
       </div>
 
       <div class="grid py-6 font-semibold capitalize gap-9 md:grid-cols-5">
         <ul v-for="link in FooterLink">
-          <li class="mb-3 text-3xl font-bold quicklink">{{ link.title }}</li>
+          <li class="mb-3 text-3xl font-bold ">{{ link.title }}</li>
           <li v-for="item in link.data" class="pl-5 my-2">
             <nuxt-link :to="item.to" class="hover:text-secondary">
               {{ item.text }}

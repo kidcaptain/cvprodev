@@ -209,17 +209,27 @@ onMounted(() => {
               <DrawerHeader
                 class="items-center gap-10 pt-10 font-semibold capitalize"
               >
-                <DrawerTitle class="flex flex-col gap-3">
-                  <NuxtLink to="/templates"
-                    ><Button class="w-full bg-primary/90 border-none">Create CV</Button></NuxtLink
-                  >
-              
-                  <NuxtLink to="/pricing"><Button class="w-full bg-primary/90 border-none">Pricing</Button></NuxtLink>
-             
-                <NuxtLink to="/about-us"><Button class="w-full bg-primary/90 border-none">About Us</Button></NuxtLink>
-                </DrawerTitle>
-             
-              
+                <DrawerClose>
+                  <DrawerTitle class="flex flex-col gap-3">
+                    <NuxtLink to="/templates"
+                      ><Button class="w-full bg-primary/90 border-none"
+                        >Create CV</Button
+                      ></NuxtLink
+                    >
+
+                    <NuxtLink to="/pricing"
+                      ><Button class="w-full bg-primary/90 border-none"
+                        >Pricing</Button
+                      ></NuxtLink
+                    >
+
+                    <NuxtLink to="/about-us"
+                      ><Button class="w-full bg-primary/90 border-none"
+                        >About Us</Button
+                      ></NuxtLink
+                    >
+                  </DrawerTitle>
+                </DrawerClose>
               </DrawerHeader>
 
               <DrawerFooter> </DrawerFooter>
@@ -262,7 +272,7 @@ onMounted(() => {
 
       <div class="grid py-6 font-semibold capitalize gap-9 md:grid-cols-5">
         <ul v-for="link in FooterLink">
-          <li class="mb-3 text-3xl font-bold ">{{ link.title }}</li>
+          <li class="mb-3 text-3xl font-bold">{{ link.title }}</li>
           <li v-for="item in link.data" class="pl-5 my-2">
             <nuxt-link :to="item.to" class="hover:text-secondary">
               {{ item.text }}

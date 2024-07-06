@@ -211,6 +211,11 @@ onMounted(() => {
               >
                 <DrawerClose>
                   <DrawerTitle class="flex flex-col gap-3">
+                   <NuxtLink to="/"
+                      ><Button class="w-full bg-primary/90 border-none"
+                        >Home</Button
+                      ></NuxtLink
+                    >
                     <NuxtLink to="/templates"
                       ><Button class="w-full bg-primary/90 border-none"
                         >Create CV</Button

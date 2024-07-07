@@ -119,14 +119,14 @@ const removeSaved = (item: number, index: number) => {
         <Button
           variant="outline"
           type="button"
-          class="px-8 space-x-4"
+        size="sm"
           title="share"
         >
           <ArrowLeft />
           <span>Previous</span>
         </Button>
       </nuxt-link>
-      <Button type="submit" class="px-12 space-x-4">
+      <Button type="submit"size="sm">
         <span>Done</span>
         <ArrowRight />
       </Button>

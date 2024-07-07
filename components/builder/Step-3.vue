@@ -80,26 +80,28 @@ const removeSaved = (item: number, index: number) => {
         }}</AccordionTrigger>
         <AccordionContent class="md:pl-5">
           <div class="space-y-2">
-            <div class="overflow-y-auto max-h-62 flex-col-reverse flex">
+            <div class="overflow-y-auto max-h-52 flex-col-reverse flex">
               <div
                 v-for="(save, index) in item.datas"
-                class="grid my-2 border-b grid-cols-3 gap-5 p-2 cursor-pointer border-secondary bg-secondary/5 hover:bg-secondary/10"
+                class="grid my-2 border-b grid-cols-3 gap-5 p-2 cursor-pointer border-secondary  "
               >
-                <h3
-                  :class="
-                    save.company || save.grade || save.type ? 'border-r' : ''
-                  "
-                  class="font-semibold border-secondary/50"
-                >
-                  {{ save.title }}
-                </h3>
-                <div
-                  :class="
-                    save.company || save.grade || save.type ? 'border-r' : ''
-                  "
-                  class="flex items-center justify-end px-2 text-end border-secondary/50"
-                >
-                  <span>{{ save.company || save.grade || save.type }}</span>
+                <div v-if="index == 0" class="bg-secondary/5 hover:bg-secondary/10">
+                  <h3
+                    :class="
+                      save.company || save.grade || save.type ? 'border-r' : ''
+                    "
+                    class="font-semibold border-secondary/50"
+                  >
+                   <span>Language:</span> {{ save.title }}
+                  </h3>
+                  <div
+                    :class="
+                      save.company || save.grade || save.type ? 'border-r' : ''
+                    "
+                    class="flex items-center justify-end px-2 text-end border-secondary/50"
+                  >
+                    <span>{{ save.company || save.grade || save.type }}</span>
+                  </div>
                 </div>
                 <div class="flex items-center justify-end gap-5 text-end">
                   <NuxtTime
@@ -113,7 +115,7 @@ const removeSaved = (item: number, index: number) => {
                   <Button
                     @click="removeSaved(itemIndex, index)"
                     variant="outline"
-                     class="p-1 bg-secondary hover:border-secondary h-fit hover:text-secondary"
+                    class="p-1 bg-secondary hover:border-secondary h-fit hover:text-secondary"
                     type="button"
                   >
                     <Trash class="size-4 text-white hover:text-secondary" />
@@ -139,17 +141,12 @@ const removeSaved = (item: number, index: number) => {
           query: { template_id: $route.query.template_id },
         }"
       >
-        <Button
-          variant="outline"
-          type="button"
-          class="px-8 space-x-4"
-          title="share"
-        >
+        <Button variant="outline" type="button" size="sm" title="share">
           <ArrowLeft />
           <span>Previous</span>
         </Button>
       </nuxt-link>
-      <Button type="submit" class="px-12 space-x-4">
+      <Button type="submit" size="sm">
         <span>Next</span>
         <ArrowRight />
       </Button>

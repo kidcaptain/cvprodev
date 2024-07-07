@@ -15,6 +15,7 @@ import axios from "axios";
 import { toTypedSchema } from "@vee-validate/zod";
 import * as z from "zod";
 import { SelectArrow } from "radix-vue";
+import { TranslateDataPreview } from "@/assets/content/translate";
 const { session, user } = useAuth();
 const BASE_URL = useRuntimeConfig().public.backendAPI;
 const tab1 = ref(false);
@@ -72,6 +73,24 @@ const download_field = [
 ];
 const translateDocument = async () => {
   const content = document.getElementById("content");
+  const awardTitle = document.getElementById("award_title");
+  const profesionalCadreTitle = document.getElementById(
+    "profesional_cadre_title"
+  );
+  const workExperienceTitle = document.getElementById("work_experience_title");
+  const educationTitle = document.getElementById("education_title");
+  const skillsGeneralTitle = document.getElementById("skills_general_title");
+  const professionalSkillsTitle = document.getElementById(
+    "professional_skills_title"
+  );
+  const personalSkillsTitle = document.getElementById("personal_skills_title");
+  const languageTitle = document.getElementById("language_title");
+  const hobbiesTitle = document.getElementById("hobbies_title");
+  const certificationsTitle = document.getElementById(
+    "professional_skills_title"
+  );
+  const referencesTitle = document.getElementById("references_title");
+  const projectTitle = document.getElementById("project_title");
   var option = {
     q: "",
     source: "en",
@@ -81,9 +100,42 @@ const translateDocument = async () => {
   if (content) {
     option.q = content.innerHTML;
     switch (currentLanguage.value) {
-      case "fr":
-        option.source = "en";
-        option.target = "fr";
+        case "fr":
+          TranslateDataPreview.forEach((e) => {
+            if (e.label == "award & honors" && awardTitle) {
+              awardTitle.innerText = e.french;
+            }
+            if (e.label == "projects" && projectTitle) {
+              projectTitle.innerText = e.french;
+            }
+            if (e.label == "references" && referencesTitle) {
+              referencesTitle.innerText = e.french;
+            }
+            if (e.label == "hobbies" && hobbiesTitle ) {
+              hobbiesTitle.innerText = e.french;
+            }
+            if (e.label == "languages" && languageTitle) {
+              languageTitle.innerText = e.french;
+            }
+            if (e.label == "professional skills" && professionalSkillsTitle) {
+              professionalSkillsTitle.innerText = e.french;
+            }
+            if (e.label == "personal kills" && awardTitle) {
+              awardTitle.innerText = e.french;
+            }
+            if (e.label == "skills" && skillsGeneralTitle)  {
+              skillsGeneralTitle.innerText = e.french;
+            }
+            if (e.label == "education" && educationTitle) {
+              educationTitle.innerText = e.french;
+            } 
+            if (e.label == "work experience" && workExperienceTitle) {
+              workExperienceTitle.innerText = e.french;
+            }
+            if (e.label == "professional summary" && profesionalCadreTitle) {
+              profesionalCadreTitle.innerText = e.french;
+            }
+          });
         break;
       case "en":
         option.source = "fr";
@@ -94,12 +146,12 @@ const translateDocument = async () => {
         option.source = "es";
         break;
     }
-    const res = await fetch("https://libretranslate.com/translate", {
-      method: "POST",
-      body: JSON.stringify(option),
-      headers: { "Content-Type": "application/json" },
-    });
-    console.log(await res.json());
+    // const res = await fetch("https://libretranslate.com/translate", {
+    //   method: "POST",
+    //   body: JSON.stringify(option),
+    //   headers: { "Content-Type": "application/json" },
+    // });
+    // console.log(await res.json());
   }
 };
 const submitCV = async () => {
@@ -231,20 +283,21 @@ const print = async () => {
     if (download) {
       download.addEventListener("click", () => {
         const element = document.getElementById("content");
-        const options = {
-          filename: defaultValues.value.name,
-          margin: 0,
-          image: { type: "jpeg", quality: 0.98 },
-          html2canvas: { scale: 2 },
-          jsPDF: {
-            unit: "in",
-            format: "letter",
-            orientation: "portrait",
-          },
-        };
-        // @ts-ignore
-        const html = html2pdf().set(options).from(element).save();
-        console.log(html);
+        if (element) {
+          const options = {
+            filename: defaultValues.value.name,
+            margin: 0,
+            image: { type: "jpeg", quality: 0.98 },
+            html2canvas: { scale: 2 },
+            jsPDF: {
+              unit: "in",
+              format: "letter",
+              orientation: "portrait",
+            },
+          };
+          // @ts-ignore
+          html2pdf().set(options).from(element).save();
+        }
       });
       download.click();
     } else {
@@ -482,7 +535,7 @@ const navigatorGet = (textToCopy: string) => {
             </FormItem>
           </FormField>
         </template>
-        <Button size="sm" @click="print()">Télécharger en pdf</Button>
+        <Button size="sm" @click="print()">Download</Button>
       </div>
       <div v-if="tab3">
         <div class="flex items-center w-full gap-2 p-2 bg-white">

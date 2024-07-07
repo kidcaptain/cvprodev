@@ -23,7 +23,6 @@ const { handleSubmit } = useForm({
 const onSubmit = handleSubmit((e: any) => {
   const firstname = (document.getElementById("firstname") as HTMLInputElement)
     .value;
- 
   const lastname = (document.getElementById("lastname") as HTMLInputElement)
     .value;
   const title = (document.getElementById("title") as HTMLInputElement).value;
@@ -36,7 +35,7 @@ const onSubmit = handleSubmit((e: any) => {
   const email = (document.getElementById("email") as HTMLInputElement).value;
   const website = (document.getElementById("website") as HTMLInputElement)
     .value;
-  const objectif = (document.getElementById("objectif") as HTMLTextAreaElement)
+  const objective = (document.getElementById("objectif") as HTMLTextAreaElement)
     .value;
   const identifiant = (document.getElementById("identifiant") as HTMLSelectElement)
     .value;
@@ -50,7 +49,7 @@ const onSubmit = handleSubmit((e: any) => {
     phone: phone == "" ? "" : identifiant + " " + phone,
     email: email,
     website: website,
-    objectif: objectif,
+    objective: objective,
   };
   window.localStorage.setItem("step_1", JSON.stringify(value));
   // values.phone = phone + " " + values.phone;
@@ -81,17 +80,9 @@ const filename = ref("");
 async function uploadImage(e: any) {
   let fl_files = e.target.files;
   let fl_file = fl_files[0];
-
-  // window.localStorage.setItem("profileimage", fl_file);
-  // const d = window.localStorage.getItem("profileimage");
-  // const upload_file = document.getElementById("upload_file");
   const upload_file = document.getElementById("upload_file");
   const storage = sessionStorage;
   if (upload_file) {
-    //   filename.value = fl_file;
-    //   (upload_file as HTMLImageElement).src = window.URL.createObjectURL(fl_file);
-    //   upload_file.onload = function () {
-    //     window.URL.revokeObjectURL(fl_file);
     var reader = new FileReader();
     reader.addEventListener("loadend", function () {
       (upload_file as any).src = reader.result;

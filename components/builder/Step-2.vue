@@ -27,8 +27,8 @@ const onSubmit = handleSubmit(() => {
     }
     values.push({ title: element.title, data: element.datas });
   });
-  console.log(values);
-  // window.localStorage.setItem("step_2", JSON.stringify(values));
+  // console.log(values);
+  window.localStorage.setItem("step_2", JSON.stringify(values));
   emit("submit");
 });
 
@@ -131,7 +131,7 @@ const editSave = (item: any, index: number) => {
           <AccordionContent class="md:pl-5">
             <div class="space-y-2">
               <div>
-                <div v-if="itemIndex == 0" class="overflow-y-auto max-h-62 flex-col-reverse flex">
+                <div v-if="itemIndex == 0" class="overflow-y-auto max-h-52 flex-col-reverse flex">
                   <div
                     v-for="(save, index) in itemsEditable"
                     :key="index"
@@ -157,12 +157,13 @@ const editSave = (item: any, index: number) => {
                       </h2>
                       <p class="p-1">{{ save.professionalTasksPerformed }}</p>
                     </div>
-                    <div class="flex gap-2 pl-4 pb-4">
+                    <div class="flex gap-2 pl-4 pb-2">
                       <Button
                         @click="editSave(save, index)"
                         variant="outline"
                         class="p-1 bg-secondary hover:border-secondary h-fit hover:text-secondary"
                         type="button"
+                        size="sm"
                       >
                         <Edit class="size-4 text-white hover:text-secondary"
                       /></Button>
@@ -198,7 +199,7 @@ const editSave = (item: any, index: number) => {
                         class="my-2 font-semibold border-r border-secondary/50"
                       >
                         <span class="font-bold uppercase">Institution:</span>
-                        Skill {{ save.title }}
+                        {{ save.title }}
                       </h3>
                       <h3
                         class="my-2 font-semibold border-r border-secondary/50"
@@ -259,14 +260,15 @@ const editSave = (item: any, index: number) => {
           <Button
             variant="outline"
             type="button"
-            class="px-8 space-x-4"
+            class=""
             title="share"
+            size="sm"
           >
             <ArrowLeft />
             <span>Previous</span>
           </Button>
         </nuxt-link>
-        <Button type="submit" class="px-12 space-x-4">
+        <Button type="submit"   size="sm" class="">
           <span>Next</span>
           <ArrowRight />
         </Button>
@@ -274,16 +276,16 @@ const editSave = (item: any, index: number) => {
     </form>
     <div
       v-if="booll"
-      class="fixed top-0 left-0 flex items-center justify-center w-full h-full bg-black/20"
+      class="fixed top-0 left-0 flex items-end md:items-center justify-center w-full h-full bg-black/20"
     >
-      <div class="z-50 w-1/3 p-10 mt-10 overflow-hidden bg-white rounded-md">
+      <div class="z-50 md:w-1/3 w-full p-5 md:p-10 mt-10 overflow-hidden bg-white rounded-md">
         <form @submit="onEdit">
           <h3 class="text-xl text-center">Edit Work Experience</h3>
           <div
-            class="w-full gap-6 p-2 space-y-6 border-l-2 md:grid md:grid-cols-2 md:space-y-0 border-secondary/50"
+            class="w-full gap-6 p-2 space-y-2  border-l-2 md:grid md:grid-cols-2 md:space-y-0 border-secondary/50"
           >
             <div>
-              <label>Job Title</label>
+              <label class="text-sm">Job Title</label>
 
               <Input
                 name="titleExperienceEdit"
@@ -295,7 +297,7 @@ const editSave = (item: any, index: number) => {
             </div>
 
             <div>
-              <label>Company Name</label>
+              <label class="text-sm">Company Name</label>
 
               <Input
                 id="companyExperienceEdit"
@@ -307,7 +309,7 @@ const editSave = (item: any, index: number) => {
             </div>
 
             <div>
-              <label>Starting Date</label>
+              <label class="text-sm">Starting Date</label>
 
               <Input
                 id="startDateExperienceEdit"
@@ -318,7 +320,7 @@ const editSave = (item: any, index: number) => {
             </div>
 
             <div>
-              <label>Ending Date</label>
+              <label class="text-sm">Ending Date</label>
               <Input
                 name="endDateExperienceEdit"
                 id="endDateExperienceEdit"
@@ -328,7 +330,7 @@ const editSave = (item: any, index: number) => {
             </div>
 
             <div class="w-full col-span-2">
-              <label>Tasks & Job description</label>
+              <label class="text-sm">Tasks & Job description</label>
 
               <textarea
                 name="experienceExperienceEdit"
@@ -338,13 +340,13 @@ const editSave = (item: any, index: number) => {
               ></textarea>
             </div>
           </div>
-          <div class="p-4">
+          <div class="p-4 flex items-center">
             <Button
               type="submit"
               class="px-6 space-x-3 bg-stone-500 border-stone-300"
               size="sm"
             >
-              <span><Edit /></span>
+              <span><Edit /> </span>Edit
             </Button>
             <Button
               type="button"

@@ -48,6 +48,7 @@ const onSubmit = handleSubmit((values) => {
   const endingDateCertification = document.getElementById(
     "endingDateCertification"
   );
+  console.log(endingDateCertification)
   titleCertification.value = "";
   gradeCertification.value = "";
   startDateCertification.value = "";

@@ -48,13 +48,7 @@ const accordionItems = ref([
     title: "Certifications",
     datas: Array<any>(),
     form: Certifications,
-  },
-  {
-    value: "item-4",
-    title: "AWARDS & HONORS",
-    datas: Array<any>(),
-    form: Award,
-  },
+  }
 ]);
 
 const removeSaved = (item: number, index: number) => {
@@ -75,7 +69,7 @@ const removeSaved = (item: number, index: number) => {
         :key="item.value"
         :value="item.value"
       >
-        <AccordionTrigger class="sticky font-bold uppercase">{{
+        <AccordionTrigger class="sticky text-sm font-bold uppercase">{{
           item.title
         }}</AccordionTrigger>
         <AccordionContent class="md:pl-5">
@@ -194,14 +188,14 @@ const removeSaved = (item: number, index: number) => {
           query: { template_id: $route.query.template_id },
         }"
       >
-        <Button variant="outline" type="button" size="sm" title="share">
-          <ArrowLeft />
-          <span>Previous</span>
+        <Button variant="outline" type="button" size="sm" class="text-xs" title="share">
+          <ArrowLeft :size="14" />
+          <span>Education and Experience</span>
         </Button>
       </nuxt-link>
-      <Button type="submit" size="sm">
-        <span>Next</span>
-        <ArrowRight />
+      <Button type="submit" size="sm" class="text-xs">
+        <span>Reference</span>
+        <ArrowRight :size="14" />
       </Button>
     </div>
   </form>

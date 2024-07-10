@@ -7,6 +7,8 @@ definePageMeta({
   middleware: "auth", //
 });
 
+
+
 const router = useRouter();
 
 const stats = ref([
@@ -30,73 +32,17 @@ const stats = ref([
   },
 ]);
 
+const getData = ref<any[]>()
 
-  const data = await $fetch(BASE_URL + "cv/get/all");
-
-
-
-// address: "dee";
-// certificationInformation: null;
-// certifications: "null";
-// createdAt: "2024-05-15 04:45:29";
-// cvId: null;
-// cvsUuid: "f271ce6b-8b74-4def-b912-aec7fcb31a0b";
-// education: '[{"institution":"Istag","degree":"licence","year_of_graduation":"5","grade":"1"}]';
-// email: "dev@gmail.com";
-// fullName: null;
-// goal: "Goal";
-// hobbies: "null";
-// id: 1;
-// isDeleted: false;
-// language: "null";
-// languageInformation: null;
-// name: "paul";
-// personalSkills: "null";
-// phone: "645454";
-// picturePath: null;
-// professionalSkills: "null";
-// projectInformation: null;
-// projects: "null";
-// referenceInformation: null;
-// references: "null";
-// status: "COMPLITED";
-// templateDescription: null;
-// templateId: "1";
-// templateImagePath: "api.ticketvivi.com/cvpro/storage/app/public/production/f8TWDkwASqvBoitmHzqLFaOlWgkfafqDVvd2zba8.png";
-// templateName: null;
-// templateUuid: "d6be0bb5-2fed-4e4b-b98c-7d0b10dec356";
-// templateViewPath: null;
-// title: "dev";
-// updatedAt: "2024-07-02 13:06:56";
-// userEmail: "text3@gmail.com";
-// userId: "10";
-// website: "siteduezro.com";
-// yearsOfExperience: "4";
-// const data = await [];
-const show = (item: any) => {
-
-  const profileInformation = {
-    firstname: item.name,
-    address: item.address,
-    website: item.website,
-    email: item.email,
-    title: item.title,
-    yearsOfExperience: item.experience,
-    phone: item.phone,
-    goal: item.goal,
-  };
+const data = await $fetch<any[]>(BASE_URL + "cv/get/all")
+  .then((val) => getData.value = val)
+  .catch((err) => {
+    console.log(err);
+  });
 
 
-  window.localStorage.setItem("step_1", JSON.stringify(profileInformation));
-  window.localStorage.setItem("step_2", JSON.stringify([item.professionalExperience, item.personalSkills, item.professionalSkills ]));
-  window.localStorage.setItem("step_3", JSON.stringify([item.language, item.hobbies, item.certifications ]));
-  window.localStorage.setItem("step_4", JSON.stringify([item.references]));
-
-  router.push({
-      name: "app-cv-builder-preview-id",
-      params: { id: item.templateUuid },
-    });
-
+const reload = () => {
+  window.location.reload();
 };
 </script>
 
@@ -106,8 +52,17 @@ const show = (item: any) => {
       class="flex justify-start gap-6 py-10 max-sm:flex-col max-sm:flex max-sm:justify-center"
     >
       <div
-        class="border rounded-full max-sm:m-auto size-24 bg-background border-secondary"
-      ></div>
+        class="relative overflow-hidden rounded-full max-sm:m-auto size-24 bg-background "
+      >
+        <img
+          class="relative z-10 mb-8 scale-75 "  
+          src="@/assets/img/logo-white-theme.svg"
+          alt=""
+        />
+        <div class="absolute top-0 left-0 w-full h-full bg-black/80 backdrop-blur-sm">
+
+        </div>
+      </div>
       <div class="max-lg:text-center">
         <h1 class="text-4xl font-semibold">
           Welcome back,
@@ -126,13 +81,15 @@ const show = (item: any) => {
           <Button class="">Create new </Button>
         </nuxt-link>
       </div>
-      <div 
-        v-if="data?.cvs"
+      {{ getData }}
+      {{ data }}
+      <div
+        v-if="getData"
         class="relative grid grid-cols-4 gap-10 py-12 max-sm:grid-cols-1 max-lg:grid-cols-2"
       >
         <div
           class="aspect-[210/297] overflow-hidden hover:shadow-lg relative border-none hover: rounded-3xl"
-          v-for="i in data?.cvs"
+          v-for="i in getData"
           :class="i.userUuid == session?.uid ? 'flex' : 'hidden'"
         >
           <div
@@ -143,19 +100,21 @@ const show = (item: any) => {
             >
               Create at {{ i.createdAt }}
             </h1>
-            <!-- 
+
             <NuxtLink
+              class="p-2 text-black border-2 rounded-md border-secondary hover:bg-white bg-white/70 hover:text-secondary hover:border-2 hover:border-white"
               :to="{
-                name: `app-cv-builder-preview-id`,
-                params: { id: i.templateUuid },
+                name: `app-view-id`,
+                params: { id: i.cvsUuid },
               }"
-            > -->
-            <Button
-              @click="show(i)"
-              class="text-black border-2 border-secondary hover:bg-white bg-white/70 hover:text-secondary hover:border-2 hover:border-white"
-              >View preview</Button
             >
-            <!-- </NuxtLink> -->
+              Show
+              <!-- <NuxtLink
+              @click="show(i)"
+              
+              ></Button
+            > -->
+            </NuxtLink>
           </div>
           <div class="absolute top-0 left-0 z-0 w-full h-full opacity-80">
             <img
@@ -195,7 +154,8 @@ const show = (item: any) => {
         </div>
       </div>
       <div v-else>
-        <h3>No data yet</h3>
+        <h3 class="text-2xl font-semibold">No data yet</h3>
+        <Button type="button" class="mt-4" @click="reload">Reload</Button>
       </div>
       <nuxt-link to="/pricing" class="hidden max-sm:block">
         <Button class="w-full">Create new </Button>
@@ -268,7 +228,7 @@ const show = (item: any) => {
               >
                 <h3 class="font-serif text-3xl font-semibold text-white">CV</h3>
               </div>
-              <div class="h-full bg-white">sdfsd</div>
+              <div class="h-full bg-white">=</div>
             </div>
           </div>
         </div>

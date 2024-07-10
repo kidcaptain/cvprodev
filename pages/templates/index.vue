@@ -9,7 +9,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-
+import { RefreshCcwIcon } from "lucide-vue-next";
 const BASE_URL = useRuntimeConfig().public.backendAPI;
 
 const preventClose = (event: any) => {
@@ -26,6 +26,10 @@ const { data, pending, error, refresh } = await useAsyncData<any>(
   "cv-templates-list",
   () => $fetch(`${BASE_URL}templates/get/all`)
 );
+
+const reloadData = () => {
+  refresh;
+};
 </script>
 <template>
   <Dialog :defaultOpen="!aggred">
@@ -44,7 +48,6 @@ const { data, pending, error, refresh } = await useAsyncData<any>(
           class="w-full prose lg:prose-xl max-w-none prose-headings:text-primary"
         >
           <h1 class="lead">Privacy Policy</h1>
-
           <p>
             This Privacy Policy describes how CV Pro we collects, uses, and
             shares information when you use our web application to generate CVs
@@ -53,14 +56,11 @@ const { data, pending, error, refresh } = await useAsyncData<any>(
             consent to the collection and use of information as described in
             this Privacy Policy.
           </p>
-
           <h2>Information We Collect</h2>
-
           <p>
             When you use our Services, we may collect the following types of
             information:
           </p>
-
           <p>
             <strong>Personal Information:</strong> When y<a href=""
               >ou create an ac</a
@@ -178,8 +178,12 @@ const { data, pending, error, refresh } = await useAsyncData<any>(
   </Dialog>
   <section class="bg-background">
     <div
+      v-if="data"
       class="container grid gap-10 py-10 md:grid-cols-2 lg:grid-cols-3 md:gap-10 md:py-20"
     >
+      <button @click="reloadData">
+        <span class=""><RefreshCcwIcon /></span>
+      </button>
       <Dialog v-for="template in data?.templates" href="/">
         <DialogTrigger as-child>
           <div
@@ -253,5 +257,48 @@ const { data, pending, error, refresh } = await useAsyncData<any>(
         </DialogTrigger>
       </Dialog>
     </div>
+    <div
+      v-else-if="error"
+      class="container flex py-4 text-2xl font-semibold text-center align-middle min-h-96"
+    >
+      No data yet
+     
+    </div>
+    <div v-else>
+      <h3 class="text-2xl font-semibold ">Is loading</h3>
+      <div class="grid gap-4 px-6 py-4 overflow-y-auto md:grid-cols-4">
+        <div
+          v-for="i of 4"
+          :key="i"
+          class="col-span-1 transition-all card is-loading h-96 hover:shadow-lg"
+        >
+          <div class="content"></div>
+        </div>
+      </div>
+    </div>
   </section>
 </template>
+
+<style scoped>
+.card {
+  background: #fff;
+  border-radius: 5px;
+}
+.card .content {
+  padding: 20px 30px;
+  height: 100%;
+}
+.card.is-loading .content {
+  background: #eee;
+  background: linear-gradient(110deg, #ececec 8%, #f5f5f5 18%, #ececec 33%);
+  border-radius: 5px;
+  background-size: 200% 100%;
+  animation: 1.5s shine linear infinite;
+}
+
+@keyframes shine {
+  to {
+    background-position-x: -200%;
+  }
+}
+</style>

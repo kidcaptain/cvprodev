@@ -42,8 +42,8 @@ const current_state  = computed(() => route.params.id)
 
 <template>
     <div class="flex flex-col text-white min-h- overflow-">
-        <header class="sticky top-0 z-10 bg-gradient-to-l bg-background">
-            <div class="container mx-auto max-w-screen-2xl">
+        <header class="sticky md:p-0 p-3 top-0 z-10 bg-gradient-to-l bg-background">
+            <div class=" w-full mx-auto max-w-screen-2xl">
                 <header class="relative items-center pt-4">
                     <ScrollArea class="max-w-3xl p-3 mx-auto bg-white shadow-lg md:p-8 rounded-xl">
                         <Button variant="outline" size="sm" @click="$router.back()" class="mb-4 space-x-2 bg-white rounded-full shadow-sm border-stone-100 shadow-primary/20 hover:text-white hover:bg-primary">
@@ -54,26 +54,26 @@ const current_state  = computed(() => route.params.id)
                             <template v-for="step in steps">
                                 <nuxt-link
                                     :to="parseInt(current_state.toString()) < step.id ? false : { name: `app-cv-builder-step-id`, params: { id: step.id }, query: { template_id: template_id } }"
-                                    class="group" :class="`
+                                    class="group flex items-center flex-col" :class="`
                                             ${parseInt(current_state.toString()) == step.id ? 'text-secondary' : 'text-gray-400'}
                                             ${parseInt(current_state.toString()) > step.id ? '!text-primary' : ''}
                                         `">
-                                    <div class="p-1 transition-transform duration-200 border rounded-full size-20 group-hover:scale-105"
+                                    <div class="p-1 transition-transform duration-200 border rounded-full md:size-20 size-14 group-hover:scale-105"
                                         :class="`
                                             ${parseInt(current_state.toString()) == step.id ? 'border-secondary' : 'border-gray-200'}
                                             ${parseInt(current_state.toString()) > step.id ? '!border-primary' : ''}
                                         `">
-                                        <div class="grid w-full h-full p-3 border rounded-full place-content-center"
+                                        <div class="grid w-full h-full p-3 border  rounded-full place-content-center"
                                             :class="`
                                             ${parseInt(current_state.toString()) == step.id ? 'bg-secondary border-secondary text-white' : 'bg-transparent border-gray-200'}
                                             ${parseInt(current_state.toString()) > step.id ? '!bg-primary !border-primary text-white' : ''}
                                         `">
-                                            <component :is="step.icon" />
+                                            <component  :is="step.icon" />
                                         </div>
                                     </div>
                                     <div class="mt-2 text-center ">
-                                        <h4 class="font-semibold uppercase"> Step {{ step.id }} </h4>
-                                        <p class="text-sm capitalize "> {{ step.title }} </p>
+                                        <h4 class="font-semibold uppercase md:text-lg text-sm"> Step {{ step.id }} </h4>
+                                        <p class="md:text-sm capitalize text-xs"> {{ step.title }} </p>
                                     </div>
                                 </nuxt-link>
                                 <div class="flex-1 h-1.5 rounded-full bg-gray-200 mt-9"
@@ -92,7 +92,7 @@ const current_state  = computed(() => route.params.id)
         </header>
         <main class="bg-background">
             <div class="container py-5">
-                <div class="max-w-3xl p-8 mx-auto bg-white shadow-lg rounded-xl text-foreground">
+                <div class="max-w-3xl p-3 md:p-8 mx-auto bg-white shadow-lg rounded-xl text-foreground">
                     <slot></slot>
                 </div>
             </div>

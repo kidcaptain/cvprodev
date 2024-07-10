@@ -62,7 +62,7 @@ const onSubmit = handleSubmit((values) => {
     endDateEducation.value = ""
     startDateEducation.value = ""
     titleEducation.value = ""
-    titleEducation.value = ""
+    gradeEducation.value = ""
   }
 });
 

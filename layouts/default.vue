@@ -248,9 +248,9 @@ onMounted(() => {
     <slot></slot>
   </main>
   <footer class="relative bg-[#E7C531]">
-    <div class="bg-white">
+    <div class="bg-white ">
       <nuxtImg
-        src="img/shapes/prefooter-removebg-preview.png"
+        src="img/shapes/prefooter.png"
         alt=""
         class="w-full"
         rcset=""

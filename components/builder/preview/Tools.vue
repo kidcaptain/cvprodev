@@ -47,7 +47,10 @@ const formSchema = toTypedSchema(
   })
 );
 const language = ref<string>("");
-const props = defineProps<{ templateId: string | string[] }>();
+const props = defineProps<{
+  templateId: string | string[];
+  isEditedPage: boolean;
+}>();
 const typeBinding = ref<string>("PDF");
 const currentLanguage = ref<string>("en");
 
@@ -100,50 +103,134 @@ const translateDocument = async () => {
   if (content) {
     option.q = content.innerHTML;
     switch (currentLanguage.value) {
-        case "fr":
-          TranslateDataPreview.forEach((e) => {
-            if (e.label == "award & honors" && awardTitle) {
-              awardTitle.innerText = e.french;
-            }
-            if (e.label == "projects" && projectTitle) {
-              projectTitle.innerText = e.french;
-            }
-            if (e.label == "references" && referencesTitle) {
-              referencesTitle.innerText = e.french;
-            }
-            if (e.label == "hobbies" && hobbiesTitle ) {
-              hobbiesTitle.innerText = e.french;
-            }
-            if (e.label == "languages" && languageTitle) {
-              languageTitle.innerText = e.french;
-            }
-            if (e.label == "professional skills" && professionalSkillsTitle) {
-              professionalSkillsTitle.innerText = e.french;
-            }
-            if (e.label == "personal kills" && awardTitle) {
-              awardTitle.innerText = e.french;
-            }
-            if (e.label == "skills" && skillsGeneralTitle)  {
-              skillsGeneralTitle.innerText = e.french;
-            }
-            if (e.label == "education" && educationTitle) {
-              educationTitle.innerText = e.french;
-            } 
-            if (e.label == "work experience" && workExperienceTitle) {
-              workExperienceTitle.innerText = e.french;
-            }
-            if (e.label == "professional summary" && profesionalCadreTitle) {
-              profesionalCadreTitle.innerText = e.french;
-            }
-          });
+      case "fr":
+        TranslateDataPreview.forEach((e) => {
+          if (e.label == "award & honors" && awardTitle) {
+            awardTitle.innerText = e.french;
+          }
+          if (e.label == "projects" && projectTitle) {
+            projectTitle.innerText = e.french;
+          }
+          if (e.label == "references" && referencesTitle) {
+            referencesTitle.innerText = e.french;
+          }
+          if (e.label == "hobbies" && hobbiesTitle) {
+            hobbiesTitle.innerText = e.french;
+          }
+          if (e.label == "languages" && languageTitle) {
+            languageTitle.innerText = e.french;
+          }
+          if (e.label == "professional skills" && professionalSkillsTitle) {
+            professionalSkillsTitle.innerText = e.french;
+          }
+          if (e.label == "personal skills" && personalSkillsTitle) {
+            personalSkillsTitle.innerText = e.french;
+          }
+          if (e.label == "certifications" && certificationsTitle) {
+            certificationsTitle.innerText = e.french;
+          }
+          if (e.label == "award & honors" && awardTitle) {
+            awardTitle.innerText = e.french;
+          }
+          if (e.label == "skills" && skillsGeneralTitle) {
+            skillsGeneralTitle.innerText = e.french;
+          }
+          if (e.label == "education" && educationTitle) {
+            educationTitle.innerText = e.french;
+          }
+          if (e.label == "work experience" && workExperienceTitle) {
+            workExperienceTitle.innerText = e.french;
+          }
+          if (e.label == "professional summary" && profesionalCadreTitle) {
+            profesionalCadreTitle.innerText = e.french;
+          }
+        });
         break;
       case "en":
-        option.source = "fr";
-        option.source = "en";
+        TranslateDataPreview.forEach((e) => {
+          if (e.label == "award & honors" && awardTitle) {
+            awardTitle.innerText = e.label;
+          }
+          if (e.label == "projects" && projectTitle) {
+            projectTitle.innerText = e.label;
+          }
+          if (e.label == "references" && referencesTitle) {
+            referencesTitle.innerText = e.label;
+          }
+          if (e.label == "hobbies" && hobbiesTitle) {
+            hobbiesTitle.innerText = e.label;
+          }
+          if (e.label == "languages" && languageTitle) {
+            languageTitle.innerText = e.label;
+          }
+          if (e.label == "professional skills" && professionalSkillsTitle) {
+            professionalSkillsTitle.innerText = e.label;
+          }
+          if (e.label == "personal skills" && personalSkillsTitle) {
+            personalSkillsTitle.innerText = e.label;
+          }
+          if (e.label == "certifications" && certificationsTitle) {
+            certificationsTitle.innerText = e.label;
+          }
+          if (e.label == "award & honors" && awardTitle) {
+            awardTitle.innerText = e.label;
+          }
+          if (e.label == "skills" && skillsGeneralTitle) {
+            skillsGeneralTitle.innerText = e.label;
+          }
+          if (e.label == "education" && educationTitle) {
+            educationTitle.innerText = e.label;
+          }
+          if (e.label == "work experience" && workExperienceTitle) {
+            workExperienceTitle.innerText = e.label;
+          }
+          if (e.label == "professional summary" && profesionalCadreTitle) {
+            profesionalCadreTitle.innerText = e.label;
+          }
+        });
         break;
       default:
-        option.source = "en";
-        option.source = "es";
+        TranslateDataPreview.forEach((e) => {
+          if (e.label == "award & honors" && awardTitle) {
+            awardTitle.innerText = e.spanish;
+          }
+          if (e.label == "projects" && projectTitle) {
+            projectTitle.innerText = e.spanish;
+          }
+          if (e.label == "references" && referencesTitle) {
+            referencesTitle.innerText = e.spanish;
+          }
+          if (e.label == "hobbies" && hobbiesTitle) {
+            hobbiesTitle.innerText = e.spanish;
+          }
+          if (e.label == "languages" && languageTitle) {
+            languageTitle.innerText = e.spanish;
+          }
+          if (e.label == "professional skills" && professionalSkillsTitle) {
+            professionalSkillsTitle.innerText = e.spanish;
+          }
+          if (e.label == "personal skills" && personalSkillsTitle) {
+            personalSkillsTitle.innerText = e.spanish;
+          }
+          if (e.label == "certifications" && certificationsTitle) {
+            certificationsTitle.innerText = e.spanish;
+          }
+          if (e.label == "award & honors" && awardTitle) {
+            awardTitle.innerText = e.spanish;
+          }
+          if (e.label == "skills" && skillsGeneralTitle) {
+            skillsGeneralTitle.innerText = e.spanish;
+          }
+          if (e.label == "education" && educationTitle) {
+            educationTitle.innerText = e.spanish;
+          }
+          if (e.label == "work experience" && workExperienceTitle) {
+            workExperienceTitle.innerText = e.spanish;
+          }
+          if (e.label == "professional summary" && profesionalCadreTitle) {
+            profesionalCadreTitle.innerText = e.spanish;
+          }
+        });
         break;
     }
     // const res = await fetch("https://libretranslate.com/translate", {
@@ -600,7 +687,6 @@ const navigatorGet = (textToCopy: string) => {
           >
             <option value="cover">Cover</option>
             <option value="contain">Contain</option>
-            <!-- <option value="en">English</option> -->
           </select>
         </div>
         <div>
@@ -616,7 +702,6 @@ const navigatorGet = (textToCopy: string) => {
             <option value="center">Center</option>
             <option value="right">Right</option>
             <option value="bottom">Bottom</option>
-            <!-- <option value="en">English</option> -->
           </select>
         </div>
       </div>
@@ -632,9 +717,10 @@ const navigatorGet = (textToCopy: string) => {
       }"
     >
       <Button class="w-full my-4 text-pink-900 bg-inherit hover:text-white"
-        >modifier mes informations</Button
+        >edit cv</Button
       >
     </nuxt-link>
-    <Button @click="submitCV" class="w-full">enregistrer</Button>
+    <Button @click="submitCV" class="w-full">Save</Button>
   </div>
+
 </template>

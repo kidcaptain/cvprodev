@@ -34,7 +34,7 @@ export default defineEventHandler(async (event: any) => {
   const data = await getTemplate(query.id);
   const url = replaceUrl(data.template.templateViewPath)
   const htmlData = await $fetch<string>(url);
-  // const cssData = await $fetch<string>("http://127.0.0.1:5500/CV-YAMO/style.css");
+  // const htmlData = await $fetch<string>("http://127.0.0.1:5500/TEMPLATE%202/index.html");
   return {
     html: htmlData,
     css: data.template.templateViewPath

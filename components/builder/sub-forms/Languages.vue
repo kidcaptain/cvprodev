@@ -54,6 +54,7 @@ const experience_fields = [
     placeholder: "Type your skill here",
     type: "text",
     id: "titleLanguage",
+    class: "basis-full"
   },
   {
     name: "type",
@@ -85,7 +86,7 @@ const experience_fields = [
 <template>
   <form @submit="onSubmit">
     <div
-      class="items-start w-full gap-6 p-2 space-y-6 border-l-2 md:space-y-0 md:flex border-secondary/50"
+      class="items-start md:flex-wrap w-full gap-6 p-2 space-y-6 border-l-2 md:space-y-0 md:flex border-secondary/50"
     >
       <template v-for="field in experience_fields">
         <FormField
@@ -111,7 +112,7 @@ const experience_fields = [
                 :value="field.value"
                 required
                 v-if="field.type == 'radio'"
-                class="w-full size-5"
+                class="w-full size-5 "
                 :type="field.type ? field.type : 'text'"
                 :placeholder="field.placeholder"
                 v-bind="componentField"
@@ -120,13 +121,14 @@ const experience_fields = [
               />
               <Input
                 required
-                v-else
-                class="w-full"
+                v-else 
+                class="w-full basis-full"
                 :type="field.type ? field.type : 'text'"
                 :placeholder="field.placeholder"
                 v-bind="componentField"
                 :id="field.id"
                 :name="field.name"
+                
               />
             </FormControl>
             <FormMessage class="text-xs" />

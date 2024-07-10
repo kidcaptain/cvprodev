@@ -81,8 +81,6 @@ const reload = () => {
           <Button class="">Create new </Button>
         </nuxt-link>
       </div>
-      {{ getData }}
-      {{ data }}
       <div
         v-if="getData"
         class="relative grid grid-cols-4 gap-10 py-12 max-sm:grid-cols-1 max-lg:grid-cols-2"
@@ -90,7 +88,7 @@ const reload = () => {
         <div
           class="aspect-[210/297] overflow-hidden hover:shadow-lg relative border-none hover: rounded-3xl"
           v-for="i in getData"
-          :class="i.userUuid == session?.uid ? 'flex' : 'hidden'"
+          :class="i?.userUuid == session?.uid ? 'flex' : 'hidden'"
         >
           <div
             class="relative z-10 flex flex-col items-center justify-center w-full h-full m-auto max-w-72"
@@ -98,27 +96,27 @@ const reload = () => {
             <h1
               class="my-8 font-semibold text-center text-black max-lg:text-xl"
             >
-              Create at {{ i.createdAt }}
+              Create at {{ i?.createdAt }}
             </h1>
-
-            <NuxtLink
+            {{i?.cvsUuid}}
+            <!-- <NuxtLink
               class="p-2 text-black border-2 rounded-md border-secondary hover:bg-white bg-white/70 hover:text-secondary hover:border-2 hover:border-white"
               :to="{
                 name: `app-view-id`,
                 params: { id: i.cvsUuid },
               }"
             >
-              Show
+              Show -->
               <!-- <NuxtLink
               @click="show(i)"
               
               ></Button
             > -->
-            </NuxtLink>
+            <!-- </NuxtLink> -->
           </div>
           <div class="absolute top-0 left-0 z-0 w-full h-full opacity-80">
             <img
-              :src="'https://' + i.templateImagePath"
+              :src="'https://' + i?.templateImagePath"
               class="w-full h-full border-none rounded-3xl"
             />
           </div>
@@ -133,8 +131,8 @@ const reload = () => {
               offert your a PREMIUM plan to change level.
             </h1>
             <h6
-              class="mt-4 mb-10 text-sm font-semibold text-white max-lg:text-sm"
-            >
+              class="mt-4 mb-10 max-w-lg text-sm font-semibold text-white max-lg:text-sm">
+            
               unlock premium templates of all sorts
             </h6>
 

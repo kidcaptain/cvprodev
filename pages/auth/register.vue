@@ -11,7 +11,7 @@ const formSchema = toTypedSchema(
     .object({
       name: z
         .string({ required_error: "User name is required" })
-        .min(5, "User name is required"),
+        .min(2, "User name is required"),
       email: z
         .string({ required_error: "Email is required" })
         .min(1, "Email is required")

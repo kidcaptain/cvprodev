@@ -365,36 +365,27 @@ const optionBackground = ref<string>("");
 const optionBackgroundPosition = ref<string>("");
 
 const print = async () => {
-  if (typeBinding.value == "pdf") {
-    const download = document.getElementById("download-pdf");
-    if (download) {
-      download.addEventListener("click", () => {
-        const element = document.getElementById("content");
-        if (element) {
-          const options = {
-            filename: defaultValues.value.name,
-            margin: 0,
-            image: { type: "jpeg", quality: 0.98 },
-            html2canvas: { scale: 2 },
-            jsPDF: {
-              unit: "in",
-              format: "letter",
-              orientation: "portrait",
-            },
-          };
-          // @ts-ignore
-          html2pdf().set(options).from(element).save();
-        }
-      });
-      download.click();
-    } else {
-    }
-  } else {
-    alert("Indisponible pour l'instant");
-    // var o = {
-    //     filename: 'test.doc'
-    // };
-    // $(document.getElementById("main")).googoose(o);
+  const download = document.getElementById("download-pdf");
+  if (download) {
+    download.addEventListener("click", () => {
+      const element = document.getElementById("content");
+      if (element) {
+        const options = {
+          filename: defaultValues.value.name,
+          margin: 0,
+          image: { type: "jpeg", quality: 0.98 },
+          html2canvas: { scale: 2 },
+          jsPDF: {
+            unit: "in",
+            format: "letter",
+            orientation: "portrait",
+          },
+        };
+        // @ts-ignore
+        html2pdf().set(options).from(element).save();
+      }
+    });
+    download.click();
   }
 };
 // const props = defineProps<{ html: string; disabled: boolean }>();
@@ -606,7 +597,7 @@ const navigatorGet = (textToCopy: string) => {
                       v-for="item in field.options"
                       :value="item.value.toString()"
                     >
-                      {{ item.text.toString() }}
+                     pdf
                     </option>
                     <!-- <option value="en">English</option> -->
                   </select>
@@ -722,5 +713,4 @@ const navigatorGet = (textToCopy: string) => {
     </nuxt-link>
     <Button @click="submitCV" class="w-full">Save</Button>
   </div>
-
 </template>

@@ -181,9 +181,7 @@ const reloadData = () => {
       v-if="data"
       class="container grid gap-10 py-10 md:grid-cols-2 lg:grid-cols-3 md:gap-10 md:py-20"
     >
-      <button @click="reloadData">
-        <span class=""><RefreshCcwIcon /></span>
-      </button>
+   
       <Dialog v-for="template in data?.templates" href="/">
         <DialogTrigger as-child>
           <div

@@ -6,14 +6,11 @@ import { useForm } from "vee-validate";
 
 definePageMeta({
   layout: "template-preview",
-   middleware: "auth"
 });
 
 const route = useRoute();
 
-const { data, error } = await useFetch<any>(
-  "http://127.0.0.1:5500/TEMPLATE%202/index.html"
-);
+const { data, error } = await useFetch<any>("/api/templates/templateById?id=" + route.params.id);
 
 const isRaedy = ref(false);
 
@@ -531,7 +528,7 @@ const reloadPage = () => {
     </div>
     <section id="preview" class="relative col-span-3 overflow-auto printme">
       <div v-if="data" class="min-h-screen">
-        <TemplateToPdf v-html="data"></TemplateToPdf>
+        <TemplateToPdf v-html="data.html"></TemplateToPdf>
       </div>
       <div v-else-if="error" class="text-center font-semibold">
         <h3>Not find Template</h3>
@@ -567,7 +564,9 @@ const reloadPage = () => {
   background-size: 200% 100%;
   animation: 1.5s shine linear infinite;
 }
-
+.container_template .bottom_Side_template{
+  padding: 30px 40px !important;
+}
 @keyframes shine {
   to {
     background-position-x: -200%;

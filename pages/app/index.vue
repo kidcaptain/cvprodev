@@ -1,13 +1,18 @@
 <script setup lang="ts">
-import { LayoutDashboard, Mails, FileText, PlusCircle } from "lucide-vue-next";
+import {
+  LayoutDashboard,
+  Mails,
+  FileText,
+  PlusCircle,
+  Eye,
+  Trash,
+} from "lucide-vue-next";
 const BASE_URL = useRuntimeConfig().public.backendAPI;
 
 const { user, session } = useAuth();
 definePageMeta({
   middleware: "auth", //
 });
-
-
 
 const router = useRouter();
 
@@ -32,10 +37,13 @@ const stats = ref([
   },
 ]);
 
-const getData = ref<any[]>()
+const getData = ref<any[]>();
 
 const data = await $fetch<any[]>(BASE_URL + "cv/get/all")
-
+  .then((val) => (getData.value = val))
+  .catch((err) => {
+    console.log(err);
+  });
 
 const reload = () => {
   window.location.reload();
@@ -48,16 +56,16 @@ const reload = () => {
       class="flex justify-start gap-6 py-10 max-sm:flex-col max-sm:flex max-sm:justify-center"
     >
       <div
-        class="relative overflow-hidden rounded-full max-sm:m-auto size-24 bg-background "
+        class="relative overflow-hidden rounded-full max-sm:m-auto size-24 bg-background"
       >
         <img
-          class="relative z-10 mb-8 scale-75 "  
+          class="relative z-10 mb-8 scale-75"
           src="@/assets/img/logo-white-theme.svg"
           alt=""
         />
-        <div class="absolute top-0 left-0 w-full h-full bg-black/80 backdrop-blur-sm">
-
-        </div>
+        <div
+          class="absolute top-0 left-0 w-full h-full bg-black/80 backdrop-blur-sm"
+        ></div>
       </div>
       <div class="max-lg:text-center">
         <h1 class="text-4xl font-semibold">
@@ -77,14 +85,14 @@ const reload = () => {
           <Button class="">Create new </Button>
         </nuxt-link>
       </div>
-      {{ data }}
+
       <div
-        v-if="data"
+        v-if="getData"
         class="relative grid grid-cols-4 gap-10 py-12 max-sm:grid-cols-1 max-lg:grid-cols-2"
       >
         <div
           class="aspect-[210/297] overflow-hidden hover:shadow-lg relative border-none hover: rounded-3xl"
-          v-for="i in data"
+          v-for="i in getData?.cvs"
           :class="i?.userUuid == session?.uid ? 'flex' : 'hidden'"
         >
           <div
@@ -96,7 +104,26 @@ const reload = () => {
               Create at {{ i?.createdAt }}
             </h1>
 
-           
+            <div class="flex gap-4">
+              <NuxtLink
+                class="p-2 text-black border-2 rounded-md border-secondary hover:bg-white bg-white/70 hover:text-secondary hover:border-2 hover:border-white"
+                :to="{
+                  name: `app-view-id`,
+                  params: { id: `${i?.cvsUuid}` },
+                }"
+              >
+                <Eye :size="14" />
+              </NuxtLink>
+              <NuxtLink
+                class="p-2 text-black border-2 rounded-md border-secondary hover:bg-white bg-white/70 hover:text-secondary hover:border-2 hover:border-white"
+                :to="{
+                  name: `app-view-id`,
+                  params: { id: `${i?.cvsUuid}` },
+                }"
+              >
+                <Trash :size="14" />
+              </NuxtLink>
+            </div>
           </div>
           <div class="absolute top-0 left-0 z-0 w-full h-full opacity-80">
             <img
@@ -109,7 +136,8 @@ const reload = () => {
           class="aspect-[210/297] relative overflow-hidden bg-primary rounded-3xl"
         >
           <div
-            class="relative z-10 flex flex-col items-center justify-center w-full h-full m-auto max-w-72"
+            class="relative z-10 flex flex-col items-center justify-center w-full h-full m-auto text-center"
+            style="max-width: 70%"
           >
             <h1 class="my-8 font-bold text-center text-white max-lg:text-xl">
               offert your a PREMIUM plan to change level.

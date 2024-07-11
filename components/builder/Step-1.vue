@@ -37,9 +37,8 @@ const onSubmit = handleSubmit((e: any) => {
     .value;
   const objective = (document.getElementById("objectif") as HTMLTextAreaElement)
     .value;
-  const identifiant = (
-    document.getElementById("identifiant") as HTMLSelectElement
-  ).value;
+  const identifiant = (document.getElementById("identifiant") as HTMLSelectElement)
+    .value;
 
   const value = {
     firstname: firstname,
@@ -219,18 +218,8 @@ const phone = ref();
                     id="identifiant"
                     class="py-2 text-white rounded-md bg-primary"
                   >
-                    <option value="+213">+213 ALGERIA</option>
-                    <option value="+244">+244 ANGOLA</option>
-                    <option value="+229">+229 BENIN</option>
-                    <option value="+267">+267 BOTSWANA</option>
-                    <option value="+226">+226 BURKINA FASO</option>
-                    <option value="+257">+257 BURUNDI</option>
-                    <option selected value="+237">+237 CAMEROON</option>
-                    <option value="+1">+1 CANADA</option>
-                    <option value="+242">+242 CONGO</option>
-                    <option value="+235">+235 CHAD</option>
-                    <option value="+225">+225 COTE D'IVOIRE</option>
-                    <option value="+241">+241 GABON</option>
+                    <option selected value="+237">+237</option>
+                    <option value="+1">+1</option>
                   </select>
                 </div>
               </FormControl>

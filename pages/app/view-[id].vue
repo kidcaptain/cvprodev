@@ -493,7 +493,7 @@ const closeModal = ref(false);
     </div>
     <section id="preview" class="relative col-span-3 overflow-auto printme">
       <div v-if="data" class="min-h-screen">
-        <TemplateToPdf v-html="data"></TemplateToPdf>
+        <TemplateToPdf v-html="data.html"></TemplateToPdf>
       </div>
       <div v-else-if="error" class="font-semibold text-center">
         <h3>Not find Template</h3>

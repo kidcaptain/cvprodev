@@ -11,7 +11,7 @@ const formSchema = toTypedSchema(
     .object({
       name: z
         .string({ required_error: "User name is required" })
-        .min(2, "User name is required"),
+        .min(5, "User name is required"),
       email: z
         .string({ required_error: "Email is required" })
         .min(1, "Email is required")
@@ -106,7 +106,7 @@ const experience_fields = [
 <template>
   <form action="" class="space-y-5" @submit.prevent="register">
     <template v-for="field in experience_fields">
-      <div class="grid items-center w-full gap-3">
+      <div class="grid w-full items-center gap-3">
         <FormField
           v-slot="{ componentField }"
           :name="field.name"
@@ -132,7 +132,7 @@ const experience_fields = [
           <Mail class="w-4 h-4 mr-2" /> Register with Email
         </Button>
       </div>
-      <div class="flex items-center gap-3 text-sm ustify-between">
+      <div class="flex text-sm items-center gap-3 ustify-between">
         <span>Already have an account ?</span>
         <span>
           <Button as-child variant="link" class="p-0">

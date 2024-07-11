@@ -40,17 +40,16 @@ const replaceUrl = (str: string) => {
 </script>
 
 <template>
-  <section class="container min-h-screen p-10">
+  <section class="container min-h-screen p-10" style="height: 120vh;">
     <h1 class="my-4 text-3xl font-semibold text-center">
       Reference template
     </h1>
-    <div class="grid h-full  gap-8">
+    <div class="grid h-full gap-8" style="height: 120vh;">
 
         <iframe
           :src="replaceUrl(data?.template?.templateViewPath)"
-          class="w-full h-full min-h-screen"
-          width="580px"
-          height="480px"
+          class="w-full h-full" style="height: 120vh;"
+        
         ></iframe>
       
     </div>

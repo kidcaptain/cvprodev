@@ -24,6 +24,7 @@ const tab3 = ref(false);
 const tab4 = ref(false);
 
 const route = useRoute();
+const router = useRouter();
 
 useHead({
   script: [
@@ -70,7 +71,7 @@ const download_field = [
     type: "select",
     options: [
       { text: "PDF", value: "pdf" },
-      { text: "DOCX", value: "docx" },
+     
     ],
   },
 ];
@@ -365,27 +366,34 @@ const optionBackground = ref<string>("");
 const optionBackgroundPosition = ref<string>("");
 
 const print = async () => {
-  const download = document.getElementById("download-pdf");
-  if (download) {
-    download.addEventListener("click", () => {
-      const element = document.getElementById("content");
-      if (element) {
-        const options = {
-          filename: defaultValues.value.name,
-          margin: 0,
-          image: { type: "jpeg", quality: 0.98 },
-          html2canvas: { scale: 2 },
-          jsPDF: {
-            unit: "in",
-            format: "letter",
-            orientation: "portrait",
-          },
-        };
-        // @ts-ignore
-        html2pdf().set(options).from(element).save();
-      }
-    });
-    download.click();
+  if (session) {
+    const download = document.getElementById("download-pdf");
+    if (download) {
+      download.addEventListener("click", () => {
+        const element = document.getElementById("content");
+        if (element) {
+          const options = {
+            filename: defaultValues.value.name,
+            margin: 0,
+            image: { type: "jpeg", quality: 0.98 },
+            html2canvas: { scale: 2 },
+            jsPDF: {
+              unit: "in",
+              format: "letter",
+              orientation: "portrait",
+            },
+          };
+          // @ts-ignore
+          html2pdf().set(options).from(element).save();
+        }
+      });
+      download.click();
+    } else {
+    }
+  } else {
+    if(confirm('Log in to use this feature')){
+      router.push('/auth/login');
+    }
   }
 };
 // const props = defineProps<{ html: string; disabled: boolean }>();
@@ -597,7 +605,7 @@ const navigatorGet = (textToCopy: string) => {
                       v-for="item in field.options"
                       :value="item.value.toString()"
                     >
-                     pdf
+                      {{ item.text.toString() }}
                     </option>
                     <!-- <option value="en">English</option> -->
                   </select>
@@ -699,7 +707,7 @@ const navigatorGet = (textToCopy: string) => {
     </div>
   </div>
   <div v-if="user">
-    <nuxt-link
+    <!-- <nuxt-link
       class="flex-1 w-full text-sm text-pink-900"
       :to="{
         name: `app-cv-builder-step-id`,
@@ -710,7 +718,8 @@ const navigatorGet = (textToCopy: string) => {
       <Button class="w-full my-4 text-pink-900 bg-inherit hover:text-white"
         >edit cv</Button
       >
-    </nuxt-link>
-    <Button @click="submitCV" class="w-full">Save</Button>
+    </nuxt-link> -->
+    <Button  @click="submitCV" class="w-full mt-4">Save</Button>
   </div>
+
 </template>

@@ -18,8 +18,7 @@ export default defineNuxtConfig({
     "@nuxtjs/i18n",
     "@nuxtjs/color-mode",
     "nuxt-swiper",
-    "nuxt-time",
-    "nuxt-csurf"
+    "nuxt-time"
   ],
 
   shadcn: {
@@ -52,7 +51,7 @@ export default defineNuxtConfig({
     verifyClientOnEveryRequest: true,
     guestRedirectTo: "/auth/login", // where to redirect if the user is not authenticated
     authenticatedRedirectTo: "/app", // where to redirect if the user is authenticated
-    baseUrl: "https://www.cv-pro.com" // should be something like 
+    baseUrl: "" // should be something like 
   },
 
   runtimeConfig: {

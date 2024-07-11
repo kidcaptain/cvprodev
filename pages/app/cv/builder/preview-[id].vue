@@ -10,7 +10,9 @@ definePageMeta({
 
 const route = useRoute();
 
-const { data, error } = await useFetch<any>("/api/templates/templateById?id=" + route.params.id);
+const { data, error } = await useFetch<any>(
+"/api/templates/templateById?id=" + route.params.id
+);
 
 const isRaedy = ref(false);
 
@@ -57,9 +59,13 @@ onMounted(() => {
     const etape2: {
       title: string;
       data: {
+        jobTitle: string;
         title: string;
         company: string;
+        startDate: string;
+        endDate: string;
         start_date: string;
+        professionalTasksPerformed: string;
         end_date: string;
         experience: string;
         grade: string;
@@ -310,19 +316,18 @@ onMounted(() => {
           text += `
         <div class="content">
                         <div class="right-align">
-                            <p><b>${e.title}</b></p>
+                            <p><b>${e.jobTitle}</b></p>
                             <p class="red_text"><i>${e.company}</i></p>
 
                         </div>
                         <div class="left-align">
-                            <p style="color: grey;"><i>${reformDate(
-                              e.start_date
-                            )} – ${reformDate(e.start_date)}</i></p>
+                            <p style="color: grey;"><i>${e.startDate
+                            } – ${e.endDate }</i></p>
                             <p>Cameroon</p>
                         </div>
                     </div><br>
                      <P style="padding: 0 50px; opacity: 0.7; font-size: 14px;" >
-                        ${e.experience}
+                        ${e.professionalTasksPerformed}
                     </P><br>`;
         });
         work_experience.innerHTML = text;
@@ -346,9 +351,7 @@ onMounted(() => {
           text += `
         <p><b>${e.title}</b></p>
                     <p class="red_text"><i>${e.grade}</i></p>
-                    <p style="color: grey;"><i>${reformDateByMonth(
-                      e.start_date
-                    )} - ${reformDateByMonth(e.end_date)}</i></p><br>
+                    <p style="color: grey;"><i>${e.start_date} - ${e.end_date}</i></p><br>
                     `;
         });
         education.innerHTML = text;
@@ -368,9 +371,9 @@ onMounted(() => {
         etape3[2].data.forEach((e) => {
           text += `
         <p>${e.title}</p>
-                <p style="color: grey;"><i>${reformDateByMonth(
+                <p style="color: grey;"><i>${
                   e.end_date
-                )}</i></p><br>
+                }</i></p><br>
                     `;
         });
         certifications.innerHTML = text;
@@ -530,7 +533,7 @@ const reloadPage = () => {
       <div v-if="data" class="min-h-screen">
         <TemplateToPdf v-html="data.html"></TemplateToPdf>
       </div>
-      <div v-else-if="error" class="text-center font-semibold">
+      <div v-else-if="error" class="font-semibold text-center">
         <h3>Not find Template</h3>
         <h4>
           Check Your Network And
@@ -541,7 +544,7 @@ const reloadPage = () => {
         </h4>
       </div>
       <div v-else>
-        <div class="w-full transition-all card is-loading min-h-screen">
+        <div class="w-full min-h-screen transition-all card is-loading">
           <div class="content"></div>
         </div>
       </div>
@@ -564,9 +567,7 @@ const reloadPage = () => {
   background-size: 200% 100%;
   animation: 1.5s shine linear infinite;
 }
-.container_template .bottom_Side_template{
-  padding: 30px 40px !important;
-}
+
 @keyframes shine {
   to {
     background-position-x: -200%;

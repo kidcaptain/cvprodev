@@ -31,6 +31,7 @@ export const authOptions: AuthConfig = {
       },
       authorize: async (credentials) => {
         // logic to verify if user exists
+        console.log(credentials)
         let user = await getUserFromAPI(credentials)
 
         if (user?.error) {

@@ -62,17 +62,8 @@ const download_field = [
   {
     name: "name",
     label: "File name",
-    placeholder: "Mon cv ",
+    placeholder: "cvPro",
     type: "text",
-  },
-  {
-    name: "type",
-    label: "File type",
-    type: "select",
-    options: [
-      { text: "PDF", value: "pdf" },
-     
-    ],
   },
 ];
 const translateDocument = async () => {

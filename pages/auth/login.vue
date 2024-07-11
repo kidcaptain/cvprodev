@@ -37,6 +37,7 @@ interface FormDatas {
 const formData = reactive<FormDatas>({});
 
 const login = handleSubmit((values) => {
+  alert(values)
   signIn("credentials", values).catch((err) => {
     console.log("errur", err);
     setErrors({
@@ -64,7 +65,7 @@ const experience_fields = [
 <template>
   <form action="" class="space-y-5" @submit.prevent="login">
     <template v-for="field in experience_fields">
-      <div class="grid w-full items-center gap-3">
+      <div class="grid items-center w-full gap-3">
         <FormField
           v-slot="{ componentField }"
           :name="field.name"
@@ -85,7 +86,7 @@ const experience_fields = [
       </div>
     </template>
     <div class="space-y-3">
-      <div class="flex text-sm items-center justify-between">
+      <div class="flex items-center justify-between text-sm">
         <span @click="">Forgoten password ?</span>
         <span>
           <Button as-child variant="link" class="p-0">
@@ -98,7 +99,7 @@ const experience_fields = [
           <Mail class="w-4 h-4 mr-2" /> Log in with Email
         </Button>
       </div>
-      <div class="flex text-sm items-center gap-3 ustify-between">
+      <div class="flex items-center gap-3 text-sm ustify-between">
         <span>Dont have an account ?</span>
         <span>
           <Button as-child variant="link" class="p-0">

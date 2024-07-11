@@ -18,7 +18,8 @@ export default defineNuxtConfig({
     "@nuxtjs/i18n",
     "@nuxtjs/color-mode",
     "nuxt-swiper",
-    "nuxt-time"
+    "nuxt-time",
+    "nuxt-csurf"
   ],
 
   shadcn: {

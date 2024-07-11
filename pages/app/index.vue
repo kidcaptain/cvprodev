@@ -35,10 +35,6 @@ const stats = ref([
 const getData = ref<any[]>()
 
 const data = await $fetch<any[]>(BASE_URL + "cv/get/all")
-  .then((val) => getData.value = val)
-  .catch((err) => {
-    console.log(err);
-  });
 
 
 const reload = () => {
@@ -81,13 +77,14 @@ const reload = () => {
           <Button class="">Create new </Button>
         </nuxt-link>
       </div>
+      {{ data }}
       <div
-        v-if="getData"
+        v-if="data"
         class="relative grid grid-cols-4 gap-10 py-12 max-sm:grid-cols-1 max-lg:grid-cols-2"
       >
         <div
           class="aspect-[210/297] overflow-hidden hover:shadow-lg relative border-none hover: rounded-3xl"
-          v-for="i in getData"
+          v-for="i in data"
           :class="i?.userUuid == session?.uid ? 'flex' : 'hidden'"
         >
           <div

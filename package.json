@@ -10,6 +10,7 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
+    "@auth/core": "^0.34.1",
     "@vee-validate/zod": "^4.12.5",
     "@vueuse/core": "^10.9.0",
     "axios": "^1.7.2",
@@ -20,6 +21,7 @@
     "embla-carousel-vue": "^8.0.2",
     "lucide-vue-next": "^0.340.0",
     "nuxt": "^3.10.3",
+    "nuxt-csurf": "^1.5.2",
     "nuxt-swiper": "^1.2.2",
     "pinia": "^2.1.7",
     "radix-vue": "^1.4.8",

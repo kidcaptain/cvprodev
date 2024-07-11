@@ -177,6 +177,9 @@ const reloadData = () => {
     </DialogContent>
   </Dialog>
   <section class="bg-background">
+    <button @click="reloadData">
+        <span class=""><RefreshCcwIcon /></span>
+      </button>
     <div
       v-if="data"
       class="container grid gap-10 py-10 md:grid-cols-2 lg:grid-cols-3 md:gap-10 md:py-20"

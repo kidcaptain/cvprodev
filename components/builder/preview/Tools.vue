@@ -366,7 +366,7 @@ const optionBackground = ref<string>("");
 const optionBackgroundPosition = ref<string>("");
 
 const print = async () => {
-  if (session) {
+  if (session.value != null) {
     const download = document.getElementById("download-pdf");
     if (download) {
       download.addEventListener("click", () => {
@@ -592,36 +592,10 @@ const navigatorGet = (textToCopy: string) => {
             class="w-full p-2 mt-2 text-sm rounded-md focus-visible:outline-none focus-visible:ring-2 ring-pink-900"
             :value="defaultValues[field.name]"
           >
-            <FormItem class="mb-4 text-sm text-left">
-              <FormLabel>{{ field.label }}</FormLabel>
-              <FormControl>
-                <FormControl>
-                  <select
-                    class="w-full p-2 mt-2 text-sm rounded-md focus-visible:outline-none focus-visible:ring-2 ring-pink-900"
-                    v-if="field.type == 'select'"
-                    v-model="typeBinding"
-                  >
-                    <option
-                      v-for="item in field.options"
-                      :value="item.value.toString()"
-                    >
-                      {{ item.text.toString() }}
-                    </option>
-                    <!-- <option value="en">English</option> -->
-                  </select>
-                  <Input
-                    v-else
-                    :type="field.type ? field.type : 'text'"
-                    :placeholder="field.placeholder"
-                    v-bind="componentField"
-                  />
-                </FormControl>
-              </FormControl>
-              <FormMessage class="text-xs" />
-            </FormItem>
+          
           </FormField>
         </template>
-        <Button size="sm" @click="print()">Download</Button>
+        <Button size="sm" @click="print()">Download pdf</Button>
       </div>
       <div v-if="tab3">
         <div class="flex items-center w-full gap-2 p-2 bg-white">

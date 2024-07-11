@@ -37,7 +37,6 @@ interface FormDatas {
 const formData = reactive<FormDatas>({});
 
 const login = handleSubmit((values) => {
-  alert(values)
   signIn("credentials", values).catch((err) => {
     console.log("errur", err);
     setErrors({

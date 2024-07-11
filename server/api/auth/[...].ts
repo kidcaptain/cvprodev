@@ -27,10 +27,12 @@ export const authOptions: AuthConfig = {
       credentials: {
         email: {},
         password: {},
+        
       },
       authorize: async (credentials) => {
         // logic to verify if user exists
         let user = await getUserFromAPI(credentials)
+
         if (user?.error) {
           // No user found, so this is their first attempt to login
           // meaning this is also the place you could do registration
@@ -44,7 +46,7 @@ export const authOptions: AuthConfig = {
   ],
   callbacks: {
     // Callback when the JWT is created / updated, see https://next-auth.js.org/configuration/callbacks#jwt-callback
-    jwt: async ({ token, user }) => {
+    jwt: async ({token, user}) => {
       const isSignIn = user ? true : false;
       if (isSignIn) {
         token.jwt = user ? (user as any).access_token || '' : '';
@@ -55,7 +57,7 @@ export const authOptions: AuthConfig = {
       return Promise.resolve(token);
     },
     // Callback whenever session is checked, see https://next-auth.js.org/configuration/callbacks#session-callback
-    session: async ({ session, token }) => {
+    session: async ({session, token}) => {
       // (session as any).role = token.role;
       (session as any).uid = token.id;
       return Promise.resolve(session);

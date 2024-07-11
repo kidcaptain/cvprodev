@@ -51,7 +51,7 @@ export default defineNuxtConfig({
     verifyClientOnEveryRequest: true,
     guestRedirectTo: "/auth/login", // where to redirect if the user is not authenticated
     authenticatedRedirectTo: "/app", // where to redirect if the user is authenticated
-    baseUrl: "" // should be something like 
+    baseUrl: "https://www.cv-pro.com" // should be something like 
   },
 
   runtimeConfig: {

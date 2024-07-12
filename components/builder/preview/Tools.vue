@@ -62,8 +62,14 @@ const download_field = [
   {
     name: "name",
     label: "File name",
-    placeholder: "cvPro",
+    placeholder: "Mon cv ",
     type: "text",
+  },
+  {
+    name: "type",
+    label: "File type",
+    type: "select",
+    options: [{ text: "PDF", value: "pdf" }],
   },
 ];
 const translateDocument = async () => {
@@ -238,14 +244,16 @@ const submitCV = async () => {
   const step2 = window.localStorage.getItem("step_2");
   const step3 = window.localStorage.getItem("step_3");
   const step4 = window.localStorage.getItem("step_4");
-  const image = window.localStorage.getItem("profileimage");
-
+  var image = window.localStorage.getItem("profileimage");
+  if (!image) {
+    image = null;
+  }
   if (step1 && step2 && step3 && step4 && image) {
     const etape1: {
       firstname: string;
       lastname: string;
       title: string;
-      experience: string;
+      yearOfExperience: string;
       address: string;
       phone: string;
       email: string;
@@ -262,6 +270,10 @@ const submitCV = async () => {
         experience: string;
         grade: string;
         type: string;
+        professionalTasksPerformed: string;
+        jobTitle: string;
+        startDate: string;
+        endDate: string;
       }[];
     }[] = JSON.parse(step2);
     const etape3: {
@@ -277,6 +289,15 @@ const submitCV = async () => {
       degree: string;
       yearOfGraduation: string;
     }[] = [];
+    var professionalExperience:
+      | {
+          jobTitle: string;
+          company: string;
+          period: string;
+          professionalTasksPerformed: string;
+        }[]
+      | null
+      | any = [];
     etape2[1].data.forEach((e) => {
       educations.push({
         institution: e.title,
@@ -284,58 +305,178 @@ const submitCV = async () => {
         yearOfGraduation: e.start_date + " - " + e.end_date,
       });
     });
-    const references: {
-      institutionName: string;
-      referenceFunction: string;
-      referenceName: string;
-      referenceNumber: string;
-      referenceEmail: string;
-    }[] = [];
+    if (educations.length == 0) {
+      educations.push({ institution: "", degree: "", yearOfGraduation: "" });
+    }
+    etape2[0].data.forEach((e) => {
+      professionalExperience.push({
+        jobTitle: e.jobTitle,
+        company: e.company,
+        period: e.startDate + " / " + e.endDate,
+        professionalTasksPerformed: e.professionalTasksPerformed,
+      });
+    });
+    if (professionalExperience.length == 0) {
+      professionalExperience = null;
+    }
+
+    var references:
+      | {
+          institutionName: string;
+          referenceFunction: string;
+          referenceName: string;
+          referenceNumber: string;
+          referenceEmail: string;
+        }[]
+      | null
+      | any = [];
+
     etape4[0].data.forEach((e) => {
       references.push({
         institutionName: e.title,
         referenceFunction: e.position,
         referenceName: e.references_name,
-        referenceNumber: e.refenreces_phone,
+        referenceNumber: e.references_phone,
         referenceEmail: e.email,
       });
     });
-    const languages: {
-      language: string;
-      abilityLevel: string;
-    }[] = [];
+    if (references.length == 0) {
+      references = null;
+    }
+    var professionalSkills: string[] | null | any = [];
+    etape2[2].data.forEach((e) => {
+      professionalSkills.push(e.title);
+    });
+
+    if (professionalSkills.length == 0) {
+      professionalSkills = null;
+    }
+
+    var personalSkills: string[] | null | any = [];
+    etape2[3].data.forEach((e) => {
+      personalSkills.push(e.title);
+    });
+
+    if (personalSkills.length == 0) {
+      personalSkills = null;
+    }
+
+    var languages:
+      | {
+          language: string;
+          abilityLevel: string;
+        }[]
+      | null
+      | any = [];
+
     etape3[0].data.forEach((e) => {
       languages.push({
-        language: e.language,
-        abilityLevel: e.abilityLevel,
+        language: e.title,
+        abilityLevel: e.type,
       });
     });
+
+    if (languages.length == 0) {
+      languages = null;
+    }
+    var hobbies: string[] | null | any = [];
+
+    etape3[1].data.forEach((e) => {
+      hobbies.push(e.title);
+    });
+
+    if (hobbies.length == 0) {
+      hobbies = null;
+    }
+
+    var certification:
+      | {
+          institutionName: string;
+          yearObtained: string;
+          certificationName: string;
+        }[]
+      | null
+      | any = [];
+
+    etape3[2].data.forEach((e) => {
+      certification.push({
+        institutionName: e.title,
+        yearObtained: e.end_date,
+        certificationName: e.grade,
+      });
+    });
+
+    if (certification.length == 0) {
+      certification = null;
+    }
+
+    var award:
+      | {
+          award: string;
+          yearObtained: string;
+          company: string;
+        }[]
+      | null
+      | any = [];
+
+    etape3[3].data.forEach((e) => {
+      award.push({
+        award: e.award,
+        yearObtained: e.start_date,
+        company: e.title,
+      });
+    });
+
+    if (award.length == 0) {
+      award = null;
+    }
+
+    var project:
+      | {
+          projectTitle: string;
+          projectTasksPerformed: string;
+          projectLink: string;
+        }[]
+      | null
+      | any = [];
+
+    etape3[3].data.forEach((e) => {
+      project.push({
+        projectTitle: e.title,
+        projectTasksPerformed: e.tasks ?? "",
+        projectLink: "",
+      });
+    });
+
+    if (project.length == 0) {
+      project = null;
+    }
+
+    console.log(etape1, etape2, etape3, etape4);
     const cvData = {
       userId: session.value?.uid,
       templateId: props.templateId,
-      picture: null, // Replace with the actual file or file path
+      picture: image, // Replace with the actual file or file path
       profileInformations: JSON.stringify({
         name: `${etape1.firstname} ${etape1.lastname}`,
         title: etape1.title,
-        yearsOfExperience: etape1.experience,
+        yearsOfExperience: etape1.yearOfExperience,
         phone: etape1.phone,
         address: etape1.address,
         email: etape1.email,
-        goal: "",
+        goal: etape1.objective,
         website: etape1.website,
         objective: etape1.objective,
       }),
-      educations:
-        JSON.stringify(educations) ??
-        `[{"institution":" ","degree":"","yearOfGraduation":"","grade":""}]`,
+      educations: JSON.stringify(educations),
       references: JSON.stringify(references),
-      personalSkills: etape2[1].data.toString(),
-      professionalSkills: etape2[2].data.toString(),
-      professionalExperience: etape2[0].data.toString(),
-      certifications: etape3[2].data.toString(),
-      projects: etape3[1].data.toString(),
-      languages: languages.toString(),
-      hobbies: etape3[1].data.toString(),
+      personalSkills: JSON.stringify(personalSkills),
+      professionalSkills: JSON.stringify(professionalSkills),
+      professionalExperience: JSON.stringify(professionalExperience),
+      certifications: JSON.stringify(certification),
+      projects: JSON.stringify(project),
+      languages: JSON.stringify(languages),
+      hobbies: JSON.stringify(hobbies),
       cvId: "",
       tmpKey: null,
     };
@@ -357,7 +498,7 @@ const optionBackground = ref<string>("");
 const optionBackgroundPosition = ref<string>("");
 
 const print = async () => {
-  if (session.value != null) {
+  if (session) {
     const download = document.getElementById("download-pdf");
     if (download) {
       download.addEventListener("click", () => {
@@ -382,8 +523,8 @@ const print = async () => {
     } else {
     }
   } else {
-    if(confirm('Log in to use this feature')){
-      router.push('/auth/login');
+    if (confirm("Log in to use this feature")) {
+      router.push("/auth/login");
     }
   }
 };
@@ -583,10 +724,36 @@ const navigatorGet = (textToCopy: string) => {
             class="w-full p-2 mt-2 text-sm rounded-md focus-visible:outline-none focus-visible:ring-2 ring-pink-900"
             :value="defaultValues[field.name]"
           >
-          
+            <FormItem class="mb-4 text-sm text-left">
+              <FormLabel>{{ field.label }}</FormLabel>
+              <FormControl>
+                <FormControl>
+                  <select
+                    class="w-full p-2 mt-2 text-sm rounded-md focus-visible:outline-none focus-visible:ring-2 ring-pink-900"
+                    v-if="field.type == 'select'"
+                    v-model="typeBinding"
+                  >
+                    <option
+                      v-for="item in field.options"
+                      :value="item.value.toString()"
+                    >
+                      {{ item.text.toString() }}
+                    </option>
+                    <!-- <option value="en">English</option> -->
+                  </select>
+                  <Input
+                    v-else
+                    :type="field.type ? field.type : 'text'"
+                    :placeholder="field.placeholder"
+                    v-bind="componentField"
+                  />
+                </FormControl>
+              </FormControl>
+              <FormMessage class="text-xs" />
+            </FormItem>
           </FormField>
         </template>
-        <Button size="sm" @click="print()">Download pdf</Button>
+        <Button size="sm" @click="print()">Download</Button>
       </div>
       <div v-if="tab3">
         <div class="flex items-center w-full gap-2 p-2 bg-white">
@@ -684,7 +851,6 @@ const navigatorGet = (textToCopy: string) => {
         >edit cv</Button
       >
     </nuxt-link> -->
-    <Button  @click="submitCV" class="w-full mt-4">Save</Button>
+    <Button @click="submitCV" class="w-full mt-4">Save</Button>
   </div>
-
 </template>

@@ -75,33 +75,90 @@ const removeSaved = (item: number, index: number) => {
           <div class="space-y-2">
             <div
               v-for="(save, index) in item.datas"
-              class="grid grid-cols-3 gap-5 p-2 border-l-2 cursor-pointer border-secondary bg-secondary/5 hover:bg-secondary/10"
+            
             >
-              <h3 class="font-semibold border-r border-secondary/50">
-                {{ save.title }}
-              </h3>
-              <div
-                class="flex items-center justify-end px-2 border-r text-end border-secondary/50"
-              >
-                <span>{{ save.company || save.grade }}</span>
-              </div>
-              <div class="flex items-center justify-end gap-5 text-end">
-                <NuxtTime
-                  v-if="save.start_date"
-                  data-testid="present"
-                  :datetime="save.start_date"
-                  second="numeric"
-                  month="long"
-                  day="numeric"
-                />
-                <Button
-                  @click="removeSaved(itemIndex, index)"
-                  variant="outline"
-                  class="p-1 border-none h-fit hover:text-secondary"
-                  type="button"
+              <div v-if="itemIndex == 0" class="border-b">
+                <h3 class="text-xs uppercase border-r border-secondary/50">
+                  <span class="font-bold">Title</span> {{ save.title }}
+                </h3>
+                <h3 class="text-xs uppercase border-r border-secondary/50">
+                  <span class="font-bold">position</span> {{ save.position }}
+                </h3>
+                <h3 class="text-xs uppercase border-r border-secondary/50">
+                  <span class="font-bold">references name</span>
+                  {{ save.references_name }}
+                </h3>
+                <h3 class="text-xs uppercase border-r border-secondary/50">
+                  <span class="font-bold">references phone</span>
+                  {{ save.references_phone }}
+                </h3>
+                <h3 class="text-xs uppercase border-r border-secondary/50">
+                  <span class="font-bold">email</span> {{ save.email }}
+                </h3>
+                <div
+                  class="flex items-center justify-end px-2 border-r text-end border-secondary/50"
                 >
-                  <Trash class="size-4" />
-                </Button>
+                  <span>{{ save.company || save.grade }}</span>
+                </div>
+                <div
+                  class="flex items-center justify-start gap-5 mt-2 text-end"
+                >
+                  <Button
+                    @click="removeSaved(itemIndex, index)"
+                    variant="outline"
+                    class="p-1 border-none h-fit hover:text-secondary"
+                    type="button"
+                  >
+                    <Trash class="size-4" />
+                  </Button>
+                </div>
+              </div>
+              <div v-if="itemIndex == 1" class="border-b">
+                <h3 class="text-xs uppercase border-r border-secondary/50">
+                  <span class="font-bold">Project Title</span> {{ save.title }}
+                </h3>
+                <h3 class="text-xs uppercase border-r border-secondary/50">
+                  <span class="font-bold">Company Name</span> {{ save.company }}
+                </h3>
+                <h3 class="text-xs uppercase border-r border-secondary/50">
+                  <span class="font-bold">Period</span>
+                  {{ save.start_date }} / {{ save.end_date }}
+                </h3>
+                <h3 class="text-xs uppercase border-r border-secondary/50">
+                  <span class="font-bold">Tasks performed</span>
+                  {{ save.tasks }}
+                </h3>
+
+                <div
+                  class="flex items-center justify-start gap-5 mt-2 text-end"
+                >
+                  <Button
+                    @click="removeSaved(itemIndex, index)"
+                    variant="outline"
+                    class="p-1 border-none h-fit hover:text-secondary"
+                    type="button"
+                  >
+                    <Trash class="size-4" />
+                  </Button>
+                </div>
+              </div>
+              <div v-if="itemIndex == 2" class="border-b">
+                <h3 class="text-xs uppercase border-r border-secondary/50">
+                  {{ save.title }}
+                </h3>
+
+                <div
+                  class="flex items-center justify-start gap-5 mt-2 text-end"
+                >
+                  <Button
+                    @click="removeSaved(itemIndex, index)"
+                    variant="outline"
+                    class="p-1 border-none h-fit hover:text-secondary"
+                    type="button"
+                  >
+                    <Trash class="size-4" />
+                  </Button>
+                </div>
               </div>
             </div>
             <component
@@ -114,19 +171,19 @@ const removeSaved = (item: number, index: number) => {
       </AccordionItem>
     </Accordion>
     <div class="flex justify-between mt-5">
-        <nuxt-link
-        :to="{ name: `app-cv-builder-step-id`, params: { id: parseInt(`${$route.params.id}`)  - 1 }, query: { template_id: $route.query.template_id } }">
-        <Button
-          variant="outline"
-          type="button"
-        size="sm"
-          title="share"
-        >
+      <nuxt-link
+        :to="{
+          name: `app-cv-builder-step-id`,
+          params: { id: parseInt(`${$route.params.id}`) - 1 },
+          query: { template_id: $route.query.template_id },
+        }"
+      >
+        <Button variant="outline" type="button" size="sm" title="share">
           <ArrowLeft />
           <span>Previous</span>
         </Button>
       </nuxt-link>
-      <Button type="submit"size="sm">
+      <Button type="submit" size="sm">
         <span>Done</span>
         <ArrowRight />
       </Button>

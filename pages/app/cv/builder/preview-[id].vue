@@ -30,11 +30,10 @@ onMounted(() => {
     if (base64) {
       if (upload_file) {
         (upload_file as HTMLImageElement).src = base64;
-      } else {
-        const image_profil = document.getElementById("image_profil");
-        if (image_profil) {
-          image_profil.style.backgroundImage = "url(" + base64 + ")";
-        }
+      }
+      const image_profil = document.getElementById("image_profil");
+      if (image_profil) {
+        image_profil.style.backgroundImage = "url(" + base64 + ")";
       }
     }
 
@@ -301,7 +300,7 @@ onMounted(() => {
       if (etape1.objective != "") {
         resume.innerHTML = etape1.objective;
       } else {
-        const resumeCadre = document.getElementById("profesional_cadre_title");
+        const resumeCadre = document.getElementById("profesional_cadre");
         if (resumeCadre) {
           resumeCadre.style.display = "none";
         }
@@ -321,8 +320,7 @@ onMounted(() => {
 
                         </div>
                         <div class="left-align">
-                            <p style="color: grey;"><i>${e.startDate
-                            } – ${e.endDate }</i></p>
+                            <p style="color: grey;"><i>${e.startDate} – ${e.endDate}</i></p>
                             <p>Cameroon</p>
                         </div>
                     </div><br>
@@ -371,9 +369,7 @@ onMounted(() => {
         etape3[2].data.forEach((e) => {
           text += `
         <p>${e.title}</p>
-                <p style="color: grey;"><i>${
-                  e.end_date
-                }</i></p><br>
+                <p style="color: grey;"><i>${e.end_date}</i></p><br>
                     `;
         });
         certifications.innerHTML = text;
@@ -473,7 +469,8 @@ onMounted(() => {
         Math.ceil(element.getBoundingClientRect().height / 1054.4889) *
         1054.4889
       }px`;
-      const hr = document.createElement("div");
+      if(Math.ceil(element.getBoundingClientRect().height / 1054.4889) > 1) {
+        const hr = document.createElement("div");
       hr.style.position = "absolute";
       hr.style.transform = "translateY(-50%)";
       hr.style.top = "50%";
@@ -486,6 +483,7 @@ onMounted(() => {
       hr.innerText =
         "Page " + Math.ceil(element.getBoundingClientRect().height / 1054.4889);
       preview.append(hr);
+      }
     }
   }
 

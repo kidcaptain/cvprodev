@@ -33,7 +33,7 @@ export const authOptions: AuthConfig = {
        
         // logic to verify if user exists
         let user = await getUserFromAPI(credentials)
-        console.log(user)
+        console.log(credentials)
         if (user?.error) {
           // No user found, so this is their first attempt to login
           // meaning this is also the place you could do registration

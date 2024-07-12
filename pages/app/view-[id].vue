@@ -6,13 +6,16 @@ import { useForm } from "vee-validate";
 
 definePageMeta({
   layout: "template-preview",
-   middleware: "auth"
+  middleware: "auth",
 });
 const { user, session } = useAuth();
 const route = useRoute();
 
 const { data, error } = await useFetch<any>(
-  "/api/templates/cvById?id=" + route.params.id + "&userId=" + session.value?.uid
+  "/api/templates/cvById?id=" +
+    route.params.id +
+    "&userId=" +
+    session.value?.uid
 );
 // const { data, error } = await useFetch<any>(
 //   "/api/templates/cvById"
@@ -24,419 +27,586 @@ const pdfSection = ref<HTMLElement | null>(null);
 
 onMounted(() => {
   const cvPro: any = {};
+  const cv = data.value.cv;
+  console.log(cv);
+  if (cv) {
+    const upload_file = document.getElementById("user_img");
 
-  const upload_file = document.getElementById("user_img");
-  var base64 = window.localStorage.getItem("profileimage");
-  if (base64) {
-    if (upload_file) {
-      (upload_file as HTMLImageElement).src = base64;
-    }
-  }
-
-  const firstname = document.getElementById("firstname");
-  if (firstname) {
-    if (!cvPro.profileInformations.name) {
-      var text =
-        cvPro.profileInformations.name ?? cvPro.profileInformations.firstname;
-      firstname.innerText = text;
+    if (cv.picture) {
+      if (upload_file) {
+        (upload_file as HTMLImageElement).src = cv.picture;
+      } else {
+        const image_profil = document.getElementById("image_profil");
+        if (image_profil) {
+          image_profil.style.backgroundImage = "url(" + cv.picture + ")";
+        }
+      }
     } else {
-      firstname.style.display = "none";
+      if (upload_file) {
+        upload_file.style.display = "none";
+      }
+      const image_profil = document.getElementById("image_profil");
+      if (image_profil) {
+        image_profil.style.display = "none";
+      }
     }
-  }
 
-  const title = document.getElementById("title");
-  if (title) {
-    if (!cvPro.profileInformations.title) {
-      title.style.display = "none";
-    } else {
-      title.innerText = cvPro.profileInformations.title;
+    const firstname = document.getElementById("firstname");
+    const lastname = document.getElementById("lastname");
+
+    if (firstname && lastname) {
+      if (cv.fullName) {
+        var text = cv.fullName;
+        firstname.innerText = text;
+        lastname.style.display = "none";
+      } else {
+        firstname.style.display = "none";
+      }
     }
-  }
 
-  const address = document.getElementById("address");
-  if (address) {
-    if (!cvPro.profileInformations.address) {
-      address.style.display = "none";
-    } else {
-      address.innerText = cvPro.profileInformations.address;
+    const title = document.getElementById("title");
+    if (title) {
+      if (!cv.title) {
+        title.style.display = "none";
+      } else {
+        title.innerText = cv.title;
+      }
     }
-  }
 
-  const phone = document.getElementById("phone");
-  if (phone) {
-    if (!cvPro.profileInformations.phone) {
-      phone.style.display = "none";
-    } else {
-      phone.innerText = cvPro.profileInformations.phone;
+    const address = document.getElementById("address");
+    if (address) {
+      if (!cv.address) {
+        address.style.display = "none";
+      } else {
+        address.innerText = cv.address;
+      }
     }
-  }
 
-  const email = document.getElementById("email");
-  if (email) {
-    if (!cvPro.profileInformations.email) {
-      email.style.display = "none";
-    } else {
-      email.innerText = cvPro.profileInformations.email;
+    const phone = document.getElementById("phone");
+    if (phone) {
+      if (!cv.phone) {
+        phone.style.display = "none";
+      } else {
+        phone.innerText = cv.phone;
+      }
     }
-  }
 
-  const personal_skills = document.getElementById("personal_skills");
-  if (personal_skills) {
-    var textPersonal = "";
-    var personalSkills: string[] = JSON.parse(cvPro.personalSkills);
-    if (personalSkills.length > 0) {
-      personalSkills.forEach((e) => {
-        textPersonal += ` <li class="point2_template">${e}</li>`;
-      });
-      personal_skills.innerHTML = textPersonal;
+    const email = document.getElementById("email");
+    if (email) {
+      if (!cv.email) {
+        email.style.display = "none";
+      } else {
+        email.innerText = cv.email;
+      }
+    }
+
+    const personal_skills = document.getElementById("personal_skills");
+    const personalCadre = document.getElementById("personal_skills_cadre");
+
+    if (cv.personalSkills) {
+      if (cv.personalSkills != "null") {
+        var personalSkills: string[] = JSON.parse(cvPro.personalSkills);
+        if (personal_skills && personalSkills) {
+          var textPersonal = "";
+          if (personalSkills.length > 0) {
+            personalSkills.forEach((e) => {
+              textPersonal += ` <li class="point2_template">${e}</li>`;
+            });
+            personal_skills.innerHTML = textPersonal;
+          } else {
+            if (personalCadre) {
+              personalCadre.style.display = "none";
+            }
+            personal_skills.style.display = "none";
+          }
+        } else {
+          if (personalCadre) {
+            personalCadre.style.display = "none";
+          }
+        }
+      } else {
+        if (personalCadre) {
+          personalCadre.style.display = "none";
+        }
+      }
     } else {
-      const personalCadre = document.getElementById("personal_skills_cadre");
       if (personalCadre) {
         personalCadre.style.display = "none";
       }
-      personal_skills.style.display = "none";
     }
-  }
-  const professional_skills = document.getElementById("professional_skills");
-  if (professional_skills) {
-    var textprofessionalSkills = "";
-    var professionalSkills: string[] = JSON.parse(cvPro.professionalSkills);
-    if (professionalSkills.length > 0) {
-      professionalSkills.forEach((e) => {
-        text += ` <li class="point2_template">${e}</li>`;
-      });
-      professional_skills.innerHTML = textprofessionalSkills;
+
+    const professional_skills = document.getElementById("professional_skills");
+    const professionalCadre = document.getElementById(
+      "professional_skills_cadre"
+    );
+
+    var professionalSkills: string[] = JSON.parse(cv.professionalSkills);
+    if (cv.professionalSkills && professionalSkills) {
+      if (cv.professionalSkills != "null") {
+        if (professional_skills) {
+          var textprofessionalSkills = "";
+          if (professionalSkills.length > 0) {
+            professionalSkills.forEach((e) => {
+              text += ` <li class="point2_template">${e}</li>`;
+            });
+            professional_skills.innerHTML = textprofessionalSkills;
+          } else {
+            if (professionalCadre) {
+              professionalCadre.style.display = "none";
+            }
+            professional_skills.style.display = "none";
+          }
+        } else {
+          if (professionalCadre) {
+            professionalCadre.style.display = "none";
+          }
+        }
+      } else {
+        if (professionalCadre) {
+          professionalCadre.style.display = "none";
+        }
+      }
     } else {
-      const professionalCadre = document.getElementById(
-        "professional_skills_cadre"
-      );
       if (professionalCadre) {
         professionalCadre.style.display = "none";
       }
-      professional_skills.style.display = "none";
     }
-  }
+    if (!professional_skills && !personal_skills) {
+      const skillsGeneral = document.getElementById("skills_general_title");
+      if (skillsGeneral) {
+        skillsGeneral.style.display = "none"
+      }
+    }
 
-  const language = document.getElementById("language");
-  if (language) {
-    var textlanguage = "";
-    var languages: any[] = JSON.parse(cvPro.language);
-    if (languages.length > 0) {
-      languages.forEach((e) => {
-        text += ` <li>
-                        <span class="text">${e.language}</span><br>
-                        <i style="text-decoration: none; font-style: italic; font-size: small;">${e.abilityLevel}</i>
-                    </li>`;
-      });
-      language.innerHTML = textlanguage;
+    const language = document.getElementById("language");
+    const languageCadre = document.getElementById("language_cadre");
+
+    if (cv.languageInformation) {
+      if (cv.languageInformation != "null") {
+        var languages: any[] = JSON.parse(cv.languageInformation);
+        if (language) {
+          var textlanguage = "";
+          if (languages.length > 0) {
+            languages.forEach((e) => {
+              text += ` <li>
+                       <span class="text">${e.language}</span><br>
+                       <i style="text-decoration: none; font-style: italic; font-size: small;">${e.abilityLevel}</i>
+                   </li>`;
+            });
+            language.innerHTML = textlanguage;
+          } else {
+            if (languageCadre) {
+              languageCadre.style.display = "none";
+            }
+            language.style.display = "none";
+          }
+        } else {
+          if (languageCadre) {
+            languageCadre.style.display = "none";
+          }
+        }
+      } else {
+        if (languageCadre) {
+          languageCadre.style.display = "none";
+        }
+      }
     } else {
-      const languageCadre = document.getElementById("language_cadre");
       if (languageCadre) {
         languageCadre.style.display = "none";
       }
-      language.style.display = "none";
     }
-  }
 
-  const hobbies = document.getElementById("hobbies");
-  if (hobbies) {
-    var texthobbies = "";
-    var hobbiesData: string[] = JSON.parse(cvPro.language);
-    if (hobbiesData.length > 0) {
-      hobbiesData.forEach((e) => {
-        text += `<li class="point2_template">${e}</li>`;
-      });
-      hobbies.innerHTML = texthobbies;
+    const hobbies = document.getElementById("hobbies");
+    const hobbiesCadre = document.getElementById("hobbies_cadre");
+    if (cv.hobbies) {
+      if (cv.hobbies != "null") {
+        var hobbiesData: string[] = JSON.parse(cvPro.language);
+        if (hobbies) {
+          var texthobbies = "";
+          if (hobbiesData.length > 0) {
+            hobbiesData.forEach((e) => {
+              text += `<li class="point2_template">${e}</li>`;
+            });
+            hobbies.innerHTML = texthobbies;
+          } else {
+            if (hobbiesCadre) {
+              hobbiesCadre.style.display = "none";
+            }
+            hobbies.style.display = "none";
+          }
+        } else {
+          if (hobbiesCadre) {
+            hobbiesCadre.style.display = "none";
+          }
+        }
+      } else {
+        if (hobbiesCadre) {
+          hobbiesCadre.style.display = "none";
+        }
+      }
     } else {
-      const hobbiesCadre = document.getElementById("hobbies_cadre");
       if (hobbiesCadre) {
         hobbiesCadre.style.display = "none";
       }
-      hobbies.style.display = "none";
     }
-  }
 
-  const achievements = document.getElementById("achievements");
-  if (achievements) {
-    var textachievements = "";
-    var projects: any[] = JSON.parse(cvPro.project);
-    if (projects.length > 0) {
-      projects.forEach((e) => {
-        text += `<li class="point2_template">${e.projectTitle}</li>`;
-      });
-      achievements.innerHTML = textachievements;
+    const achievements = document.getElementById("achievements");
+    const projectCadre = document.getElementById("project_cadre");
+
+    if (cv.projects) {
+      if (cv.projects != "null") {
+        var projects: any[] = JSON.parse(cv.projects);
+        if (achievements) {
+          var textachievements = "";
+          if (projects.length > 0) {
+            projects.forEach((e) => {
+              text += `<li class="point2_template">${e.projectTitle}</li>`;
+            });
+            achievements.innerHTML = textachievements;
+          } else {
+            if (projectCadre) {
+              projectCadre.style.display = "none";
+            }
+            achievements.style.display = "none";
+          }
+        } else {
+          if (projectCadre) {
+            projectCadre.style.display = "none";
+          }
+        }
+      } else {
+        if (projectCadre) {
+          projectCadre.style.display = "none";
+        }
+      }
     } else {
-      const projectCadre = document.getElementById("project_cadre");
       if (projectCadre) {
         projectCadre.style.display = "none";
       }
-      achievements.style.display = "none";
     }
-  }
 
-  const references = document.getElementById("references");
-  const referencesLeftRight = document.getElementById("references_left_right");
-  if (references) {
-    var textReference: string = "";
-    var referenceInfos: any[] = JSON.parse(cvPro.references);
-    if (referenceInfos.length > 0) {
-      referenceInfos.forEach((e) => {
-        text += `<li class="point2_template">${
-          e.referenceName
-        }(<span style="font-size: 12px; opacity: 0.8;">${
-          e.referenceFunction
-        } - ${e.institutionName}</span>) ${
-          e.referenceNumber ?? ""
-        } <br> <span style="font-size: 12px; opacity: 0.8;"> ${
-          e.referenceEmail
-        } </span></li>`;
-      });
-      references.innerHTML = textReference;
+    const references = document.getElementById("references");
+    const referencesLeftRight = document.getElementById(
+      "references_left_right"
+    );
+    const referencesCadre = document.getElementById("references_cadre");
+    if (cv.referenceInformation) {
+      if (cv.referenceInformation != "null") {
+        var referenceInfos: any[] = JSON.parse(cv.referenceInformation);
+        if (references) {
+          var textReference: string = "";
+          if (referenceInfos.length > 0) {
+            referenceInfos.forEach((e) => {
+              text += `<li class="point2_template">${
+                e.referenceName
+              }(<span style="font-size: 12px; opacity: 0.8;">${
+                e.referenceFunction
+              } - ${e.institutionName}</span>) ${
+                e.referenceNumber ?? ""
+              } <br> <span style="font-size: 12px; opacity: 0.8;"> ${
+                e.referenceEmail
+              } </span></li>`;
+            });
+            references.innerHTML = textReference;
+          } else {
+            if (referencesCadre) {
+              referencesCadre.style.display = "none";
+            }
+            references.style.display = "none";
+          }
+        } else {
+          if (referencesCadre) {
+            referencesCadre.style.display = "none";
+          }
+        }
+        if (referencesLeftRight) {
+          var textReferencesLeftRight = "";
+          if (referenceInfos.length > 0) {
+            referenceInfos.forEach((e) => {
+              text += `<li class="point2_template">${
+                e.referenceName
+              }(<span style="font-size: 12px; opacity: 0.8;">${
+                e.referenceFunction
+              } - ${e.institutionName}</span>) ${
+                e.referenceNumber ?? ""
+              } <br> <span style="font-size: 12px; opacity: 0.8;"> ${
+                e.referenceEmail
+              } </span></li>`;
+            });
+            referencesLeftRight.innerHTML = textReferencesLeftRight;
+          } else {
+            if (referencesCadre) {
+              referencesCadre.style.display = "none";
+            }
+            referencesLeftRight.style.display = "none";
+          }
+        } else {
+          if (referencesCadre) {
+            referencesCadre.style.display = "none";
+          }
+        }
+      } else {
+        if (referencesCadre) {
+          referencesCadre.style.display = "none";
+        }
+      }
     } else {
-      const referencesCadre = document.getElementById("references_cadre");
       if (referencesCadre) {
         referencesCadre.style.display = "none";
       }
-      references.style.display = "none";
     }
-  }
-  if (referencesLeftRight) {
-    var textReferencesLeftRight = "";
-    var referenceInfos: any[] = JSON.parse(cvPro.references);
-    if (referenceInfos.length > 0) {
-      referenceInfos.forEach((e) => {
-        text += `<li class="point2_template">${
-          e.referenceName
-        }(<span style="font-size: 12px; opacity: 0.8;">${
-          e.referenceFunction
-        } - ${e.institutionName}</span>) ${
-          e.referenceNumber ?? ""
-        } <br> <span style="font-size: 12px; opacity: 0.8;"> ${
-          e.referenceEmail
-        } </span></li>`;
-      });
-      referencesLeftRight.innerHTML = textReferencesLeftRight;
-    } else {
-      const referencesCadre = document.getElementById("references_cadre");
-      if (referencesCadre) {
-        referencesCadre.style.display = "none";
-      }
-      referencesLeftRight.style.display = "none";
-    }
-  }
 
-  // A modifier
-  const social = document.getElementById("social");
-  if (social) {
-    // var text = "";
-    // if (etape4[2].data.length > 0) {
-    //   etape4[2].data.forEach((e) => {
-    //     text += `
-    //      <li>
-    //       <span class="icon" style="color: white;"><i class="fa fa-facebook"
-    //                           aria-hidden="true"></i></span>
-    //                   <span class="text">${e.title}</span>
-    //               </li>`;
-    //   });
-    //   social.innerHTML = text;
-    // } else {
+    // A modifier
+    const social = document.getElementById("social");
     const socialCadre = document.getElementById("social_cadre");
-    if (socialCadre) {
-      socialCadre.style.display = "none";
-    }
-    social.style.display = "none";
-    // }
-  }
-
-  const resume = document.getElementById("resume");
-  if (resume) {
-    if (cvPro.goal != "") {
-      resume.innerHTML = cvPro.goal;
+    if (cv.social) {
+      if (social) {
+        if (socialCadre) {
+          socialCadre.style.display = "none";
+        }
+        social.style.display = "none";
+      }
     } else {
-      const resumeCadre = document.getElementById("profesional_cadre_title");
+      if (socialCadre) {
+        socialCadre.style.display = "none";
+      }
+    }
+
+    const resume = document.getElementById("resume");
+    const resumeCadre = document.getElementById("profesional_cadre");
+    if (cv.goal) {
+      if (resume) {
+        resume.innerHTML = cv.goal;
+      } else {
+        if (resumeCadre) {
+          resumeCadre.style.display = "none";
+        }
+      }
+    } else {
       if (resumeCadre) {
         resumeCadre.style.display = "none";
       }
-      resume.style.display = "none";
     }
-  }
-  const work_experience = document.getElementById("work_experience");
-  if (work_experience) {
-    text = "";
-    var ProfessionalExperienceInformation: any[] = JSON.parse(
-      cvPro.ProfessionalExperienceInformation
-    );
-    if (ProfessionalExperienceInformation.length > 0) {
-      ProfessionalExperienceInformation.forEach((e) => {
-        text += `
-        <div class="content">
-                        <div class="right-align">
-                            <p><b>${e.jobTitle}</b></p>
-                            <p class="red_text"><i>${e.company}</i></p>
+    const work_experience = document.getElementById("work_experience");
+    const experienceCadre = document.getElementById("work_experience_cadre");
 
-                        </div>
-                        <div class="left-align">
-                            <p style="color: grey;"><i>${e.period}</i></p>
-                            <p>Cameroon</p>
-                        </div>
-                    </div><br>
-                     <P style="padding: 0 50px; opacity: 0.7; font-size: 14px;" >
-                        ${e.professionalTasksPerformed}
-                    </P><br>`;
-      });
-      work_experience.innerHTML = text;
+    if (cv.ProfessionalExperienceInformation) {
+      if (cv.ProfessionalExperienceInformation != "null") {
+        var ProfessionalExperienceInformation: any[] = JSON.parse(
+          cv.ProfessionalExperienceInformation
+        );
+        if (work_experience) {
+          text = "";
+          ProfessionalExperienceInformation.forEach((e) => {
+            text += `
+       <div class="content">
+                       <div class="right-align">
+                           <p><b>${e.jobTitle}</b></p>
+                           <p class="red_text"><i>${e.company}</i></p>
+
+                       </div>
+                       <div class="left-align">
+                           <p style="color: grey;"><i>${e.period}</i></p>
+                           <p>Cameroon</p>
+                       </div>
+                   </div><br>
+                    <P style="padding: 0 50px; opacity: 0.7; font-size: 14px;" >
+                       ${e.professionalTasksPerformed}
+                   </P><br>`;
+          });
+          work_experience.innerHTML = text;
+        } else {
+          if (experienceCadre) {
+            experienceCadre.style.display = "none";
+          }
+        }
+      } else {
+        if (experienceCadre) {
+          experienceCadre.style.display = "none";
+        }
+      }
     } else {
-      const experienceCadre = document.getElementById("work_experience_cadre");
       if (experienceCadre) {
         experienceCadre.style.display = "none";
       }
-      work_experience.style.display = "none";
     }
-  }
 
-  const education = document.getElementById("education");
-  if (education) {
-    text = "";
-    var educations: any[] = JSON.parse(cvPro.educations);
-    if (educations.length > 0) {
-      educations.forEach((e) => {
-        text += `
-        <p><b>${e.institution}</b></p>
-                    <p class="red_text"><i>${e.grade}</i></p>
-                    <p style="color: grey;"><i>${e.yearOfGraduation}</i></p><br>
-                    `;
-      });
-      education.innerHTML = text;
+    const education = document.getElementById("education");
+    const educationCadre = document.getElementById("education_cadre");
+    if (cv.education) {
+      if (cv.education != null) {
+        var educations: any[] = JSON.parse(cv.education);
+        if (education) {
+          text = "";
+          if (educations.length > 0) {
+            educations.forEach((e) => {
+              text += `
+                  <p><b>${e.institution}</b></p>
+                   <p class="red_text"><i>${e.grade}</i></p>
+                   <p style="color: grey;"><i>${e.yearOfGraduation}</i></p><br>
+                   `;
+            });
+            education.innerHTML = text;
+          } else {
+            if (educationCadre) {
+              educationCadre.style.display = "none";
+            }
+          }
+        } else {
+          if (educationCadre) {
+            educationCadre.style.display = "none";
+          }
+        }
+      } else {
+        if (educationCadre) {
+          educationCadre.style.display = "none";
+        }
+      }
     } else {
-      const educationCadre = document.getElementById("education_cadre");
       if (educationCadre) {
         educationCadre.style.display = "none";
       }
-      education.style.display = "none";
     }
-  }
-
-  const certifications = document.getElementById("certifications");
-  if (certifications) {
-    text = "";
-    var certificationsInfo: any[] = JSON.parse(cvPro.certifications);
-    if (certificationsInfo.length > 0) {
-      certificationsInfo.forEach((e) => {
-        text += `
-        <p>${e.institutionName}</p></br>
-        <p>${e.certificationName}</p>
-                <p style="color: grey;"><i>${e.yearObtained}</i></p><br>
-                    `;
-      });
-      certifications.innerHTML = text;
+    const certifications = document.getElementById("certifications");
+    const certificationsCadre = document.getElementById("certifications_cadre");
+    if (cv.certificationInformation) {
+      if (cv.certificationInformation != "null") {
+        var certificationsInfo: any[] = JSON.parse(cv.certificationInformation);
+        if (certifications) {
+          text = "";
+          if (certificationsInfo.length > 0) {
+            certificationsInfo.forEach((e) => {
+              text += `
+              <p>${e.institutionName}</p></br>
+              <p>${e.certificationName}</p>
+               <p style="color: grey;"><i>${e.yearObtained}</i></p><br>
+                   `;
+            });
+            certifications.innerHTML = text;
+          } else {
+            if (certificationsCadre) {
+              certificationsCadre.style.display = "none";
+            }
+          }
+        } else {
+          if (certificationsCadre) {
+            certificationsCadre.style.display = "none";
+          }
+        }
+      } else {
+        if (certificationsCadre) {
+          certificationsCadre.style.display = "none";
+        }
+      }
     } else {
-      const certificationsCadre = document.getElementById(
-        "certifications_cadre"
-      );
       if (certificationsCadre) {
         certificationsCadre.style.display = "none";
       }
-      certifications.style.display = "none";
     }
-  }
 
-  const award = document.getElementById("award");
-  const awardLeftRight = document.getElementById("award_left_right");
-  if (award) {
-    text = "";
+    const award = document.getElementById("award");
+    const awardCadre = document.getElementById("award_cadre");
 
-    // const company = document.querySelector(".award_company");
-    // const title = document.querySelector(".award_title");
-    // const date = document.querySelector(".award_date");
-    // if (company && title && date) {
-    //   title.innerHTML = etape3[3].data[0].title;
-    //   company.innerHTML = etape3[3].data[0].award;
-    //   date.innerHTML = etape3[3].data[0].start_date;
-    //   award.innerHTML = "";
-    //   award.innerHTML += title.innerHTML;
-    //   award.innerHTML += company.innerHTML;
-    //   award.innerHTML += date.innerHTML;
-    // }
-    // console.log(award.innerHTML);
-    // etape3[3].data.forEach((e, index: number) => {
-    //   if (index > 0) {
-    //     if (company && title && date) {
-    //       title.innerHTML = e.title;
-    //       company.innerHTML = e.award;
-    //       date.innerHTML = e.start_date;
-    //       award.appendChild(title);
-    //       award.appendChild(company);
-    //       award.appendChild(date);
-    //     }
-    //   }
-    // });
-    // award.innerHTML = text;
-  }
-  if (awardLeftRight) {
-    text = "";
+    const awardLeftRight = document.getElementById("award_left_right");
+    if (award && awardCadre) {
+      award.style.display = "none";
+      awardCadre.style.display = "none";
+      text = "";
 
-    // const company = document.querySelector(".award_company");
-    // const title = document.querySelector(".award_title");
-    // const date = document.querySelector(".award_date");
-    // awardLeftRight.innerHTML = "";
+      // const company = document.querySelector(".award_company");
+      // const title = document.querySelector(".award_title");
+      // const date = document.querySelector(".award_date");
+      // if (company && title && date) {
+      //   title.innerHTML = etape3[3].data[0].title;
+      //   company.innerHTML = etape3[3].data[0].award;
+      //   date.innerHTML = etape3[3].data[0].start_date;
+      //   award.innerHTML = "";
+      //   award.innerHTML += title.innerHTML;
+      //   award.innerHTML += company.innerHTML;
+      //   award.innerHTML += date.innerHTML;
+      // }
+      // console.log(award.innerHTML);
+      // etape3[3].data.forEach((e, index: number) => {
+      //   if (index > 0) {
+      //     if (company && title && date) {
+      //       title.innerHTML = e.title;
+      //       company.innerHTML = e.award;
+      //       date.innerHTML = e.start_date;
+      //       award.appendChild(title);
+      //       award.appendChild(company);
+      //       award.appendChild(date);
+      //     }
+      //   }
+      // });
+      // award.innerHTML = text;
+    }
+    if (awardLeftRight) {
+      text = "";
+      awardLeftRight.style.display = "none";
+      // const company = document.querySelector(".award_company");
+      // const title = document.querySelector(".award_title");
+      // const date = document.querySelector(".award_date");
+      // awardLeftRight.innerHTML = "";
 
-    // etape3[3].data.forEach((e, index: number) => {
-    //   if (index % 2 == 0) {
-    //     text += `
-    //     <div class="left-column_template">
-    //       <div class="content_template">
-    //           <div class="vertical-line_template">
-    //               <p class="award_company">${e.title}</p>
-    //               <p class="red_text_template award_title"><i>${
-    //                 e.award
-    //               }</i></p>
-    //                 <p class=<"award_date" style="color: grey;"><i>${reformDateByMonth(
-    //                   e.start_date
-    //                 )}</i></p>
-    //             </div>
-    //         </div>
-    //     </div>
-    //               `;
-    //   } else {
-    //     text += `
-    //     <div class="right-column_template">
-    //       <div class="content_template">
-    //           <div class="vertical-line_template">
-    //               <p class="award_company">${e.title}</p>
-    //               <p class="red_text_template award_title"><i>${
-    //                 e.award
-    //               }</i></p>
-    //                 <p class=<"award_date" style="color: grey;"><i>${reformDateByMonth(
-    //                   e.start_date
-    //                 )}</i></p>
-    //             </div>
-    //         </div>
-    //     </div>
-    //               `;
-    //   }
-    // });
-    // awardLeftRight.innerHTML = text;
-  }
+      // etape3[3].data.forEach((e, index: number) => {
+      //   if (index % 2 == 0) {
+      //     text += `
+      //     <div class="left-column_template">
+      //       <div class="content_template">
+      //           <div class="vertical-line_template">
+      //               <p class="award_company">${e.title}</p>
+      //               <p class="red_text_template award_title"><i>${
+      //                 e.award
+      //               }</i></p>
+      //                 <p class=<"award_date" style="color: grey;"><i>${reformDateByMonth(
+      //                   e.start_date
+      //                 )}</i></p>
+      //             </div>
+      //         </div>
+      //     </div>
+      //               `;
+      //   } else {
+      //     text += `
+      //     <div class="right-column_template">
+      //       <div class="content_template">
+      //           <div class="vertical-line_template">
+      //               <p class="award_company">${e.title}</p>
+      //               <p class="red_text_template award_title"><i>${
+      //                 e.award
+      //               }</i></p>
+      //                 <p class=<"award_date" style="color: grey;"><i>${reformDateByMonth(
+      //                   e.start_date
+      //                 )}</i></p>
+      //             </div>
+      //         </div>
+      //     </div>
+      //               `;
+      //   }
+      // });
+      // awardLeftRight.innerHTML = text;
+    }
 
-  const element = document.getElementById("content");
-  const preview = document.getElementById("preview");
-  if (element && preview) {
-    element.style.height = `${
-      Math.ceil(element.getBoundingClientRect().height / 1054.4889) * 1054.4889
-    }px`;
-    const hr = document.createElement("div");
-    hr.style.position = "absolute";
-    hr.style.transform = "translateY(-50%)";
-    hr.style.top = "50%";
-    hr.style.backgroundColor = "#faf4f4";
-    hr.style.padding = "5px 0";
-    hr.style.width = "100%";
-    hr.style.textAlign = "center";
-    hr.style.minWidth = "816.3px";
-    hr.style.fontSize = "14px";
-    hr.innerText =
-      "Page " + Math.ceil(element.getBoundingClientRect().height / 1054.4889);
-    preview.append(hr);
+    const element = document.getElementById("content");
+    const preview = document.getElementById("preview");
+    if (element && preview) {
+      element.style.height = `${
+        Math.ceil(element.getBoundingClientRect().height / 1054.4889) *
+        1054.4889
+      }px`;
+      const hr = document.createElement("div");
+      hr.style.position = "absolute";
+      hr.style.transform = "translateY(-50%)";
+      hr.style.top = "50%";
+      hr.style.backgroundColor = "#faf4f4";
+      hr.style.padding = "5px 0";
+      hr.style.width = "100%";
+      hr.style.textAlign = "center";
+      hr.style.minWidth = "816.3px";
+      hr.style.fontSize = "14px";
+      hr.innerText =
+        "Page " + Math.ceil(element.getBoundingClientRect().height / 1054.4889);
+      preview.append(hr);
+    }
   }
 });
 
@@ -593,7 +763,12 @@ const closeModal = ref(false);
         </div>
         <div v-if="tab2Edit">
           <BuilderStep2Edit
-            :step2="{ experience: [], skillsPersonal: [], skillsPro: [], education: [{grade: 'Pop', period: 'dd', title: '20'}] }"
+            :step2="{
+              experience: [],
+              skillsPersonal: [],
+              skillsPro: [],
+              education: [{ grade: 'Pop', period: 'dd', title: '20' }],
+            }"
           ></BuilderStep2Edit>
         </div>
         <div v-if="tab3Edit">

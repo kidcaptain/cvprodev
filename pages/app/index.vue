@@ -44,20 +44,20 @@ const data = await $fetch<any[]>(BASE_URL + "cv/get/all")
   .catch((err) => {
     console.log(err);
   });
-const deleteCv = async (id: string) => {
-  if (confirm("Do you want to delete this CV?")) {
-    try {
-      const response: any = await $fetch("/api/templates/deleteById?id=" + id);
-      if (response.response) {
-        alert(response.response);
-      } else {
-        console.log("error");
-      }
-    } catch (error) {
-      console.error("Error:", error);
-    }
-  }
-};
+// const deleteCv = async (id: string) => {
+//   if (confirm("Do you want to delete this CV?")) {
+//     try {
+//       const response: any = await $fetch("/api/templates/deleteById?id=" + id);
+//       if (response.response) {
+//         alert(response.response);
+//       } else {
+//         console.log("error");
+//       }
+//     } catch (error) {
+//       console.error("Error:", error);
+//     }
+//   }
+// };
 const reload = () => {
   window.location.reload();
 };
@@ -127,12 +127,12 @@ const reload = () => {
               >
                 <Eye :size="14" />
               </NuxtLink>
-              <Button
+              <!-- <Button
                 class="p-2 text-black border-2 rounded-md border-secondary hover:bg-white bg-white/70 hover:text-secondary hover:border-2 hover:border-white"
                 @click="deleteCv(i?.cvsUuid)"
               >
                 <Trash :size="14" />
-              </Button>
+              </Button> -->
             </div>
           </div>
           <div class="absolute top-0 left-0 z-0 w-full h-full opacity-80">

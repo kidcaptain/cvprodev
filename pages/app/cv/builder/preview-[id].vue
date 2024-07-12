@@ -471,18 +471,18 @@ onMounted(() => {
       }px`;
       if(Math.ceil(element.getBoundingClientRect().height / 1054.4889) > 1) {
         const hr = document.createElement("div");
-      hr.style.position = "absolute";
-      hr.style.transform = "translateY(-50%)";
-      hr.style.top = "50%";
-      hr.style.backgroundColor = "#faf4f4";
-      hr.style.padding = "5px 0";
-      hr.style.width = "100%";
-      hr.style.textAlign = "center";
-      hr.style.minWidth = "816.3px";
-      hr.style.fontSize = "14px";
-      hr.innerText =
-        "Page " + Math.ceil(element.getBoundingClientRect().height / 1054.4889);
-      preview.append(hr);
+        hr.style.position = "absolute";
+        hr.style.transform = "translateY(-50%)";
+        hr.style.top = "50%";
+        hr.style.backgroundColor = "#faf4f4";
+        hr.style.padding = "5px 0";
+        hr.style.width = "100%";
+        hr.style.textAlign = "center";
+        hr.style.minWidth = "816.3px";
+        hr.style.fontSize = "14px";
+        hr.innerText =
+          "Page " + Math.ceil(element.getBoundingClientRect().height / 1054.4889);
+        preview.append(hr);
       }
     }
   }

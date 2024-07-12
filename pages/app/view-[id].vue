@@ -593,7 +593,8 @@ onMounted(() => {
         Math.ceil(element.getBoundingClientRect().height / 1054.4889) *
         1054.4889
       }px`;
-      const hr = document.createElement("div");
+      if( Math.ceil(element.getBoundingClientRect().height / 1054.4889) > 1){
+        const hr = document.createElement("div");
       hr.style.position = "absolute";
       hr.style.transform = "translateY(-50%)";
       hr.style.top = "50%";
@@ -606,6 +607,8 @@ onMounted(() => {
       hr.innerText =
         "Page " + Math.ceil(element.getBoundingClientRect().height / 1054.4889);
       preview.append(hr);
+      }
+    
     }
   }
 });
@@ -651,7 +654,15 @@ const closeModal = ref(false);
   >
     <div class="col-span-1">
       <BuilderPreviewTools :templateId="route.params.id" :isEditedPage="true" />
-   
+      <Button
+        @click="
+          () => {
+            closeModal = true;
+          }
+        "
+        class="w-full my-4 text-pink-900 bg-inherit hover:text-white"
+        >edit cv</Button
+      >
     </div>
     <section id="preview" class="relative col-span-3 overflow-auto printme">
       <div v-if="data" class="min-h-screen">
@@ -780,5 +791,5 @@ const closeModal = ref(false);
         >
       </div>
     </div>
-  </section>  
+  </section>
 </template>

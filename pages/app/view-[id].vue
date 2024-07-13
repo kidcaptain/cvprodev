@@ -651,7 +651,7 @@ const closeModal = ref(false);
   >
     <div class="col-span-1">
       <BuilderPreviewTools :templateId="route.params.id" :isEditedPage="true" />
-      <Button
+      <!-- <Button
         @click="
           () => {
             closeModal = true;
@@ -659,7 +659,7 @@ const closeModal = ref(false);
         "
         class="w-full my-4 text-pink-900 bg-inherit hover:text-white"
         >edit cv</Button
-      >
+      > -->
     </div>
     <section id="preview" class="relative col-span-3 overflow-auto printme">
       <div v-if="data" class="min-h-screen">

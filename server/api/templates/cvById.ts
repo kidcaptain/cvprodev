@@ -38,6 +38,6 @@ export default defineEventHandler(async (event: any) => {
   // const cssData = await $fetch<string>("http://127.0.0.1:5500/CV-YAMO/style.css");
   return {
     html: htmlData,
-    data: data.cvPro
+    cv: data.cvPro
   }
 });

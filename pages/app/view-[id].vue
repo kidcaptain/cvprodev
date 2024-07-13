@@ -17,6 +17,7 @@ const { data, error } = await useFetch<any>(
     "&userId=" +
     session.value?.uid
 );
+
 // const { data, error } = await useFetch<any>(
 //   "/api/templates/cvById"
 // );

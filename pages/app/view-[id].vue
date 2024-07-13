@@ -17,7 +17,6 @@ const { data, error } = await useFetch<any>(
     "&userId=" +
     session.value?.uid
 );
-
 // const { data, error } = await useFetch<any>(
 //   "/api/templates/cvById"
 // );
@@ -27,21 +26,16 @@ const isRaedy = ref(false);
 const pdfSection = ref<HTMLElement | null>(null);
 
 onMounted(() => {
-  const cvPro: any = {};
   const cv = data.value.cv;
   console.log(cv);
   if (cv) {
     const upload_file = document.getElementById("user_img");
 
-    if (cv.picture) {
-      if (upload_file) {
-        (upload_file as HTMLImageElement).src = cv.picture;
-      } else {
-        const image_profil = document.getElementById("image_profil");
+    if (cv.piicturePath) {
+       const image_profil = document.getElementById("image_profil");
         if (image_profil) {
-          image_profil.style.backgroundImage = "url(" + cv.picture + ")";
-        }
-      }
+          image_profil.style.backgroundImage = "url(" + cv.piicturePath + ")";
+        } 
     } else {
       if (upload_file) {
         upload_file.style.display = "none";
@@ -103,10 +97,11 @@ onMounted(() => {
 
     const personal_skills = document.getElementById("personal_skills");
     const personalCadre = document.getElementById("personal_skills_cadre");
-
+    
     if (cv.personalSkills) {
       if (cv.personalSkills != "null") {
-        var personalSkills: string[] = JSON.parse(cvPro.personalSkills);
+        var personalSkills: any[] = JSON.parse(cv.personalSkills);
+       
         if (personal_skills && personalSkills) {
           var textPersonal = "";
           if (personalSkills.length > 0) {
@@ -148,7 +143,7 @@ onMounted(() => {
           var textprofessionalSkills = "";
           if (professionalSkills.length > 0) {
             professionalSkills.forEach((e) => {
-              text += ` <li class="point2_template">${e}</li>`;
+              textprofessionalSkills += ` <li class="point2_template">${e}</li>`;
             });
             professional_skills.innerHTML = textprofessionalSkills;
           } else {
@@ -172,7 +167,7 @@ onMounted(() => {
         professionalCadre.style.display = "none";
       }
     }
-    if (!professional_skills && !personal_skills) {
+    if (cv.professionalSkills == "null" && cv.personalSkills == "null") {
       const skillsGeneral = document.getElementById("skills_general_title");
       if (skillsGeneral) {
         skillsGeneral.style.display = "none"
@@ -189,7 +184,7 @@ onMounted(() => {
           var textlanguage = "";
           if (languages.length > 0) {
             languages.forEach((e) => {
-              text += ` <li>
+              textlanguage += ` <li>
                        <span class="text">${e.language}</span><br>
                        <i style="text-decoration: none; font-style: italic; font-size: small;">${e.abilityLevel}</i>
                    </li>`;
@@ -221,12 +216,12 @@ onMounted(() => {
     const hobbiesCadre = document.getElementById("hobbies_cadre");
     if (cv.hobbies) {
       if (cv.hobbies != "null") {
-        var hobbiesData: string[] = JSON.parse(cvPro.language);
+        var hobbiesData: string[] = JSON.parse(cv.hobbies);
         if (hobbies) {
           var texthobbies = "";
           if (hobbiesData.length > 0) {
             hobbiesData.forEach((e) => {
-              text += `<li class="point2_template">${e}</li>`;
+              texthobbies += `<li class="point2_template">${e}</li>`;
             });
             hobbies.innerHTML = texthobbies;
           } else {
@@ -260,8 +255,10 @@ onMounted(() => {
         if (achievements) {
           var textachievements = "";
           if (projects.length > 0) {
+           
             projects.forEach((e) => {
-              text += `<li class="point2_template">${e.projectTitle}</li>`;
+              
+              textachievements += `<li class="point2_template">${e.project_title}</li>`;
             });
             achievements.innerHTML = textachievements;
           } else {
@@ -298,7 +295,7 @@ onMounted(() => {
           var textReference: string = "";
           if (referenceInfos.length > 0) {
             referenceInfos.forEach((e) => {
-              text += `<li class="point2_template">${
+              textReference += `<li class="point2_template">${
                 e.referenceName
               }(<span style="font-size: 12px; opacity: 0.8;">${
                 e.referenceFunction
@@ -324,7 +321,7 @@ onMounted(() => {
           var textReferencesLeftRight = "";
           if (referenceInfos.length > 0) {
             referenceInfos.forEach((e) => {
-              text += `<li class="point2_template">${
+              textReferencesLeftRight += `<li class="point2_template">${
                 e.referenceName
               }(<span style="font-size: 12px; opacity: 0.8;">${
                 e.referenceFunction
@@ -390,18 +387,15 @@ onMounted(() => {
     }
     const work_experience = document.getElementById("work_experience");
     const experienceCadre = document.getElementById("work_experience_cadre");
-
     if (cv.ProfessionalExperienceInformation) {
-      alert(cv.ProfessionalExperienceInformation  + "1")
-
       if (cv.ProfessionalExperienceInformation != "null") {
         var ProfessionalExperienceInformation: any[] = JSON.parse(
           cv.ProfessionalExperienceInformation
         );
         if (work_experience) {
-          text = "";
+          var textWork = "";
           ProfessionalExperienceInformation.forEach((e) => {
-            text += `
+            textWork += `
        <div class="content">
                        <div class="right-align">
                            <p><b>${e.jobTitle}</b></p>
@@ -417,7 +411,7 @@ onMounted(() => {
                        ${e.professionalTasksPerformed}
                    </P><br>`;
           });
-          work_experience.innerHTML = text;
+          work_experience.innerHTML = textWork;
         } else {
           if (experienceCadre) {
             experienceCadre.style.display = "none";
@@ -427,14 +421,11 @@ onMounted(() => {
         if (experienceCadre) {
           experienceCadre.style.display = "none";
         }
-        alert(cv.ProfessionalExperienceInformation)
       }
     } else {
       if (experienceCadre) {
         experienceCadre.style.display = "none";
       }
-      alert(cv.ProfessionalExperienceInformation)
-
     }
 
     const education = document.getElementById("education");
@@ -443,16 +434,16 @@ onMounted(() => {
       if (cv.education != null) {
         var educations: any[] = JSON.parse(cv.education);
         if (education) {
-          text = "";
+          var textEducation = "";
           if (educations.length > 0) {
             educations.forEach((e) => {
-              text += `
+              textEducation += `
                   <p><b>${e.institution}</b></p>
-                   <p class="red_text"><i>${e.grade}</i></p>
+                   <p class="red_text"><i>${e.grade ?? ''} ${e.degree ?? ''}</i></p>
                    <p style="color: grey;"><i>${e.year_of_graduation}</i></p><br>
                    `;
             });
-            education.innerHTML = text;
+            education.innerHTML = textEducation;
           } else {
             if (educationCadre) {
               educationCadre.style.display = "none";
@@ -479,16 +470,16 @@ onMounted(() => {
       if (cv.certificationInformation != "null") {
         var certificationsInfo: any[] = JSON.parse(cv.certificationInformation);
         if (certifications) {
-          text = "";
+          var textCertification = "";
           if (certificationsInfo.length > 0) {
             certificationsInfo.forEach((e) => {
-              text += `
-              <p>${e.institutionName}</p></br>
-              <p>${e.certificationName}</p>
-               <p style="color: grey;"><i>${e.yearObtained}</i></p><br>
+              textCertification += `
+              <p>${e.institution_name}</p></br>
+              <p>${e.certification_name}</p>
+               <p style="color: grey;"><i>${e.year_obtained}</i></p><br>
                    `;
             });
-            certifications.innerHTML = text;
+            certifications.innerHTML = textCertification;
           } else {
             if (certificationsCadre) {
               certificationsCadre.style.display = "none";
@@ -547,7 +538,7 @@ onMounted(() => {
       // award.innerHTML = text;
     }
     if (awardLeftRight) {
-      text = "";
+      var textAward = "";
       awardLeftRight.style.display = "none";
       // const company = document.querySelector(".award_company");
       // const title = document.querySelector(".award_title");
@@ -556,7 +547,7 @@ onMounted(() => {
 
       // etape3[3].data.forEach((e, index: number) => {
       //   if (index % 2 == 0) {
-      //     text += `
+      //     textAward += `
       //     <div class="left-column_template">
       //       <div class="content_template">
       //           <div class="vertical-line_template">
@@ -572,7 +563,7 @@ onMounted(() => {
       //     </div>
       //               `;
       //   } else {
-      //     text += `
+      //     textAward += `
       //     <div class="right-column_template">
       //       <div class="content_template">
       //           <div class="vertical-line_template">

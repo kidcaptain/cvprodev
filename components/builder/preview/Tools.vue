@@ -456,7 +456,7 @@ const submitCV = async () => {
     const cvData = {
       userId: session.value?.uid,
       templateId: props.templateId,
-     // Replace with the actual file or file path
+      picturePath: `${image}`,
       profileInformations: JSON.stringify({
         name: `${etape1.firstname} ${etape1.lastname}`,
         title: etape1.title,
@@ -466,7 +466,7 @@ const submitCV = async () => {
         email: etape1.email,
         goal: etape1.objective,
         website: etape1.website,
-        picturePath: "ee",
+
       }),
       educations: JSON.stringify(educations),
       references: JSON.stringify(references),

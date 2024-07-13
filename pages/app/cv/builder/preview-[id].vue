@@ -1,856 +1,577 @@
 <script setup lang="ts">
-import { Button } from "@/components/ui/button";
-import {
-  Download,
-  Save,
-  LanguagesIcon,
-  Share2,
-  ArrowDown,
-  ArrowUp,
-  Image,
-  Copy,
-  ImageDownIcon,
-} from "lucide-vue-next";
-import axios from "axios";
-import { toTypedSchema } from "@vee-validate/zod";
-import * as z from "zod";
-import { SelectArrow } from "radix-vue";
-import { TranslateDataPreview } from "@/assets/content/translate";
-const { session, user } = useAuth();
-const BASE_URL = useRuntimeConfig().public.backendAPI;
-const tab1 = ref(false);
-const tab2 = ref(true);
-const tab3 = ref(false);
-const tab4 = ref(false);
+import { SelectItem } from "radix-vue";
+
+import { useForm } from "vee-validate";
+// import type TemplateToPdf from "~/components/builder/preview/Template-to-pdf.vue";
+
+definePageMeta({
+  layout: "template-preview",
+});
 
 const route = useRoute();
-const router = useRouter();
 
-useHead({
-  script: [
-    {
-      src: "https://connect.facebook.net/fr_FR/sdk.js#xfbml=1&version=v20.0",
-      async: true,
-      crossorigin: "anonymous",
-      defer: true,
-      nonce: "PDLfjnl4",
-    },
-  ],
-});
-
-const formSchema = toTypedSchema(
-  z.object({
-    title: z.string().min(2).max(255),
-    company: z.string().min(2).max(255),
-    start_date: z.string().date(),
-    end_date: z.string().date(),
-    experience: z.string().min(8),
-  })
+const { data, error } = await useFetch<any>(
+  "/api/templates/templateById?id=" + route.params.id
 );
-const language = ref<string>("");
-const props = defineProps<{
-  templateId: string | string[];
-  isEditedPage: boolean;
-}>();
-const typeBinding = ref<string>("PDF");
-const currentLanguage = ref<string>("en");
 
-const defaultValues = ref<any>({
-  name: "mon cv",
-});
-const download_field = [
-  {
-    name: "name",
-    label: "File name",
-    placeholder: "Mon cv ",
-    type: "text",
-  },
-  {
-    name: "type",
-    label: "File type",
-    type: "select",
-    options: [{ text: "PDF", value: "pdf" }],
-  },
-];
-const translateDocument = async () => {
-  const content = document.getElementById("content");
-  const awardTitle = document.getElementById("award_title");
-  const profesionalCadreTitle = document.getElementById(
-    "profesional_cadre_title"
-  );
-  const workExperienceTitle = document.getElementById("work_experience_title");
-  const educationTitle = document.getElementById("education_title");
-  const skillsGeneralTitle = document.getElementById("skills_general_title");
-  const professionalSkillsTitle = document.getElementById(
-    "professional_skills_title"
-  );
-  const personalSkillsTitle = document.getElementById("personal_skills_title");
-  const languageTitle = document.getElementById("language_title");
-  const hobbiesTitle = document.getElementById("hobbies_title");
-  const certificationsTitle = document.getElementById(
-    "professional_skills_title"
-  );
-  const referencesTitle = document.getElementById("references_title");
-  const projectTitle = document.getElementById("project_title");
-  var option = {
-    q: "",
-    source: "en",
-    target: "es",
-    format: "html",
-  };
-  if (content) {
-    option.q = content.innerHTML;
-    switch (currentLanguage.value) {
-      case "fr":
-        TranslateDataPreview.forEach((e) => {
-          if (e.label == "award & honors" && awardTitle) {
-            awardTitle.innerText = e.french;
-          }
-          if (e.label == "projects" && projectTitle) {
-            projectTitle.innerText = e.french;
-          }
-          if (e.label == "references" && referencesTitle) {
-            referencesTitle.innerText = e.french;
-          }
-          if (e.label == "hobbies" && hobbiesTitle) {
-            hobbiesTitle.innerText = e.french;
-          }
-          if (e.label == "languages" && languageTitle) {
-            languageTitle.innerText = e.french;
-          }
-          if (e.label == "professional skills" && professionalSkillsTitle) {
-            professionalSkillsTitle.innerText = e.french;
-          }
-          if (e.label == "personal skills" && personalSkillsTitle) {
-            personalSkillsTitle.innerText = e.french;
-          }
-          if (e.label == "certifications" && certificationsTitle) {
-            certificationsTitle.innerText = e.french;
-          }
-          if (e.label == "award & honors" && awardTitle) {
-            awardTitle.innerText = e.french;
-          }
-          if (e.label == "skills" && skillsGeneralTitle) {
-            skillsGeneralTitle.innerText = e.french;
-          }
-          if (e.label == "education" && educationTitle) {
-            educationTitle.innerText = e.french;
-          }
-          if (e.label == "work experience" && workExperienceTitle) {
-            workExperienceTitle.innerText = e.french;
-          }
-          if (e.label == "professional summary" && profesionalCadreTitle) {
-            profesionalCadreTitle.innerText = e.french;
-          }
-        });
-        break;
-      case "en":
-        TranslateDataPreview.forEach((e) => {
-          if (e.label == "award & honors" && awardTitle) {
-            awardTitle.innerText = e.label;
-          }
-          if (e.label == "projects" && projectTitle) {
-            projectTitle.innerText = e.label;
-          }
-          if (e.label == "references" && referencesTitle) {
-            referencesTitle.innerText = e.label;
-          }
-          if (e.label == "hobbies" && hobbiesTitle) {
-            hobbiesTitle.innerText = e.label;
-          }
-          if (e.label == "languages" && languageTitle) {
-            languageTitle.innerText = e.label;
-          }
-          if (e.label == "professional skills" && professionalSkillsTitle) {
-            professionalSkillsTitle.innerText = e.label;
-          }
-          if (e.label == "personal skills" && personalSkillsTitle) {
-            personalSkillsTitle.innerText = e.label;
-          }
-          if (e.label == "certifications" && certificationsTitle) {
-            certificationsTitle.innerText = e.label;
-          }
-          if (e.label == "award & honors" && awardTitle) {
-            awardTitle.innerText = e.label;
-          }
-          if (e.label == "skills" && skillsGeneralTitle) {
-            skillsGeneralTitle.innerText = e.label;
-          }
-          if (e.label == "education" && educationTitle) {
-            educationTitle.innerText = e.label;
-          }
-          if (e.label == "work experience" && workExperienceTitle) {
-            workExperienceTitle.innerText = e.label;
-          }
-          if (e.label == "professional summary" && profesionalCadreTitle) {
-            profesionalCadreTitle.innerText = e.label;
-          }
-        });
-        break;
-      default:
-        TranslateDataPreview.forEach((e) => {
-          if (e.label == "award & honors" && awardTitle) {
-            awardTitle.innerText = e.spanish;
-          }
-          if (e.label == "projects" && projectTitle) {
-            projectTitle.innerText = e.spanish;
-          }
-          if (e.label == "references" && referencesTitle) {
-            referencesTitle.innerText = e.spanish;
-          }
-          if (e.label == "hobbies" && hobbiesTitle) {
-            hobbiesTitle.innerText = e.spanish;
-          }
-          if (e.label == "languages" && languageTitle) {
-            languageTitle.innerText = e.spanish;
-          }
-          if (e.label == "professional skills" && professionalSkillsTitle) {
-            professionalSkillsTitle.innerText = e.spanish;
-          }
-          if (e.label == "personal skills" && personalSkillsTitle) {
-            personalSkillsTitle.innerText = e.spanish;
-          }
-          if (e.label == "certifications" && certificationsTitle) {
-            certificationsTitle.innerText = e.spanish;
-          }
-          if (e.label == "award & honors" && awardTitle) {
-            awardTitle.innerText = e.spanish;
-          }
-          if (e.label == "skills" && skillsGeneralTitle) {
-            skillsGeneralTitle.innerText = e.spanish;
-          }
-          if (e.label == "education" && educationTitle) {
-            educationTitle.innerText = e.spanish;
-          }
-          if (e.label == "work experience" && workExperienceTitle) {
-            workExperienceTitle.innerText = e.spanish;
-          }
-          if (e.label == "professional summary" && profesionalCadreTitle) {
-            profesionalCadreTitle.innerText = e.spanish;
-          }
-        });
-        break;
-    }
-    // const res = await fetch("https://libretranslate.com/translate", {
-    //   method: "POST",
-    //   body: JSON.stringify(option),
-    //   headers: { "Content-Type": "application/json" },
-    // });
-    // console.log(await res.json());
-  }
-};
-const submitCV = async () => {
+const isRaedy = ref(false);
+
+// const pdfSection = ref<HTMLElement | null>(null);
+
+onMounted(() => {
   const step1 = window.localStorage.getItem("step_1");
   const step2 = window.localStorage.getItem("step_2");
   const step3 = window.localStorage.getItem("step_3");
   const step4 = window.localStorage.getItem("step_4");
-  var image = window.localStorage.getItem("profileimage");
-  if (!image) {
-    image = null;
-  }
-  if (step1 && step2 && step3 && step4 && image) {
+
+  if (step1 && step2 && step3 && step4) {
+    const upload_file = document.getElementById("user_img");
+    var base64 = window.localStorage.getItem("profileimage");
+    if (base64) {
+      if (upload_file) {
+        (upload_file as HTMLImageElement).src = base64;
+      }
+      const image_profil = document.getElementById("image_profil");
+      if (image_profil) {
+        image_profil.style.backgroundImage = "url(" + base64 + ")";
+      }
+    }
+
+    // const storage = sessionStorage;
+    // if ('image' in storage) {
+    //   (upload_file as HTMLImageElement).src = storage['image'];
+    // }
+
     const etape1: {
       firstname: string;
       lastname: string;
       title: string;
-      yearOfExperience: string;
+      experience: string;
       address: string;
       phone: string;
       email: string;
       website: string;
       objective: string;
+      name: string;
     } = JSON.parse(step1);
+
     const etape2: {
       title: string;
       data: {
+        jobTitle: string;
         title: string;
         company: string;
+        startDate: string;
+        endDate: string;
         start_date: string;
+        professionalTasksPerformed: string;
         end_date: string;
         experience: string;
         grade: string;
         type: string;
-        professionalTasksPerformed: string;
-        jobTitle: string;
-        startDate: string;
-        endDate: string;
       }[];
     }[] = JSON.parse(step2);
+
     const etape3: {
       title: string;
       data: any[];
     }[] = JSON.parse(step3);
+
     const etape4: {
       title: string;
       data: any[];
     }[] = JSON.parse(step4);
-    const educations: {
-      institution: string;
-      degree: string;
-      yearOfGraduation: string;
-    }[] = [];
-    var professionalExperience:
-      | {
-          jobTitle: string;
-          company: string;
-          period: string;
-          professionalTasksPerformed: string;
-        }[]
-      | null
-      | any = [];
-    etape2[1].data.forEach((e) => {
-      educations.push({
-        institution: e.title,
-        degree: e.grade,
-        yearOfGraduation: e.start_date + " - " + e.end_date,
-      });
-    });
-    if (educations.length == 0) {
-      educations.push({ institution: "", degree: "", yearOfGraduation: "" });
-    }
-    etape2[0].data.forEach((e) => {
-      professionalExperience.push({
-        jobTitle: e.jobTitle.toString(),
-        company: e.company.toString(),
-        period: (e.startDate + " / " + e.endDate).toString(),
-        professionalTasksPerformed: e.professionalTasksPerformed.toString(),
-      });
-    });
-    if (professionalExperience.length == 0) {
-      professionalExperience = null;
+
+    const firstname = document.getElementById("firstname");
+    if (firstname) {
+      if (!etape1.firstname || !etape1.name) {
+        var text = etape1.name ?? etape1.firstname;
+        firstname.innerText = text;
+      } else {
+        firstname.style.display = "none";
+      }
     }
 
-    var references:
-      | {
-          institutionName: string;
-          referenceFunction: string;
-          referenceName: string;
-          referenceNumber: string;
-          referenceEmail: string;
-        }[]
-      | null
-      | any = [];
-
-    etape4[0].data.forEach((e) => {
-      references.push({
-        institutionName: e.title,
-        referenceFunction: e.position,
-        referenceName: e.references_name,
-        referenceNumber: e.references_phone,
-        referenceEmail: e.email,
-      });
-    });
-    if (references.length == 0) {
-      references = null;
-    }
-    var professionalSkills: string[] | null | any = [];
-    etape2[2].data.forEach((e) => {
-      professionalSkills.push(e.title);
-    });
-
-    if (professionalSkills.length == 0) {
-      professionalSkills = null;
+    const lastname = document.getElementById("lastname");
+    if (lastname) {
+      lastname.innerText = etape1.lastname;
+      if (!etape1.lastname) {
+        lastname.style.display = "none";
+      }
     }
 
-    var personalSkills: string[] | null | any = [];
-    etape2[3].data.forEach((e) => {
-      personalSkills.push(e.title);
-    });
-
-    if (personalSkills.length == 0) {
-      personalSkills = null;
+    const title = document.getElementById("title");
+    if (title) {
+      title.innerText = etape1.title;
+      if (!etape1.title) {
+        title.style.display = "none";
+      }
     }
 
-    var languages:
-      | {
-          language: string;
-          abilityLevel: string;
-        }[]
-      | null
-      | any = [];
-
-    etape3[0].data.forEach((e) => {
-      languages.push({
-        language: e.title,
-        abilityLevel: e.type,
-      });
-    });
-
-    if (languages.length == 0) {
-      languages = null;
-    }
-    var hobbies: string[] | null | any = [];
-
-    etape3[1].data.forEach((e) => {
-      hobbies.push(e.title);
-    });
-
-    if (hobbies.length == 0) {
-      hobbies = null;
+    const address = document.getElementById("address");
+    if (address) {
+      address.innerText = etape1.address;
+      if (!etape1.address) {
+        address.style.display = "none";
+      }
     }
 
-    var certification:
-      | {
-          institutionName: string;
-          yearObtained: string;
-          certificationName: string;
-        }[]
-      | null
-      | any = [];
-
-    etape3[2].data.forEach((e) => {
-      certification.push({
-        institutionName: e.title,
-        yearObtained: e.end_date,
-        certificationName: e.grade,
-      });
-    });
-
-    if (certification.length == 0) {
-      certification = null;
+    const phone = document.getElementById("phone");
+    if (phone) {
+      phone.innerText = etape1.phone;
+      if (!etape1.phone) {
+        phone.style.display = "none";
+      }
     }
 
-    var award:
-      | {
-          award: string;
-          yearObtained: string;
-          company: string;
-        }[]
-      | null
-      | any = [];
-
-    etape3[3].data.forEach((e) => {
-      award.push({
-        award: e.award,
-        yearObtained: e.start_date,
-        company: e.title,
-      });
-    });
-
-    if (award.length == 0) {
-      award = null;
+    const email = document.getElementById("email");
+    if (email) {
+      email.innerText = etape1.email;
+      if (!etape1.email) {
+        email.style.display = "none";
+      }
     }
 
-    var project:
-      | {
-          projectTitle: string;
-          projectTasksPerformed: string;
-          projectLink: string;
-        }[]
-      | null
-      | any = [];
-
-    etape3[3].data.forEach((e) => {
-      project.push({
-        projectTitle: e.title + "",
-        projectTasksPerformed: e.tasks + "",
-        projectLink: "",
-      });
-    });
-
-    if (project.length == 0) {
-      project = null;
+    const personal_skills = document.getElementById("personal_skills");
+    if (personal_skills) {
+      var text = "";
+      if (etape2[2].data.length > 0) {
+        etape2[2].data.forEach((e) => {
+          text += ` <li class="point2_template">${e.title}</li>`;
+        });
+        personal_skills.innerHTML = text;
+      } else {
+        const personalCadre = document.getElementById("personal_skills_cadre");
+        if (personalCadre) {
+          personalCadre.style.display = "none";
+        }
+        personal_skills.style.display = "none";
+      }
+    }
+    const professional_skills = document.getElementById("professional_skills");
+    if (professional_skills) {
+      var text = "";
+      if (etape2[3].data.length > 0) {
+        etape2[3].data.forEach((e) => {
+          text += ` <li class="point2_template">${e.title}</li>`;
+        });
+        professional_skills.innerHTML = text;
+      } else {
+        const professionalCadre = document.getElementById(
+          "professional_skills_cadre"
+        );
+        if (professionalCadre) {
+          professionalCadre.style.display = "none";
+        }
+        professional_skills.style.display = "none";
+      }
     }
 
-    console.log(etape1, etape2, etape3, etape4);
-    const cvData = {
-      userId: session.value?.uid,
-      templateId: props.templateId,
-      picture: null, // Replace with the actual file or file path
-      profileInformations: JSON.stringify({
-        name: `${etape1.firstname} ${etape1.lastname}`,
-        title: etape1.title,
-        yearsOfExperience: etape1.yearOfExperience,
-        phone: etape1.phone,
-        address: etape1.address,
-        email: etape1.email,
-        goal: etape1.objective,
-        website: etape1.website,
-
-      }),
-      educations: JSON.stringify(educations),
-      references: JSON.stringify(references),
-      personalSkills: JSON.stringify(personalSkills),
-      professionalSkills: JSON.stringify(professionalSkills),
-      ProfessionalExperienceInformation: JSON.stringify(professionalExperience),
-      certifications: JSON.stringify(certification),
-      projects: JSON.stringify(project),
-      languages: JSON.stringify(languages),
-      hobbies: JSON.stringify(hobbies),
-      tmpKey: null,
-    };
-    console.log(cvData);
-    try {
-       const response = await axios.post(BASE_URL + "cv/save", cvData, {
-         headers: {
-           "Content-Type": "application/json",
-         },
-       });
-       alert(response.data.message);
-      
-      console.log("CV submitted successfully:", response.data);
-    } catch (error) {
-      console.error("Error submitting CV:", error);
+    const language = document.getElementById("language");
+    if (language) {
+      var text = "";
+      if (etape3[0].data.length > 0) {
+        etape3[0].data.forEach((e) => {
+          text += ` <li>
+                        <span class="text">${e.title}</span><br>
+                        <i style="text-decoration: none; font-style: italic; font-size: small;">${e.type}</i>
+                    </li>`;
+        });
+        language.innerHTML = text;
+      } else {
+        const languageCadre = document.getElementById("language_cadre");
+        if (languageCadre) {
+          languageCadre.style.display = "none";
+        }
+        language.style.display = "none";
+      }
     }
-  }
-};
-const optionBackground = ref<string>("");
-const optionBackgroundPosition = ref<string>("");
 
-const print = async () => {
-  if (session) {
-    const download = document.getElementById("download-pdf");
-    if (download) {
-      download.addEventListener("click", () => {
-        const element = document.getElementById("content");
-        if (element) {
-          const options = {
-            filename: defaultValues.value.name,
-            margin: 0,
-            image: { type: "jpeg", quality: 0.98 },
-            html2canvas: { scale: 2 },
-            jsPDF: {
-              unit: "in",
-              format: "letter",
-              orientation: "portrait",
-            },
-          };
-          // @ts-ignore
-          html2pdf().set(options).from(element).save();
+    const hobbies = document.getElementById("hobbies");
+    if (hobbies) {
+      var text = "";
+      if (etape3[1].data.length > 0) {
+        etape3[1].data.forEach((e) => {
+          text += `<li class="point2_template">${e.title}</li>`;
+        });
+        hobbies.innerHTML = text;
+      } else {
+        const hobbiesCadre = document.getElementById("hobbies_cadre");
+        if (hobbiesCadre) {
+          hobbiesCadre.style.display = "none";
+        }
+        hobbies.style.display = "none";
+      }
+    }
+
+    const achievements = document.getElementById("achievements");
+    if (achievements) {
+      var text = "";
+      if (etape4[1].data.length > 0) {
+        etape4[1].data.forEach((e) => {
+          text += `<li class="point2_template">${e.title}</li>`;
+        });
+        achievements.innerHTML = text;
+      } else {
+        const projectCadre = document.getElementById("project_cadre");
+        if (projectCadre) {
+          projectCadre.style.display = "none";
+        }
+        achievements.style.display = "none";
+      }
+    }
+
+    const references = document.getElementById("references");
+    const referencesLeftRight = document.getElementById(
+      "references_left_right"
+    );
+    if (references) {
+      var text = "";
+      if (etape4[0].data.length > 0) {
+        etape4[0].data.forEach((e) => {
+          text += `<li class="point2_template">${
+            e.references_name
+          }(<span style="font-size: 12px; opacity: 0.8;">${
+            e.position
+          }</span>) ${
+            e.refenreces_phone ?? ""
+          } <br> <span style="font-size: 12px; opacity: 0.8;"> ${
+            e.email
+          } </span></li>`;
+        });
+        references.innerHTML = text;
+      } else {
+        const referencesCadre = document.getElementById("references_cadre");
+        if (referencesCadre) {
+          referencesCadre.style.display = "none";
+        }
+        references.style.display = "none";
+      }
+    }
+    if (referencesLeftRight) {
+      var text = "";
+      if (etape4[0].data.length > 0) {
+        etape4[0].data.forEach((e) => {
+          text += `<li class="point2_template">${
+            e.references_name
+          }(<span style="font-size: 12px; opacity: 0.8;">${
+            e.position
+          }</span>) ${
+            e.refenreces_phone ?? ""
+          } <br> <span style="font-size: 12px; opacity: 0.8;"> ${
+            e.email
+          } </span></li>`;
+        });
+        referencesLeftRight.innerHTML = text;
+      } else {
+        const referencesCadre = document.getElementById("references_cadre");
+        if (referencesCadre) {
+          referencesCadre.style.display = "none";
+        }
+        referencesLeftRight.style.display = "none";
+      }
+    }
+
+    // A modifier
+    const social = document.getElementById("social");
+    if (social) {
+      var text = "";
+      if (etape4[2].data.length > 0) {
+        etape4[2].data.forEach((e) => {
+          text += `
+           <li>
+            <span class="icon" style="color: white;"><i class="fa fa-facebook"
+                                aria-hidden="true"></i></span>
+                        <span class="text">${e.title}</span>
+                    </li>`;
+        });
+        social.innerHTML = text;
+      } else {
+        const socialCadre = document.getElementById("social_cadre");
+        if (socialCadre) {
+          socialCadre.style.display = "none";
+        }
+        social.style.display = "none";
+      }
+    }
+
+    const resume = document.getElementById("resume");
+    if (resume) {
+      if (etape1.objective != "") {
+        resume.innerHTML = etape1.objective;
+      } else {
+        const resumeCadre = document.getElementById("profesional_cadre");
+        if (resumeCadre) {
+          resumeCadre.style.display = "none";
+        }
+        resume.style.display = "none";
+      }
+    }
+    const work_experience = document.getElementById("work_experience");
+    if (work_experience) {
+      text = "";
+      if (etape2[0].data.length > 0) {
+        etape2[0].data.forEach((e) => {
+          text += `
+        <div class="content">
+                        <div class="right-align">
+                            <p><b>${e.jobTitle}</b></p>
+                            <p class="red_text"><i>${e.company}</i></p>
+
+                        </div>
+                        <div class="left-align">
+                            <p style="color: grey;"><i>${e.startDate} – ${e.endDate}</i></p>
+                            <p>Cameroon</p>
+                        </div>
+                    </div><br>
+                     <P style="padding: 0 50px; opacity: 0.7; font-size: 14px;" >
+                        ${e.professionalTasksPerformed}
+                    </P><br>`;
+        });
+        work_experience.innerHTML = text;
+      } else {
+        const experienceCadre = document.getElementById(
+          "work_experience_cadre"
+        );
+        if (experienceCadre) {
+          experienceCadre.style.display = "none";
+        }
+        work_experience.style.display = "none";
+      }
+    }
+
+    const education = document.getElementById("education");
+    if (education) {
+      text = "";
+      console.log(etape2);
+      if (etape2[1].data.length > 0) {
+        etape2[1].data.forEach((e) => {
+          text += `
+        <p><b>${e.title}</b></p>
+                    <p class="red_text"><i>${e.grade}</i></p>
+                    <p style="color: grey;"><i>${e.start_date} - ${e.end_date}</i></p><br>
+                    `;
+        });
+        education.innerHTML = text;
+      } else {
+        const educationCadre = document.getElementById("education_cadre");
+        if (educationCadre) {
+          educationCadre.style.display = "none";
+        }
+        education.style.display = "none";
+      }
+    }
+
+    const certifications = document.getElementById("certifications");
+    if (certifications) {
+      text = "";
+      if (etape3[2].data.length > 0) {
+        etape3[2].data.forEach((e) => {
+          text += `
+        <p>${e.title}</p>
+                <p style="color: grey;"><i>${e.end_date}</i></p><br>
+                    `;
+        });
+        certifications.innerHTML = text;
+      } else {
+        const certificationsCadre = document.getElementById(
+          "certifications_cadre"
+        );
+        if (certificationsCadre) {
+          certificationsCadre.style.display = "none";
+        }
+        certifications.style.display = "none";
+      }
+    }
+
+    const award = document.getElementById("award");
+    const awardLeftRight = document.getElementById("award_left_right");
+    if (award) {
+      text = "";
+
+      const company = document.querySelector(".award_company");
+      const title = document.querySelector(".award_title");
+      const date = document.querySelector(".award_date");
+      if (company && title && date) {
+        title.innerHTML = etape3[3].data[0].title;
+        company.innerHTML = etape3[3].data[0].award;
+        date.innerHTML = etape3[3].data[0].start_date;
+        award.innerHTML = "";
+        award.innerHTML += title.innerHTML;
+        award.innerHTML += company.innerHTML;
+        award.innerHTML += date.innerHTML;
+      }
+      console.log(award.innerHTML);
+      etape3[3].data.forEach((e, index: number) => {
+        if (index > 0) {
+          if (company && title && date) {
+            title.innerHTML = e.title;
+            company.innerHTML = e.award;
+            date.innerHTML = e.start_date;
+            award.appendChild(title);
+            award.appendChild(company);
+            award.appendChild(date);
+          }
         }
       });
-      download.click();
-    } else {
+      award.innerHTML = text;
     }
-  } else {
-    if (confirm("Log in to use this feature")) {
-      router.push("/auth/login");
-    }
-  }
-};
-// const props = defineProps<{ html: string; disabled: boolean }>();
-const divAction = ref();
-const showDivAction = ref<boolean>(false);
-onMounted(() => {
-  document.querySelector(".tweet")?.addEventListener("click", function (event) {
-    var width = 575,
-      height = 400,
-      url =
-        "https://twitter.com/share?text=<?= $datas['title']; ?>&hashtags=Blog",
-      opts =
-        "status=1" +
-        ",width=" +
-        width +
-        ",height=" +
-        height +
-        ",top=" +
-        top +
-        ",left=" +
-        400;
+    if (awardLeftRight) {
+      text = "";
 
-    window.open(url, "twitter", opts);
-    return false;
-  });
+      const company = document.querySelector(".award_company");
+      const title = document.querySelector(".award_title");
+      const date = document.querySelector(".award_date");
+      awardLeftRight.innerHTML = "";
+
+      etape3[3].data.forEach((e, index: number) => {
+        if (index % 2 == 0) {
+          text += `
+          <div class="left-column_template">
+            <div class="content_template">
+                <div class="vertical-line_template">
+                    <p class="award_company">${e.title}</p>
+                    <p class="red_text_template award_title"><i>${
+                      e.award
+                    }</i></p>
+                      <p class=<"award_date" style="color: grey;"><i>${reformDateByMonth(
+                        e.start_date
+                      )}</i></p>
+                  </div>
+              </div>
+          </div>
+                    `;
+        } else {
+          text += `
+          <div class="right-column_template">
+            <div class="content_template">
+                <div class="vertical-line_template">
+                    <p class="award_company">${e.title}</p>
+                    <p class="red_text_template award_title"><i>${
+                      e.award
+                    }</i></p>
+                      <p class=<"award_date" style="color: grey;"><i>${reformDateByMonth(
+                        e.start_date
+                      )}</i></p>
+                  </div>
+              </div>
+          </div>
+                    `;
+        }
+      });
+      awardLeftRight.innerHTML = text;
+    }
+
+    const element = document.getElementById("content");
+    const preview = document.getElementById("preview");
+    if (element && preview) {
+      element.style.height = `${
+        Math.ceil(element.getBoundingClientRect().height / 1054.4889) *
+        1054.4889
+      }px`;
+      if(Math.ceil(element.getBoundingClientRect().height / 1054.4889) > 1) {
+        const hr = document.createElement("div");
+      hr.style.position = "absolute";
+      hr.style.transform = "translateY(-50%)";
+      hr.style.top = "50%";
+      hr.style.backgroundColor = "#faf4f4";
+      hr.style.padding = "5px 0";
+      hr.style.width = "100%";
+      hr.style.textAlign = "center";
+      hr.style.minWidth = "816.3px";
+      hr.style.fontSize = "14px";
+      hr.innerText =
+        "Page " + Math.ceil(element.getBoundingClientRect().height / 1054.4889);
+      preview.append(hr);
+      }
+    }
+  }
+
+  isRaedy.value = true;
 });
-const backgroundOptionPosition = () => {
-  const image_profil = document.getElementById("image_profil");
-  if (image_profil) {
-    image_profil.style.backgroundPosition = optionBackgroundPosition.value;
+
+const reformDate = (str: string) => {
+  var date = new Date(str);
+  var dateNow = new Date();
+  if (
+    date.getFullYear() == dateNow.getFullYear() &&
+    dateNow.getMonth() == date.getMonth()
+  ) {
+    return "present";
   }
+  return `${
+    date.getMonth() < 10 ? "0" + date.getMonth() : date.getMonth()
+  }/${date.getFullYear()}`;
 };
-const backgroundOption = () => {
-  const image_profil = document.getElementById("image_profil");
-  if (image_profil) {
-    image_profil.style.backgroundSize = optionBackground.value;
+
+const reformDateByMonth = (str: string) => {
+  var date = new Date(str);
+  var dateNow = new Date();
+  if (date.getFullYear() == dateNow.getFullYear()) {
+    return "present";
   }
+  return date.getFullYear();
 };
-const navigatorGet = (textToCopy: string) => {
-  navigator.clipboard
-    .writeText(textToCopy)
-    .then(() => {
-      alert("Text copied successfully.");
-    })
-    .catch((err) => {
-      alert("Copy Failed");
-    });
+
+const reloadPage = () => {
+  window.location.reload();
 };
 </script>
 
-<template>
-  <div
-    class="flex items-center justify-between p-4 px-6 bg-white shadow-md rounded-2xl"
+<template :ref="pdfSection">
+  <!-- <Button @click="submitCV">Save</Button> -->
+
+  <section
+    class="container grid min-h-screen grid-cols-4 gap-8 p-10 translate-x-1 max-sm:flex max-xl:flex-col"
   >
-    <h2 class="text-xl font-semibold">Tools</h2>
-    <Button
-      class="text-black border-none hover:bg-pink-50 bg-inherit"
-      @click="
-        () => {
-          if (!showDivAction) {
-            divAction.querySelector('.tab-content').style.display = 'none';
-          } else {
-            divAction.querySelector('.tab-content').style.display = 'block';
-          }
-          showDivAction = !showDivAction;
-        }
-      "
-      size="sm"
-      ><ArrowDown :size="20" v-if="showDivAction" />
-      <ArrowUp :size="20" v-if="!showDivAction" />
-    </Button>
-  </div>
-  <div
-    ref="divAction"
-    class="mt-4 overflow-hidden bg-white shadow-md rounded-2xl"
-  >
-    <div class="px-6 py-4">
-      <ul class="flex justify-between text-xl font-semibold text-pink-800">
-        <li class="flex justify-center py-1 basis-1/3">
-          <Button
-            :class="tab1 ? '' : 'text-stone-400'"
-            @click="
-              () => {
-                tab2 = false;
-                tab1 = true;
-                tab3 = false;
-                tab4 = false;
-              }
-            "
-            variant="ghost"
-            class="p-2 m-auto"
-            size="icon"
-          >
-            <LanguagesIcon :size="20" />
-          </Button>
-        </li>
-        <li class="flex justify-center py-1 basis-1/3">
-          <Button
-            :class="tab2 ? '' : 'text-stone-400'"
-            @click="
-              () => {
-                tab2 = true;
-                tab1 = false;
-                tab3 = false;
-                tab4 = false;
-              }
-            "
-            variant="ghost"
-            size="icon"
-          >
-            <Download :size="20" />
-          </Button>
-        </li>
-        <li class="flex justify-center py-1 basis-1/3">
-          <Button
-            :class="tab3 ? '' : 'text-stone-400'"
-            @click="
-              () => {
-                tab2 = false;
-                tab3 = true;
-                tab1 = false;
-                tab4 = false;
-              }
-            "
-            variant="ghost"
-            size="icon"
-          >
-            <Share2 :size="20" />
-          </Button>
-        </li>
-        <li class="flex justify-center py-1 basis-1/3">
-          <Button
-            :class="tab4 ? '' : 'text-stone-400'"
-            @click="
-              () => {
-                tab2 = false;
-                tab3 = false;
-                tab1 = false;
-                tab4 = true;
-              }
-            "
-            variant="ghost"
-            size="icon"
-          >
-            <Image :size="20" />
-          </Button>
-        </li>
-      </ul>
-      <div
-        class="relative flex items-center justify-between h-1 overflow-hidden bg-stone-100 rounded-2xl"
-      >
-        <div
-          class="h-1 basis-1/3 rounded-2xl"
-          :class="tab1 ? 'bg-pink-800' : 'bg-stone-200'"
-        ></div>
-        <div
-          class="h-1 basis-1/3 rounded-2xl"
-          :class="tab2 ? 'bg-pink-800' : 'bg-stone-200'"
-        ></div>
-        <div
-          class="h-1 basis-1/3 rounded-2xl"
-          :class="tab3 ? 'bg-pink-800' : 'bg-stone-200'"
-        ></div>
-        <div
-          class="h-1 basis-1/3 rounded-2xl"
-          :class="tab4 ? 'bg-pink-800' : 'bg-stone-200'"
-        ></div>
-      </div>
+    <div class="col-span-1">
+      <BuilderPreviewTools
+        :templateId="route.params.id"
+        :isEditedPage="false"
+      />
     </div>
-    <div class="px-6 py-4 tab-content bg-stone-50">
-      <div v-if="tab1">
-        <FormField name="language" :value="language">
-          <FormItem class="mb-4 text-sm text-left">
-            <FormLabel>Documents Language</FormLabel>
-            <FormControl>
-              <select
-                v-model="currentLanguage"
-                class="w-full p-2 mt-2 text-sm rounded-md focus-visible:outline-none focus-visible:ring-2 ring-pink-900"
-              >
-                <option value="fr">French</option>
-                <option value="en">English</option>
-              </select>
-            </FormControl>
-            <FormMessage class="text-xs" />
-          </FormItem>
-        </FormField>
-        <Button size="sm" class="mt-2" @click="translateDocument"
-          >Translate</Button
-        >
+    <section id="preview" class="relative col-span-3 overflow-auto printme">
+      <div v-if="data" class="min-h-screen">
+        <TemplateToPdf v-html="data.html"></TemplateToPdf>
       </div>
-      <div v-if="tab2">
-        <template v-for="field in download_field">
-          <FormField
-            v-slot="{ componentField }"
-            name="download"
-            class="w-full p-2 mt-2 text-sm rounded-md focus-visible:outline-none focus-visible:ring-2 ring-pink-900"
-            :value="defaultValues[field.name]"
+      <div v-else-if="error" class="font-semibold text-center">
+        <h3>Not find Template</h3>
+        <h4>
+          Check Your Network And
+          <Button variant="ghost" class="text-primary" @click="reloadPage"
+            >Reload</Button
           >
-            <FormItem class="mb-4 text-sm text-left">
-              <FormLabel>{{ field.label }}</FormLabel>
-              <FormControl>
-                <FormControl>
-                  <select
-                    class="w-full p-2 mt-2 text-sm rounded-md focus-visible:outline-none focus-visible:ring-2 ring-pink-900"
-                    v-if="field.type == 'select'"
-                    v-model="typeBinding"
-                  >
-                    <option
-                      v-for="item in field.options"
-                      :value="item.value.toString()"
-                    >
-                      {{ item.text.toString() }}
-                    </option>
-                    <!-- <option value="en">English</option> -->
-                  </select>
-                  <Input
-                    v-else
-                    :type="field.type ? field.type : 'text'"
-                    :placeholder="field.placeholder"
-                    v-bind="componentField"
-                  />
-                </FormControl>
-              </FormControl>
-              <FormMessage class="text-xs" />
-            </FormItem>
-          </FormField>
-        </template>
-        <Button size="sm" @click="print()">Download</Button>
+          a Page
+        </h4>
       </div>
-      <div v-if="tab3">
-        <div class="flex items-center w-full gap-2 p-2 bg-white">
-          <input
-            type="url"
-            value="http://localhost:3000/app/cv/builder/preview-9b01ff62-ea56-457e-97a9-ab9c03e3b8f6"
-            id="link"
-            class="max-w-full overflow-hidden text-sm text-slate-400 focus-visible:outline-none bg-inherit"
-          />
-          <Button
-            title="copy"
-            size="sm"
-            @click="navigatorGet(route.fullPath)"
-            class="text-black border-none hover:bg-pink-50 bg-inherit"
-            ><Copy :size="16"
-          /></Button>
-        </div>
-        <div class="flex flex-wrap items-center">
-          <div>
-            <div id="fb-root"></div>
-            <div
-              class="w-12 h-12 overflow-hidden rounded-full fb-share-button"
-              data-href="https://cv-pro-client.vercel.app/app/cv/builder/preview-"
-              data-layout=""
-              data-size=""
-            >
-              <NuxtLink
-                target="_blank"
-                to="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fcv-pro-client.vercel.app%2Fapp%2Fcv%2Fbuilder%2Fpreview-&amp;src=sdkpreparse"
-                class="fb-xfbml-parse-ignore"
-              >
-                <img
-                  src="assets/img/icons/facebook-svgrepo-com.svg"
-                  alt=""
-                  class="w-full h-full rounded-full"
-                  srcset=""
-                />
-              </NuxtLink>
-            </div>
-          </div>
-          <div>
-            <a
-              class="tweet size-5"
-              target="_blank"
-              href="https://twitter.com/share?text=<?= $datas['title']; ?>&hashtags=Blog"
-            >
-              <span class="fa-stack size-5 fa-lg">
-                <i class="tw fa fa-circle fa-stack-2x"></i>
-                <i class="fa fa-twitter fa-stack-1x fa-inverse"></i> </span
-            ></a>
-          </div>
+      <div v-else>
+        <div class="w-full min-h-screen transition-all card is-loading">
+          <div class="content"></div>
         </div>
       </div>
-      <div v-if="tab4">
-        <div>
-          <label for="optionBackground">Size</label>
-          <select
-            class="w-full p-2 mt-2 text-sm rounded-md focus-visible:outline-none focus-visible:ring-2 ring-pink-900"
-            v-model="optionBackground"
-            @change="backgroundOption"
-            name="optionBackground"
-          >
-            <option value="cover">Cover</option>
-            <option value="contain">Contain</option>
-          </select>
-        </div>
-        <div>
-          <label for="optionBackgroundPosition">Position</label>
-          <select
-            class="w-full p-2 mt-2 text-sm rounded-md focus-visible:outline-none focus-visible:ring-2 ring-pink-900"
-            v-model="optionBackgroundPosition"
-            @change="backgroundOptionPosition"
-            name="optionBackgroundPosition"
-          >
-            <option value="top">Top</option>
-            <option value="left">Left</option>
-            <option value="center">Center</option>
-            <option value="right">Right</option>
-            <option value="bottom">Bottom</option>
-          </select>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div v-if="user">
-    <!-- <nuxt-link
-      class="flex-1 w-full text-sm text-pink-900"
-      :to="{
-        name: `app-cv-builder-step-id`,
-        params: { id: 1 },
-        query: { template_id: $route.params.id },
-      }"
-    >
-      <Button class="w-full my-4 text-pink-900 bg-inherit hover:text-white"
-        >edit cv</Button
-      >
-    </nuxt-link> -->
-    <Button @click="submitCV" class="w-full mt-4">Save</Button>
-  </div>
+    </section>
+  </section>
 </template>
+<style scoped>
+.card {
+  background: #fff;
+  border-radius: 5px;
+}
+.card .content {
+  padding: 20px 30px;
+  height: 100%;
+}
+.card.is-loading .content {
+  background: #eee;
+  background: linear-gradient(110deg, #ececec 8%, #f5f5f5 18%, #ececec 33%);
+  border-radius: 5px;
+  background-size: 200% 100%;
+  animation: 1.5s shine linear infinite;
+}
+
+@keyframes shine {
+  to {
+    background-position-x: -200%;
+  }
+}
+</style>

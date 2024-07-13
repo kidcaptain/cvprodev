@@ -498,7 +498,7 @@ const optionBackground = ref<string>("");
 const optionBackgroundPosition = ref<string>("");
 
 const print = async () => {
-  if (session) {
+  if (session != null) {
     const download = document.getElementById("download-pdf");
     if (download) {
       download.addEventListener("click", () => {
@@ -520,8 +520,7 @@ const print = async () => {
         }
       });
       download.click();
-    } else {
-    }
+    } 
   } else {
     if (confirm("Log in to use this feature")) {
       router.push("/auth/login");

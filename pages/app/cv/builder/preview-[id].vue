@@ -11,7 +11,7 @@ definePageMeta({
 const route = useRoute();
 
 const { data, error } = await useFetch<any>(
-"/api/templates/templateById?id=" + route.params.id
+  "/api/templates/templateById?id=" + route.params.id
 );
 
 const isRaedy = ref(false);
@@ -26,14 +26,22 @@ onMounted(() => {
 
   if (step1 && step2 && step3 && step4) {
     const upload_file = document.getElementById("user_img");
+    const image_profil = document.getElementById("image_profil");
     var base64 = window.localStorage.getItem("profileimage");
     if (base64) {
       if (upload_file) {
         (upload_file as HTMLImageElement).src = base64;
       }
-      const image_profil = document.getElementById("image_profil");
+
       if (image_profil) {
         image_profil.style.backgroundImage = "url(" + base64 + ")";
+      }
+    } else {
+      if (upload_file) {
+        (upload_file as HTMLImageElement).style.display = "none";
+      }
+      if (image_profil) {
+        image_profil.style.display = "none";
       }
     }
 
@@ -133,6 +141,7 @@ onMounted(() => {
     }
 
     const personal_skills = document.getElementById("personal_skills");
+    const personalCadre = document.getElementById("personal_skills_cadre");
     if (personal_skills) {
       var text = "";
       if (etape2[2].data.length > 0) {
@@ -141,14 +150,21 @@ onMounted(() => {
         });
         personal_skills.innerHTML = text;
       } else {
-        const personalCadre = document.getElementById("personal_skills_cadre");
         if (personalCadre) {
           personalCadre.style.display = "none";
         }
         personal_skills.style.display = "none";
       }
+    } else {
+      if (personalCadre) {
+        personalCadre.style.display = "none";
+      }
     }
+    const professionalCadre = document.getElementById(
+      "professional_skills_cadre"
+    );
     const professional_skills = document.getElementById("professional_skills");
+
     if (professional_skills) {
       var text = "";
       if (etape2[3].data.length > 0) {
@@ -157,17 +173,19 @@ onMounted(() => {
         });
         professional_skills.innerHTML = text;
       } else {
-        const professionalCadre = document.getElementById(
-          "professional_skills_cadre"
-        );
         if (professionalCadre) {
           professionalCadre.style.display = "none";
         }
         professional_skills.style.display = "none";
       }
+    } else {
+      if (professionalCadre) {
+        professionalCadre.style.display = "none";
+      }
     }
 
     const language = document.getElementById("language");
+    const languageCadre = document.getElementById("language_cadre");
     if (language) {
       var text = "";
       if (etape3[0].data.length > 0) {
@@ -179,15 +197,19 @@ onMounted(() => {
         });
         language.innerHTML = text;
       } else {
-        const languageCadre = document.getElementById("language_cadre");
         if (languageCadre) {
           languageCadre.style.display = "none";
         }
         language.style.display = "none";
       }
+    } else {
+      if (languageCadre) {
+        languageCadre.style.display = "none";
+      }
     }
 
     const hobbies = document.getElementById("hobbies");
+    const hobbiesCadre = document.getElementById("hobbies_cadre");
     if (hobbies) {
       var text = "";
       if (etape3[1].data.length > 0) {
@@ -196,15 +218,19 @@ onMounted(() => {
         });
         hobbies.innerHTML = text;
       } else {
-        const hobbiesCadre = document.getElementById("hobbies_cadre");
         if (hobbiesCadre) {
           hobbiesCadre.style.display = "none";
         }
         hobbies.style.display = "none";
       }
+    } else {
+      if (hobbiesCadre) {
+        hobbiesCadre.style.display = "none";
+      }
     }
 
     const achievements = document.getElementById("achievements");
+    const projectCadre = document.getElementById("project_cadre");
     if (achievements) {
       var text = "";
       if (etape4[1].data.length > 0) {
@@ -213,11 +239,14 @@ onMounted(() => {
         });
         achievements.innerHTML = text;
       } else {
-        const projectCadre = document.getElementById("project_cadre");
         if (projectCadre) {
           projectCadre.style.display = "none";
         }
         achievements.style.display = "none";
+      }
+    } else {
+      if (projectCadre) {
+        projectCadre.style.display = "none";
       }
     }
 
@@ -225,6 +254,7 @@ onMounted(() => {
     const referencesLeftRight = document.getElementById(
       "references_left_right"
     );
+    const referencesCadre = document.getElementById("references_cadre");
     if (references) {
       var text = "";
       if (etape4[0].data.length > 0) {
@@ -241,11 +271,14 @@ onMounted(() => {
         });
         references.innerHTML = text;
       } else {
-        const referencesCadre = document.getElementById("references_cadre");
         if (referencesCadre) {
           referencesCadre.style.display = "none";
         }
         references.style.display = "none";
+      }
+    } else {
+      if (referencesCadre) {
+        referencesCadre.style.display = "none";
       }
     }
     if (referencesLeftRight) {
@@ -270,10 +303,15 @@ onMounted(() => {
         }
         referencesLeftRight.style.display = "none";
       }
+    } else {
+      if (referencesCadre) {
+        referencesCadre.style.display = "none";
+      }
     }
 
     // A modifier
     const social = document.getElementById("social");
+    const socialCadre = document.getElementById("social_cadre");
     if (social) {
       var text = "";
       if (etape4[2].data.length > 0) {
@@ -287,27 +325,35 @@ onMounted(() => {
         });
         social.innerHTML = text;
       } else {
-        const socialCadre = document.getElementById("social_cadre");
         if (socialCadre) {
           socialCadre.style.display = "none";
         }
         social.style.display = "none";
       }
+    } else {
+      if (socialCadre) {
+        socialCadre.style.display = "none";
+      }
     }
 
     const resume = document.getElementById("resume");
+    const resumeCadre = document.getElementById("profesional_cadre");
     if (resume) {
       if (etape1.objective != "") {
         resume.innerHTML = etape1.objective;
       } else {
-        const resumeCadre = document.getElementById("profesional_cadre");
         if (resumeCadre) {
           resumeCadre.style.display = "none";
         }
         resume.style.display = "none";
       }
+    } else {
+      if (resumeCadre) {
+        resumeCadre.style.display = "none";
+      }
     }
     const work_experience = document.getElementById("work_experience");
+    const experienceCadre = document.getElementById("work_experience_cadre");
     if (work_experience) {
       text = "";
       if (etape2[0].data.length > 0) {
@@ -330,17 +376,19 @@ onMounted(() => {
         });
         work_experience.innerHTML = text;
       } else {
-        const experienceCadre = document.getElementById(
-          "work_experience_cadre"
-        );
         if (experienceCadre) {
           experienceCadre.style.display = "none";
         }
         work_experience.style.display = "none";
       }
+    } else {
+      if (experienceCadre) {
+        experienceCadre.style.display = "none";
+      }
     }
 
     const education = document.getElementById("education");
+    const educationCadre = document.getElementById("education_cadre");
     if (education) {
       text = "";
       console.log(etape2);
@@ -354,15 +402,19 @@ onMounted(() => {
         });
         education.innerHTML = text;
       } else {
-        const educationCadre = document.getElementById("education_cadre");
         if (educationCadre) {
           educationCadre.style.display = "none";
         }
         education.style.display = "none";
       }
+    } else {
+      if (educationCadre) {
+        educationCadre.style.display = "none";
+      }
     }
 
     const certifications = document.getElementById("certifications");
+    const certificationsCadre = document.getElementById("certifications_cadre");
     if (certifications) {
       text = "";
       if (etape3[2].data.length > 0) {
@@ -374,19 +426,23 @@ onMounted(() => {
         });
         certifications.innerHTML = text;
       } else {
-        const certificationsCadre = document.getElementById(
-          "certifications_cadre"
-        );
         if (certificationsCadre) {
           certificationsCadre.style.display = "none";
         }
         certifications.style.display = "none";
       }
+    } else {
+      if (certificationsCadre) {
+        certificationsCadre.style.display = "none";
+      }
     }
 
     const award = document.getElementById("award");
+    const awardCadre = document.getElementById("award_cadre");
+
     const awardLeftRight = document.getElementById("award_left_right");
-    if (award) {
+    if (award && awardCadre)  {
+      awardCadre.style.display = "none";
       text = "";
 
       const company = document.querySelector(".award_company");
@@ -401,7 +457,7 @@ onMounted(() => {
         award.innerHTML += company.innerHTML;
         award.innerHTML += date.innerHTML;
       }
-      console.log(award.innerHTML);
+      
       etape3[3].data.forEach((e, index: number) => {
         if (index > 0) {
           if (company && title && date) {
@@ -416,9 +472,9 @@ onMounted(() => {
       });
       award.innerHTML = text;
     }
-    if (awardLeftRight) {
+    if (awardLeftRight && awardCadre) {
       text = "";
-
+      awardCadre.style.display = "none";
       const company = document.querySelector(".award_company");
       const title = document.querySelector(".award_title");
       const date = document.querySelector(".award_date");
@@ -469,7 +525,7 @@ onMounted(() => {
         Math.ceil(element.getBoundingClientRect().height / 1054.4889) *
         1054.4889
       }px`;
-      if(Math.ceil(element.getBoundingClientRect().height / 1054.4889) > 1) {
+      if (Math.ceil(element.getBoundingClientRect().height / 1054.4889) > 1) {
         const hr = document.createElement("div");
         hr.style.position = "absolute";
         hr.style.transform = "translateY(-50%)";
@@ -481,7 +537,8 @@ onMounted(() => {
         hr.style.minWidth = "816.3px";
         hr.style.fontSize = "14px";
         hr.innerText =
-          "Page " + Math.ceil(element.getBoundingClientRect().height / 1054.4889);
+          "Page " +
+          Math.ceil(element.getBoundingClientRect().height / 1054.4889);
         preview.append(hr);
       }
     }
@@ -525,7 +582,10 @@ const reloadPage = () => {
     class="container grid min-h-screen grid-cols-4 gap-8 p-10 translate-x-1 max-sm:flex max-xl:flex-col"
   >
     <div class="col-span-1">
-      <BuilderPreviewTools :templateId="route.params.id" :isEditedPage="false"  />
+      <BuilderPreviewTools
+        :templateId="route.params.id"
+        :isEditedPage="false"
+      />
     </div>
     <section id="preview" class="relative col-span-3 overflow-auto printme">
       <div v-if="data" class="min-h-screen">

@@ -120,14 +120,25 @@ onMounted(() => {
     if (address) {
       address.innerText = etape1.address;
       if (!etape1.address) {
+        const addressIcon = document.querySelector(".fa-map-marker");
+        addressIcon?.classList.replace('fa-map-marker', 'hidden');
+        addressIcon?.remove();
         address.style.display = "none";
+      }else{
+
+        
       }
+    }else{
+      
     }
 
     const phone = document.getElementById("phone");
     if (phone) {
       phone.innerText = etape1.phone;
       if (!etape1.phone) {
+        const addressIcon = document.querySelector(".fa-map-marker");
+        addressIcon?.classList.replace('fa-phone', 'hidden');
+        addressIcon?.remove();
         phone.style.display = "none";
       }
     }
@@ -136,6 +147,9 @@ onMounted(() => {
     if (email) {
       email.innerText = etape1.email;
       if (!etape1.email) {
+        const addressIcon = document.querySelector(".fa-envelope");
+        addressIcon?.classList.replace('fa-phone', 'hidden');
+        addressIcon?.remove();
         email.style.display = "none";
       }
     }

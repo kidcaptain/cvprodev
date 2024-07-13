@@ -444,7 +444,7 @@ onMounted(() => {
               text += `
                   <p><b>${e.institution}</b></p>
                    <p class="red_text"><i>${e.grade}</i></p>
-                   <p style="color: grey;"><i>${e.yearOfGraduation}</i></p><br>
+                   <p style="color: grey;"><i>${e.year_of_graduation}</i></p><br>
                    `;
             });
             education.innerHTML = text;

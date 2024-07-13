@@ -392,6 +392,8 @@ onMounted(() => {
     const experienceCadre = document.getElementById("work_experience_cadre");
 
     if (cv.ProfessionalExperienceInformation) {
+      alert(cv.ProfessionalExperienceInformation  + "1")
+
       if (cv.ProfessionalExperienceInformation != "null") {
         var ProfessionalExperienceInformation: any[] = JSON.parse(
           cv.ProfessionalExperienceInformation
@@ -425,11 +427,14 @@ onMounted(() => {
         if (experienceCadre) {
           experienceCadre.style.display = "none";
         }
+        alert(cv.ProfessionalExperienceInformation)
       }
     } else {
       if (experienceCadre) {
         experienceCadre.style.display = "none";
       }
+      alert(cv.ProfessionalExperienceInformation)
+
     }
 
     const education = document.getElementById("education");

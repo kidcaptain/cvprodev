@@ -310,10 +310,10 @@ const submitCV = async () => {
     }
     etape2[0].data.forEach((e) => {
       professionalExperience.push({
-        jobTitle: e.jobTitle,
-        company: e.company,
-        period: e.startDate + " / " + e.endDate,
-        professionalTasksPerformed: e.professionalTasksPerformed,
+        jobTitle: e.jobTitle.toString(),
+        company: e.company.toString(),
+        period: (e.startDate + " / " + e.endDate).toString(),
+        professionalTasksPerformed: e.professionalTasksPerformed.toString(),
       });
     });
     if (professionalExperience.length == 0) {
@@ -442,8 +442,8 @@ const submitCV = async () => {
 
     etape3[3].data.forEach((e) => {
       project.push({
-        projectTitle: e.title,
-        projectTasksPerformed: e.tasks ?? "",
+        projectTitle: e.title + "",
+        projectTasksPerformed: e.tasks + "",
         projectLink: "",
       });
     });
@@ -456,7 +456,7 @@ const submitCV = async () => {
     const cvData = {
       userId: session.value?.uid,
       templateId: props.templateId,
-      picture: image, // Replace with the actual file or file path
+     // Replace with the actual file or file path
       profileInformations: JSON.stringify({
         name: `${etape1.firstname} ${etape1.lastname}`,
         title: etape1.title,
@@ -466,28 +466,28 @@ const submitCV = async () => {
         email: etape1.email,
         goal: etape1.objective,
         website: etape1.website,
-        objective: etape1.objective,
+        picturePath: "ee",
       }),
       educations: JSON.stringify(educations),
       references: JSON.stringify(references),
       personalSkills: JSON.stringify(personalSkills),
       professionalSkills: JSON.stringify(professionalSkills),
-      professionalExperience: JSON.stringify(professionalExperience),
+      ProfessionalExperienceInformation: JSON.stringify(professionalExperience),
       certifications: JSON.stringify(certification),
       projects: JSON.stringify(project),
       languages: JSON.stringify(languages),
       hobbies: JSON.stringify(hobbies),
-      cvId: "",
       tmpKey: null,
     };
     console.log(cvData);
     try {
-      const response = await axios.post(BASE_URL + "cv/save", cvData, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      alert(response.data.message);
+       const response = await axios.post(BASE_URL + "cv/save", cvData, {
+         headers: {
+           "Content-Type": "application/json",
+         },
+       });
+       alert(response.data.message);
+      
       console.log("CV submitted successfully:", response.data);
     } catch (error) {
       console.error("Error submitting CV:", error);

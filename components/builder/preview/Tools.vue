@@ -468,8 +468,17 @@ const submitCV = async () => {
         website: etape1.website,
       }),
       educations: JSON.stringify(educations),
-      isDeleted: "0",
+      references: JSON.stringify(references),
+      personalSkills: JSON.stringify(personalSkills),
+      professionalSkills: JSON.stringify(professionalSkills),
+      ProfessionalExperienceInformation: JSON.stringify(professionalExperience),
+      certifications: JSON.stringify(certification),
+      projects: JSON.stringify(project),
+      languages: JSON.stringify(languages),
+      hobbies: JSON.stringify(hobbies),
       tmpKey: null,
+      isDeleted: "0",
+
     };
 
     try {

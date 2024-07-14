@@ -9,8 +9,7 @@ import * as z from "zod";
 
 const formSchema = toTypedSchema(
   z.object({
-    firstname: z.string().min(2).max(50),
-    lastname: z.string().min(2).max(50),
+
   })
 );
 
@@ -19,10 +18,43 @@ const emit = defineEmits(["submit"]);
 const { handleSubmit } = useForm({
   validationSchema: formSchema,
 });
-
+onMounted(() => {
+  const step1 = window.localStorage.getItem("step_1");
+  if (step1) {
+    const etape1: {
+      firstname: string;
+      lastname: string;
+      title: string;
+      yearOfExperience: string;
+      address: string;
+      phone: string;
+      email: string;
+      website: string;
+      objective: string;
+    } = JSON.parse(`${step1}`);
+    (document.getElementById("firstname") as HTMLInputElement).value =
+      etape1.firstname;
+    (document.getElementById("lastname") as HTMLInputElement).value =
+      etape1.lastname;
+    (document.getElementById("title") as HTMLInputElement).value = etape1.title;
+    (document.getElementById("yearOfExperience") as HTMLInputElement).value =
+      etape1.yearOfExperience;
+    (document.getElementById("address") as HTMLInputElement).value =
+      etape1.address;
+    (document.getElementById("phone") as HTMLInputElement).value = etape1.phone;
+    (document.getElementById("email") as HTMLInputElement).value = etape1.email;
+    (document.getElementById("website") as HTMLInputElement).value =
+      etape1.website;
+    (document.getElementById("objectif") as HTMLInputElement).value =
+      etape1.objective;
+  }
+  const input = (document.getElementById("firstname") as HTMLInputElement);
+  if (input) {
+    input.focus();
+  }
+});
 const onSubmit = handleSubmit((e: any) => {
-  const firstname = (document.getElementById("firstname") as HTMLInputElement)
-    .value;
+  const firstname = (document.getElementById("firstname") as HTMLInputElement).value;
   const lastname = (document.getElementById("lastname") as HTMLInputElement)
     .value;
   const title = (document.getElementById("title") as HTMLInputElement).value;
@@ -144,6 +176,7 @@ const phone = ref();
               id="firstname"
               v-bind="componentField"
               placeholder="John Doe"
+              required
             />
           </FormControl>
           <FormMessage class="text-xs" />
@@ -158,6 +191,7 @@ const phone = ref();
               id="lastname"
               placeholder="Odin'son"
               v-bind="componentField"
+              required
             />
           </FormControl>
           <FormMessage class="text-xs" />
@@ -219,18 +253,8 @@ const phone = ref();
                     id="identifiant"
                     class="py-2 text-white rounded-md bg-primary"
                   >
-                    <option value="+213">+213 ALGERIA</option>
-                    <option value="+244">+244 ANGOLA</option>
-                    <option value="+229">+229 BENIN</option>
-                    <option value="+267">+267 BOTSWANA</option>
-                    <option value="+226">+226 BURKINA FASO</option>
-                    <option value="+257">+257 BURUNDI</option>
-                    <option selected value="+237">+237 CAMEROON</option>
-                    <option value="+1">+1 CANADA</option>
-                    <option value="+242">+242 CONGO</option>
-                    <option value="+235">+235 CHAD</option>
-                    <option value="+225">+225 COTE D'IVOIRE</option>
-                    <option value="+241">+241 GABON</option>
+                    <option selected value="+237">+237</option>
+                    <option value="+1">+1</option>
                   </select>
                 </div>
               </FormControl>

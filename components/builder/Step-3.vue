@@ -56,7 +56,40 @@ const accordionItems = ref([
     form: Award,
   },
 ]);
-
+onMounted(() => {
+    const step3 = window.localStorage.getItem("step_3");
+    console.log(step3)
+    if (step3) {
+      const etape2: {
+        title: string;
+        data: any[];
+      }[] = JSON.parse(`${step3}`);
+      var Languages :  any[]= [];
+      var Certifications :  any[]= [];
+      var Hobbies :  any[]= [];
+      var Award :  any[]= [];
+      etape2.forEach((element) => {
+        if (element.title == "Language") {
+          Languages = element.data;
+        }
+        if (element.title == "Hobbies and interests") {
+          Hobbies = element.data;
+        }
+        if (element.title == "Certifications") {
+          Certifications = element.data;
+        }
+        if (element.title == "AWARDS & HONORS") {
+          Award = element.data;
+        } 
+      });
+    
+      accordionItems.value[0].datas = Languages;
+      accordionItems.value[1].datas = Certifications;
+      accordionItems.value[2].datas = Hobbies;
+      accordionItems.value[3].datas = Award;
+    }
+  
+  });
 const removeSaved = (item: number, index: number) => {
   accordionItems.value[item]?.datas.splice(index, 1);
 };

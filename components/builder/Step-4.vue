@@ -17,7 +17,35 @@ import Network from "./sub-forms/Network.vue";
 const { handleSubmit } = useForm({});
 
 const emit = defineEmits(["submit"]);
+onMounted(() => {
+    const step4 = window.localStorage.getItem("step_4");
+    console.log(step4)
+    if (step4) {
+      const etape4: {
+        title: string;
+        data: any[];
+      }[] = JSON.parse(`${step4}`);
+      var references :  any[]= [];
+      var project :  any[]= [];
+      var network :  any[]= [];
 
+      etape4.forEach((element) => {
+        if (element.title == "REFEREnces") {
+          references = element.data;
+        }
+        if (element.title == "Social network") {
+          network = element.data;
+        }
+        if (element.title == "Project") {
+          project = element.data;
+        }
+      });
+      accordionItems.value[0].datas = references;
+      accordionItems.value[1].datas = project;
+      accordionItems.value[2].datas = network;
+    }
+  
+  });
 const onSubmit = handleSubmit(() => {
   const values: any[] = [];
   accordionItems.value.forEach((element) => {

@@ -248,7 +248,7 @@ const submitCV = async () => {
   if (!image) {
     image = null;
   }
-  if (step1 && step2 && step3 && step4 && image) {
+  if (step1 || step2 || step3 || step4 || image) {
     const etape1: {
       firstname: string;
       lastname: string;
@@ -259,7 +259,7 @@ const submitCV = async () => {
       email: string;
       website: string;
       objective: string;
-    } = JSON.parse(step1);
+    } = JSON.parse(`${step1}`);
     const etape2: {
       title: string;
       data: {
@@ -275,15 +275,15 @@ const submitCV = async () => {
         startDate: string;
         endDate: string;
       }[];
-    }[] = JSON.parse(step2);
+    }[] = JSON.parse(`${step2}`);
     const etape3: {
       title: string;
       data: any[];
-    }[] = JSON.parse(step3);
+    }[] = JSON.parse(`${step3}`);
     const etape4: {
       title: string;
       data: any[];
-    }[] = JSON.parse(step4);
+    }[] = JSON.parse(`${step4}`);
     const educations: {
       institution: string;
       degree: string;
@@ -306,7 +306,7 @@ const submitCV = async () => {
       });
     });
     if (educations.length == 0) {
-      educations.push({ institution: "", degree: "", yearOfGraduation: "" });
+      educations.push({ institution: "aaa", degree: "aaa", yearOfGraduation: "2023-02" });
     }
     etape2[0].data.forEach((e) => {
       professionalExperience.push({
@@ -456,7 +456,7 @@ const submitCV = async () => {
     const cvData = {
       userId: session.value?.uid,
       templateId: props.templateId,
-      picturePath: `${image}`,
+      picturePath: image != "" ? image : null,
       profileInformations: JSON.stringify({
         name: `${etape1.firstname} ${etape1.lastname}`,
         title: etape1.title,
@@ -466,20 +466,12 @@ const submitCV = async () => {
         email: etape1.email,
         goal: etape1.objective,
         website: etape1.website,
-
       }),
       educations: JSON.stringify(educations),
-      references: JSON.stringify(references),
-      personalSkills: JSON.stringify(personalSkills),
-      professionalSkills: JSON.stringify(professionalSkills),
-      ProfessionalExperienceInformation: JSON.stringify(professionalExperience),
-      certifications: JSON.stringify(certification),
-      projects: JSON.stringify(project),
-      languages: JSON.stringify(languages),
-      hobbies: JSON.stringify(hobbies),
+      isDeleted: "0",
       tmpKey: null,
     };
-    console.log(cvData);
+
     try {
        const response = await axios.post(BASE_URL + "cv/save", cvData, {
          headers: {
@@ -498,7 +490,7 @@ const optionBackground = ref<string>("");
 const optionBackgroundPosition = ref<string>("");
 
 const print = async () => {
-  if (session != null) {
+  if (session.value != null) {
     const download = document.getElementById("download-pdf");
     if (download) {
       download.addEventListener("click", () => {
@@ -520,7 +512,9 @@ const print = async () => {
         }
       });
       download.click();
-    } 
+    } else {
+
+    }
   } else {
     if (confirm("Log in to use this feature")) {
       router.push("/auth/login");

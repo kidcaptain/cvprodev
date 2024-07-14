@@ -31,7 +31,52 @@ const onSubmit = handleSubmit(() => {
   window.localStorage.setItem("step_2", JSON.stringify(values));
   emit("submit");
 });
-
+onMounted(() => {
+    const step2 = window.localStorage.getItem("step_2");
+    console.log(step2)
+    if (step2) {
+      const etape2: {
+        title: string;
+        data: {
+          title: string;
+          company: string;
+          start_date: string;
+          end_date: string;
+          experience: string;
+          grade: string;
+          type: string;
+          professionalTasksPerformed: string;
+          jobTitle: string;
+          startDate: string;
+          endDate: string;
+        }[];
+      }[] = JSON.parse(`${step2}`);
+      var education :  any[]= [];
+      var professional :  any[]= [];
+      var experience :  any[]= [];
+      var personal :  any[]= [];
+      etape2.forEach((element) => {
+        if (element.title == "EDUCATION") {
+          education = element.data;
+        }
+        if (element.title == "PROFESSIONAL EXPERIENCE") {
+          experience = element.data;
+        }
+        if (element.title == "PROFESSIONAL SKILLS") {
+          professional = element.data;
+        }
+        if (element.title == "PERSONAL SKILLS") {
+          personal = element.data;
+        } 
+      });
+    
+      itemsEditable.value = experience;
+      accordionItems.value[1].datas = education;
+      accordionItems.value[2].datas = personal;
+      accordionItems.value[3].datas = professional;
+    }
+  
+  });
 const onEdit = (e: Event) => {
   e.preventDefault();
   const data = {
@@ -41,7 +86,7 @@ const onEdit = (e: Event) => {
     endDate: endDate.value,
     professionalTasksPerformed: professionalTasksPerformed.value,
   };
-
+ 
   var tab: any[] = itemsEditable.value;
   tab[itemEditable.value] = data;
   itemsEditable.value = tab;
@@ -131,7 +176,10 @@ const editSave = (item: any, index: number) => {
           <AccordionContent class="md:pl-5">
             <div class="space-y-2">
               <div>
-                <div v-if="itemIndex == 0" class="overflow-y-auto max-h-52 flex-col-reverse flex">
+                <div
+                  v-if="itemIndex == 0"
+                  class="flex flex-col-reverse overflow-y-auto max-h-52"
+                >
                   <div
                     v-for="(save, index) in itemsEditable"
                     :key="index"
@@ -157,7 +205,7 @@ const editSave = (item: any, index: number) => {
                       </h2>
                       <p class="p-1">{{ save.professionalTasksPerformed }}</p>
                     </div>
-                    <div class="flex gap-2 pl-4 pb-2">
+                    <div class="flex gap-2 pb-2 pl-4">
                       <Button
                         @click="editSave(save, index)"
                         variant="outline"
@@ -165,7 +213,7 @@ const editSave = (item: any, index: number) => {
                         type="button"
                         size="sm"
                       >
-                        <Edit class="size-4 text-white hover:text-secondary"
+                        <Edit class="text-white size-4 hover:text-secondary"
                       /></Button>
                       <Button
                         @click="removeSavedExperience(index)"
@@ -173,12 +221,12 @@ const editSave = (item: any, index: number) => {
                         class="p-1 bg-secondary hover:border-secondary h-fit hover:text-secondary"
                         type="button"
                       >
-                        <Trash class="size-4 text-white hover:text-secondary" />
+                        <Trash class="text-white size-4 hover:text-secondary" />
                       </Button>
                     </div>
                   </div>
                 </div>
-                <div class="overflow-y-auto max-h-52 flex-col-reverse flex">
+                <div class="flex flex-col-reverse overflow-y-auto max-h-52">
                   <div
                     v-for="(save, index) in item.datas"
                     :key="index"
@@ -223,14 +271,16 @@ const editSave = (item: any, index: number) => {
                       </h3>
                     </div>
 
-                    <div class="flex p-4 items-center justify-start gap-3 text-end">
+                    <div
+                      class="flex items-center justify-start gap-3 p-4 text-end"
+                    >
                       <Button
                         @click="removeSaved(itemIndex, index)"
                         variant="outline"
-                         class="p-1 bg-secondary hover:border-secondary h-fit hover:text-secondary"
+                        class="p-1 bg-secondary hover:border-secondary h-fit hover:text-secondary"
                         type="button"
                       >
-                        <Trash class="size-4 text-white hover:text-secondary" />
+                        <Trash class="text-white size-4 hover:text-secondary" />
                       </Button>
                     </div>
                   </div>
@@ -268,7 +318,7 @@ const editSave = (item: any, index: number) => {
             <span>Previous</span>
           </Button>
         </nuxt-link>
-        <Button type="submit"   size="sm" class="">
+        <Button type="submit" size="sm" class="">
           <span>Next</span>
           <ArrowRight />
         </Button>
@@ -276,13 +326,15 @@ const editSave = (item: any, index: number) => {
     </form>
     <div
       v-if="booll"
-      class="fixed top-0 left-0 flex items-end md:items-center justify-center w-full h-full bg-black/20"
+      class="fixed top-0 left-0 flex items-end justify-center w-full h-full md:items-center bg-black/20"
     >
-      <div class="z-50 md:w-1/3 w-full p-5 md:p-10 mt-10 overflow-hidden bg-white rounded-md">
+      <div
+        class="z-50 w-full p-5 mt-10 overflow-hidden bg-white rounded-md md:w-1/3 md:p-10"
+      >
         <form @submit="onEdit">
           <h3 class="text-xl text-center">Edit Work Experience</h3>
           <div
-            class="w-full gap-6 p-2 space-y-2  border-l-2 md:grid md:grid-cols-2 md:space-y-0 border-secondary/50"
+            class="w-full gap-6 p-2 space-y-2 border-l-2 md:grid md:grid-cols-2 md:space-y-0 border-secondary/50"
           >
             <div>
               <label class="text-sm">Job Title</label>
@@ -340,7 +392,7 @@ const editSave = (item: any, index: number) => {
               ></textarea>
             </div>
           </div>
-          <div class="p-4 flex items-center">
+          <div class="flex items-center p-4">
             <Button
               type="submit"
               class="px-6 space-x-3 bg-stone-500 border-stone-300"

@@ -306,7 +306,11 @@ const submitCV = async () => {
       });
     });
     if (educations.length == 0) {
-      educations.push({ institution: "aaa", degree: "aaa", yearOfGraduation: "2023-02" });
+      educations.push({
+        institution: "aaa",
+        degree: "aaa",
+        yearOfGraduation: "2023-02",
+      });
     }
     etape2[0].data.forEach((e) => {
       professionalExperience.push({
@@ -478,25 +482,22 @@ const submitCV = async () => {
       hobbies: JSON.stringify(hobbies),
       tmpKey: null,
       isDeleted: "0",
-
     };
 
     try {
-       const response = await axios.post(BASE_URL + "cv/save", cvData, {
-         headers: {
-           "Content-Type": "application/json",
-         },
-       });
-       alert(response.data.message);
-      
+      const response = await axios.post(BASE_URL + "cv/save", cvData, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      alert(response.data.message);
+
       console.log("CV submitted successfully:", response.data);
     } catch (error) {
       console.error("Error submitting CV:", error);
     }
   }
 };
-const optionBackground = ref<string>("");
-const optionBackgroundPosition = ref<string>("");
 
 const print = async () => {
   if (session.value != null) {
@@ -522,7 +523,6 @@ const print = async () => {
       });
       download.click();
     } else {
-
     }
   } else {
     if (confirm("Log in to use this feature")) {
@@ -554,6 +554,13 @@ onMounted(() => {
     return false;
   });
 });
+const optionBackground = ref<string>("");
+const optionBackgroundPosition = ref<string>("");
+const optionBackgroundNoRepeat = ref<string>("");
+const optionBackgroundSize = ref<string>("");
+const optionBackgroundColor = ref<string>("");
+const optionBackgroundRadius = ref<string>("");
+
 const backgroundOptionPosition = () => {
   const image_profil = document.getElementById("image_profil");
   if (image_profil) {
@@ -564,6 +571,37 @@ const backgroundOption = () => {
   const image_profil = document.getElementById("image_profil");
   if (image_profil) {
     image_profil.style.backgroundSize = optionBackground.value;
+  }
+};
+const backgroundOptionNoRepeat = () => {
+  const image_profil = document.getElementById("image_profil");
+  if (image_profil) {
+    image_profil.style.backgroundRepeat = optionBackgroundNoRepeat.value;
+  }
+};
+const backgroundOptionColor = () => {
+  const image_profil = document.getElementById("image_profil");
+  if (image_profil) {
+    image_profil.style.backgroundColor = optionBackgroundColor.value;
+  }
+};
+const backgroundOptionSize = () => {
+  const image_profil = document.getElementById("image_profil");
+  if (image_profil) {
+    switch (optionBackgroundSize.value) {
+      case "full":
+        image_profil.style.width = "100%";
+        image_profil.style.height = "100%";
+        break;
+      case "small":
+        image_profil.style.width = "75px";
+        image_profil.style.height = "75px";
+        break;
+      default:
+        image_profil.style.width = "150px";
+        image_profil.style.height = "150px";
+        break;
+    }
   }
 };
 const navigatorGet = (textToCopy: string) => {
@@ -837,6 +875,45 @@ const navigatorGet = (textToCopy: string) => {
             <option value="bottom">Bottom</option>
           </select>
         </div>
+        <div>
+          <label for="optionBackgroundPosition">Repeat</label>
+          <select
+            class="w-full p-2 mt-2 text-sm rounded-md focus-visible:outline-none focus-visible:ring-2 ring-pink-900"
+            v-model="optionBackgroundNoRepeat"
+            @change="backgroundOptionNoRepeat"
+            name="optionBackgroundNoRepeat"
+          >
+            <option value="space">Space</option>
+            <option value="no-repeat">No Repeat</option>
+            <option value="round">Round</option>
+            <option value="repeat">Repeat</option>
+          </select>
+        </div>
+        <div>
+          <label for="optionBackgroundPosition">Size</label>
+          <select
+            class="w-full p-2 mt-2 text-sm rounded-md focus-visible:outline-none focus-visible:ring-2 ring-pink-900"
+            v-model="optionBackgroundSize"
+            @change="backgroundOptionSize"
+            name="optionBackgroundNoRepeat"
+          >
+            <option value="full">Full</option>
+            <option value="normal">Normal</option>
+            <option value="small">Small</option>
+          </select>
+        </div>
+    
+        <div>
+          <label for="optionBackgroundPosition">Color</label>
+          <input type="color"
+            class="w-full p-2 mt-2 text-sm rounded-md focus-visible:outline-none focus-visible:ring-2 ring-pink-900"
+            v-model="optionBackgroundColor"
+            @change="backgroundOptionColor"
+            name="optionBackgroundNoRepeat"
+          >
+           
+        </div>
+
       </div>
     </div>
   </div>
@@ -853,6 +930,8 @@ const navigatorGet = (textToCopy: string) => {
         >edit cv</Button
       >
     </nuxt-link> -->
-    <Button @click="submitCV" class="w-full mt-4">Save</Button>
+    <Button @click="submitCV" v-if="!isEditedPage" class="w-full mt-4"
+      >Save</Button
+    >
   </div>
 </template>

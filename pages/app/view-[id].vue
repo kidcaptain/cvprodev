@@ -21,13 +21,25 @@ const { data, error } = await useFetch<any>(
 //   "/api/templates/cvById"
 // );
 
+const picturePath = ref();
+const profileInformations = ref<{
+        name: string,
+        title: string,
+        yearsOfExperience: string,
+        phone:string,
+        address: string,
+        email: string,
+        goal: string,
+        website: string,
+}>();
+const educations = ref<any[]>();
+
 const isRaedy = ref(false);
 
 const pdfSection = ref<HTMLElement | null>(null);
 
 onMounted(() => {
   const cv = data.value.cv;
-  console.log(cv);
   if (cv) {
     const upload_file = document.getElementById("user_img");
 
@@ -36,6 +48,9 @@ onMounted(() => {
         if (image_profil) {
           image_profil.style.backgroundImage = "url(" + cv.piicturePath + ")";
         } 
+        if (upload_file) {
+        upload_file.style.backgroundImage = "url(" + cv.piicturePath + ")";
+      }
     } else {
       if (upload_file) {
         upload_file.style.display = "none";
@@ -686,8 +701,17 @@ const closeModal = ref(false);
     v-if="closeModal"
     class="fixed top-0 left-0 w-full h-full pt-20 bg-black/30"
   >
-    <div class="z-50 max-w-lg p-6 m-auto bg-white">
-      <div>
+    <div class="z-50 max-w-lg  m-auto bg-white">
+      <div class="mt-2 text-center">
+        <Button
+          class="text-xs"
+          size="sm"
+          @click="closeModal = false"
+          variant="ghost"
+          >Close</Button
+        >
+      </div>
+      <div class="p-6">
         <div>
           <ul class="flex flex-wrap gap-2">
             <li>
@@ -778,15 +802,7 @@ const closeModal = ref(false);
           <BuilderStep4Edit></BuilderStep4Edit>
         </div>
       </div>
-      <div class="mt-2 text-center">
-        <Button
-          class="text-xs"
-          size="sm"
-          @click="closeModal = false"
-          variant="ghost"
-          >Close</Button
-        >
-      </div>
+      
     </div>
   </section>
 </template>

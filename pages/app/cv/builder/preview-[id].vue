@@ -27,20 +27,20 @@ onMounted(() => {
   if (step1 && step2 && step3 && step4) {
     const upload_file = document.getElementById("user_img");
     var base64 = window.localStorage.getItem("profileimage");
-    const image_profil = document.getElementById("image_profil");
     if (base64) {
       if (upload_file) {
         (upload_file as HTMLImageElement).src = base64;
       }
-
+      const image_profil = document.getElementById("image_profil");
       if (image_profil) {
         image_profil.style.backgroundImage = "url(" + base64 + ")";
+        image_profil.style.margin = "auto";
       }
     } else {
       if (upload_file) {
         upload_file.style.display = "none";
       }
-     
+      const image_profil = document.getElementById("image_profil");
       if (image_profil) {
         image_profil.style.display = "none";
       }
@@ -489,6 +489,8 @@ onMounted(() => {
         hr.style.textAlign = "center";
         hr.style.minWidth = "816.3px";
         hr.style.fontSize = "14px";
+        hr.style.backdropFilter: "blur(10px)";
+
         hr.innerText =
           "Page " +
           Math.ceil(element.getBoundingClientRect().height / 1054.4889);

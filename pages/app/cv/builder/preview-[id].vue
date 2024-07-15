@@ -489,7 +489,6 @@ onMounted(() => {
         hr.style.textAlign = "center";
         hr.style.minWidth = "816.3px";
         hr.style.fontSize = "14px";
-        hr.style.backdropFilter: "blur(10px)";
 
         hr.innerText =
           "Page " +

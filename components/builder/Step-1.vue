@@ -253,8 +253,20 @@ const phone = ref();
                     id="identifiant"
                     class="py-2 text-white rounded-md bg-primary"
                   >
-                    <option selected value="+237">+237</option>
-                    <option value="+1">+1</option>
+                  <option value="+213">+213 ALGERIA</option>
+                  <option value="+244">+244 ANGOLA</option>
+                  <option value="+297">+297 ARUBA</option>
+                  <option value="+267">+267 BOTSWANA</option>
+                  <option value="+226">+226 BURKINA FASO</option>
+                  <option value="+257">+257 BURUNDI</option>
+                  <option value="+238">+238 CAPE VERDE</option>
+                  <option value="+236">+236 CENTRAL AFRICAN REPUBLIC</option>
+                  <option value="+235">+235 CHAD</option>
+                  <option value="+269">+269 COMOROS</option>
+                  <option value="+242">+242 CONGO</option>
+                  <option value="+225">+225 COTE D'IVOIRE</option>
+                    <option selected value="+237">+237 CAMEROON</option>
+                    
                   </select>
                 </div>
               </FormControl>

@@ -4,15 +4,11 @@ export const FooterLink = [
     data: [
       {
         text: "Home",
-        to: "/pricing",
+        to: "/",
       },
       {
         text: "Templates",
         to: "/",
-      },
-      {
-        text: "Pricing",
-        to: "/templates",
       },
     ],
   },
@@ -29,7 +25,7 @@ export const FooterLink = [
       },
       {
         text: "Privacy Police",
-        to: "/pricing",
+        to: "/",
       },
     ],
   },
@@ -46,7 +42,7 @@ export const FooterLink = [
       },
       {
         text: "Privacy Police",
-        to: "/pricing",
+        to: "/",
       },
     ],
   },
@@ -59,10 +55,6 @@ export const HeaderLink = [
   {
     text: "Templates",
     to: "/templates",
-  },
-  {
-    text: "pricings",
-    to: "/pricing",
   },
   {
     text: "About Us",
@@ -78,10 +70,6 @@ export const OtherLink = [
   {
     text: "Templates",
     to: "/templates",
-  },
-  {
-    text: "pricings",
-    to: "/pricing",
   },
   {
     text: "About Us",

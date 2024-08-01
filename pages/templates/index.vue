@@ -26,10 +26,8 @@ const { data, pending, error, refresh } = await useAsyncData<any>(
   "cv-templates-list",
   () => $fetch(`${BASE_URL}templates/get/all`)
 );
+console.log(data);
 
-const reloadData = () => {
-  refresh;
-};
 </script>
 <template>
   <Dialog :defaultOpen="!aggred">
@@ -177,12 +175,10 @@ const reloadData = () => {
     </DialogContent>
   </Dialog>
   <section class="bg-background">
-    
     <div
       v-if="data"
       class="container grid gap-10 py-10 md:grid-cols-2 lg:grid-cols-3 md:gap-10 md:py-20"
     >
-    
       <Dialog v-for="template in data?.templates" href="/">
         <DialogTrigger as-child>
           <div
@@ -190,10 +186,10 @@ const reloadData = () => {
             class="transition-shadow duration-300 bg-white shadow-md cursor-pointer shadow-black/20 rounded-2xl overflow-clip hover:shadow-black/40 hover:shadow-2xl"
           >
             <DialogContent
-              class="sm:max-w-[425px] lg:max-w-4xl grid-rows-[auto_minmax(0,1fr)_auto] p-0 max-h-[70dvh]"
+              class="sm:max-w-[425px] lg:max-w-4xl grid-rows-[auto_minmax(0,1fr)_auto] p-0 max-h-[80dvh]"
             >
-              <div class="grid gap-4 px-6 py-4 overflow-y-auto md:grid-cols-2">
-                <div>
+              <div class="flex flex-col gap-4 px-6 py-4 overflow-y-auto lg:grid md:grid-cols-2">
+                <div class="col-span-1">
                   <div class="aspect-[210/297]">
                     <nuxt-img
                       :src="'https://' + template.templateImagePath"
@@ -201,7 +197,7 @@ const reloadData = () => {
                     />
                   </div>
                 </div>
-                <div class="flex flex-col justify-between">
+                <div class="flex flex-col justify-between p-8">
                   <div>
                     <h2
                       class="mb-4 text-3xl font-bold capitalize text-secondary"
@@ -261,10 +257,9 @@ const reloadData = () => {
       class="container flex py-4 text-2xl font-semibold text-center align-middle min-h-96"
     >
       No data yet
-     
     </div>
     <div v-else>
-      <h3 class="text-2xl font-semibold ">Is loading</h3>
+      <h3 class="text-2xl font-semibold">Is loading</h3>
       <div class="grid gap-4 px-6 py-4 overflow-y-auto md:grid-cols-4">
         <div
           v-for="i of 4"

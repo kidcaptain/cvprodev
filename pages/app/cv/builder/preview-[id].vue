@@ -24,6 +24,11 @@ onMounted(() => {
   const step3 = window.localStorage.getItem("step_3");
   const step4 = window.localStorage.getItem("step_4");
 
+  const elementContent = document.getElementById("content");
+  if (elementContent) {
+    elementContent.style.fontFamily =
+      "font-family: 'Poppins', sans-serif !important";
+  }
   if (step1 && step2 && step3 && step4) {
     const upload_file = document.getElementById("user_img");
     var base64 = window.localStorage.getItem("profileimage");
@@ -470,7 +475,6 @@ onMounted(() => {
       });
       awardLeftRight.innerHTML = text;
     }
-
     const element = document.getElementById("content");
     const preview = document.getElementById("preview");
     if (element && preview) {

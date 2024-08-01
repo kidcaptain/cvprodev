@@ -40,8 +40,18 @@ const stats = ref([
 
 const getData = ref<any[]>();
 
-const data = await $fetch<any[]>(BASE_URL + "cv/get/all")
-  .then((val) => (getData.value = val))
+const data = await $fetch<any>(BASE_URL + "cv/get/all")
+  .then((val) => {
+    var tab: any[] = [];
+    val.cvs.forEach((element: any) => {
+      if (session) {
+        if (element.userUuid == session.value?.uid) {
+          tab.push(element);
+        }
+      }
+    });
+    getData.value = tab;
+  })
   .catch((err) => {
     console.log(err);
   });
@@ -97,7 +107,6 @@ const deleteCv = async (val: any) => {
 const reload = () => {
   window.location.reload();
 };
-  
 </script>
 
 <template>
@@ -137,13 +146,12 @@ const reload = () => {
       </div>
 
       <div
-        v-if="getData"
-        class="relative grid grid-cols-4 gap-10 py-12 max-sm:grid-cols-1 max-lg:grid-cols-2"
+        v-if="getData?.length > 0"
+        class="relative grid grid-cols-4 gap-10 p-4 py-12 max-sm:grid-cols-1 max-lg:grid-cols-2"
       >
         <div
           class="aspect-[210/297] overflow-hidden hover:shadow-lg relative border-none hover: rounded-3xl"
-          v-for="i in getData?.cvs"
-          :class="i?.userUuid == session?.uid ? 'flex' : 'hidden'"
+          v-for="i in getData"
         >
           <div
             class="relative z-10 flex flex-col items-center justify-center w-full h-full m-auto max-w-72"
@@ -179,20 +187,20 @@ const reload = () => {
             />
           </div>
         </div>
-        <div
+        <!-- <div
           class="aspect-[210/297] relative overflow-hidden bg-primary rounded-3xl"
         >
           <div
             class="relative z-10 flex flex-col items-center justify-center w-full h-full m-auto text-center"
             style="max-width: 70%"
           >
-            <h1 class="my-8 font-bold text-center text-white max-lg:text-xl">
+            <h1 class="my-8 text-white uppercase text- center max-lg:text-xl">
               offert your a PREMIUM plan to change level.
             </h1>
             <h6
               class="mt-4 mb-10 text-sm font-semibold text-white max-lg:text-sm"
             >
-              unlock premium templates of all sorts
+              Unlock premium templates of all sorts
             </h6>
 
             <Button
@@ -208,15 +216,15 @@ const reload = () => {
               srcset=""
             />
           </div>
-        </div>
+        </div> -->
       </div>
-      <div v-else>
-        <h3 class="text-2xl font-semibold">No data yet</h3>
+      <div v-else class="p-2">
+        <h3 class="text-xl font-semibold">No documents saved</h3>
         <Button type="button" class="mt-4" @click="reload">Reload</Button>
       </div>
-      <nuxt-link to="/pricing" class="hidden max-sm:block">
+      <!-- <nuxt-link to="/pricing" class="hidden max-sm:block">
         <Button class="w-full">Create new </Button>
-      </nuxt-link>
+      </nuxt-link> -->
     </div>
   </div>
   <div v-if="false" class="flex flex-col h-full gap-12 pt-8 mb-12">

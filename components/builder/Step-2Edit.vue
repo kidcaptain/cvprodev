@@ -256,7 +256,7 @@ const editSave = (item: any, index: number) => {
                         class="my-2 text-xs font-semibold border-r border-secondary/50"
                       >
                         <span class="font-bold uppercase">Period:</span>
-                        {{ (save.start_date + "/" + save.end_date) ?? save.period  }}
+                        {{ (save.start_date + "/" + save.end_date) }}
                       </h3>
                      
                     </div>

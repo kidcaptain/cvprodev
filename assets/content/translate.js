@@ -65,3 +65,58 @@ export const TranslateDataPreview = [
     spanish: "certificaciones",
   },
 ];
+
+export const HomeAppTranslate = [
+  {
+    label: "home",
+    french: "accueil",
+  },
+  {
+    label: "templates",
+    french: "maquettes de cv",
+  },
+  {
+    label: "template",
+    french: "maquette",
+  },
+  {
+    label: "documents",
+    french: "documents",
+  },
+  {
+    label: "about us",
+    french: "a-propos",
+  },
+  {
+    label: "welcome back",
+    french: "content de vous revoir",
+  },
+  {
+    label: "welcome",
+    french: "Bienvenue",
+  },
+  {
+    label: "your documents",
+    french: "vos documents",
+  },
+  {
+    label: "create new",
+    french: "ajouter un nouveau cv",
+  },
+  {
+    label: "no documents saved",
+    french: "aucuns documents enregistrés",
+  },
+  {
+    label: "reload",
+    french: "actualiser",
+  },
+  {
+    label: "french",
+    french: "français",
+  },
+  {
+    label: "english",
+    french: "anglais",
+  },
+];

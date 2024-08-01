@@ -25,11 +25,7 @@ const loginSidePannel = ref(null);
         class="absolute right-0 w-full max-w-[52rem] flex justify-end h-full py-12 opacity-10"
       >
         <slot name="side-image">
-          <nuxt-img
-            src="/img/logo-footer.png"
-            alt="image"
-            class="my-auto max-h-full h-full object-cover w-full"
-          />
+       
         </slot>
       </div>
       <div class="mx-auto w-full max-w-2xl text-white font-bold px-4">

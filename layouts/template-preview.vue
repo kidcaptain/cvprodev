@@ -17,7 +17,7 @@ const { user, signOut } = useAuth()
 </script>
 
 <template>
-  <header class="sticky top-0 z-10 bg-white  no-printme">
+  <header class="sticky top-0 z-10 bg-white no-printme">
     <div class="container mx-auto max-w-screen-2xl xl:p-0">
       <header class="flex items-center justify-between py-3">
         <div class="flex items-center gap-6">
@@ -35,7 +35,7 @@ const { user, signOut } = useAuth()
             </nuxt-link>
           </div>
         </div>
-        <h2 class="text-xl max-md:hidden font-bold">Preview</h2>
+        <h2 class="text-xl font-bold max-md:hidden">Preview</h2>
         <div class="flex items-center gap-5 md:flex-row-reverse">
           <template v-if="user">
             <nuxt-link to="/auth/register" class="hidden md:inline-block">
@@ -49,7 +49,7 @@ const { user, signOut } = useAuth()
                   <div class="flex items-center gap-2">
                     <div class="bg-gray-200 rounded-full size-12 max-md:size-8"></div>
                     <div>
-                      <h4 class="max-md:font-light font-semibold">{{ user.name }}</h4>
+                      <h4 class="font-semibold max-md:font-light">{{ user.name }}</h4>
                       <h6 class="text-xs font-light max-sm:hidden">{{ user.email }}</h6>
                     </div>
                     <ChevronDown />
@@ -94,21 +94,10 @@ const { user, signOut } = useAuth()
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
-            <nuxt-link to="/pricing" class="hidden md:inline-block">
-              <Button variant="ternary" class="">Upgrade</Button>
-            </nuxt-link>
+           
           </template>
 
-          <template v-if="!user">
-            <nuxt-link to="/auth/login">
-              <Button
-                class="font-bold text-black bg-yellow-500 border-yellow-500 hover:bg-white hover:text-yellow-500 hover:border-yellow-500"
-                variant="outline"
-                to="/login"
-                >Upgrade</Button
-              >
-            </nuxt-link>
-          </template>
+        
         </div>
       </header>
     </div>

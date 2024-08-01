@@ -20,10 +20,6 @@ import {
   Keyboard,
   LifeBuoy,
   LogOut,
-  Mail,
-  MessageSquare,
-  Plus,
-  PlusCircle,
   Settings,
   User,
   UserPlus,
@@ -74,6 +70,8 @@ const socials = [
     img: "img/icons/socials/linkedin.png",
   },
 ];
+
+
 onMounted(() => {
   const header = document.querySelector(".header");
   window.addEventListener("scroll", () => {
@@ -188,11 +186,33 @@ onMounted(() => {
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
-            <nuxt-link to="/pricing" class="hidden md:inline-block">
+            <!-- <nuxt-link to="/pricing" class="hidden md:inline-block">
               <Button variant="ternary" class="">Upgrade</Button>
-            </nuxt-link>
+            </nuxt-link> -->
           </template>
-          <Languages class="" />
+         
+          <DropdownMenu>
+            <DropdownMenuTrigger as-child>
+              <Button
+                variant="link"
+                class="!p-0 !text-start !no-underline text-forground"
+              >
+              <Languages class="" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent class="w-56 border-gray-200">
+              <DropdownMenuLabel>Languages</DropdownMenuLabel>
+              <DropdownMenuGroup>
+                <DropdownMenuItem>
+                  <span>French</span>
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                  <span>English</span>
+                </DropdownMenuItem>
+              </DropdownMenuGroup>
+          
+            </DropdownMenuContent>
+          </DropdownMenu>
           <template v-if="!user">
             <nuxt-link to="/auth/register" class="hidden md:inline-block">
               <Button class="">Create account</Button>
@@ -211,25 +231,25 @@ onMounted(() => {
               >
                 <DrawerClose>
                   <DrawerTitle class="flex flex-col gap-3">
-                   <NuxtLink to="/"
-                      ><Button class="w-full bg-primary/90 border-none"
+                    <NuxtLink to="/"
+                      ><Button class="w-full border-none bg-primary/90"
                         >Home</Button
                       ></NuxtLink
                     >
                     <NuxtLink to="/templates"
-                      ><Button class="w-full bg-primary/90 border-none"
+                      ><Button class="w-full border-none bg-primary/90"
                         >Create CV</Button
                       ></NuxtLink
                     >
 
-                    <NuxtLink to="/pricing"
-                      ><Button class="w-full bg-primary/90 border-none"
+                    /* <NuxtLink to="/pricing"
+                      ><Button class="w-full border-none bg-primary/90"
                         >Pricing</Button
                       ></NuxtLink
-                    >
+                    > */
 
                     <NuxtLink to="/about-us"
-                      ><Button class="w-full bg-primary/90 border-none"
+                      ><Button class="w-full border-none bg-primary/90"
                         >About Us</Button
                       ></NuxtLink
                     >
@@ -248,13 +268,8 @@ onMounted(() => {
     <slot></slot>
   </main>
   <footer class="relative bg-[#E7C531]">
-    <div class="bg-white ">
-      <nuxtImg
-        src="img/shapes/prefooter.png"
-        alt=""
-        class="w-full"
-        rcset=""
-      />
+    <div class="bg-white">
+      <nuxtImg src="img/shapes/prefooter.png" alt="" class="w-full" rcset="" />
     </div>
     <div
       class="container relative mx-auto my-auto text-center place-content-center md:text-start md:grid"

@@ -17,7 +17,7 @@ export const FooterLink = [
     data: [
       {
         text: "about Us",
-        to: "/",
+        to: "/about-us",
       },
       {
         text: "Terms",
@@ -25,7 +25,7 @@ export const FooterLink = [
       },
       {
         text: "Privacy Police",
-        to: "/",
+        to: "/privacy-police",
       },
     ],
   },

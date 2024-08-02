@@ -84,8 +84,8 @@ onMounted(() => {
       });
     
       accordionItems.value[0].datas = Languages;
-      accordionItems.value[1].datas = Certifications;
-      accordionItems.value[2].datas = Hobbies;
+      accordionItems.value[1].datas = Hobbies;
+      accordionItems.value[2].datas = Certifications;
       accordionItems.value[3].datas = Award;
     }
   

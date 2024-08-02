@@ -289,24 +289,26 @@ onMounted(() => {
     // A modifier
     const social = document.getElementById("social");
     if (social) {
-      var text = "";
-      if (etape4[2].data.length > 0) {
-        etape4[2].data.forEach((e) => {
-          text += `
-           <li>
-            <span class="icon" style="color: white;"><i class="fa fa-facebook"
-                                aria-hidden="true"></i></span>
-                        <span class="text">${e.title}</span>
-                    </li>`;
-        });
-        social.innerHTML = text;
-      } else {
-        const socialCadre = document.getElementById("social_cadre");
-        if (socialCadre) {
-          socialCadre.style.display = "none";
-        }
-        social.style.display = "none";
+      // social.style.display = "none"
+
+      // var text = "";
+      // if (etape4[2].data.length > 0) {
+      //   etape4[2].data.forEach((e) => {
+      //     text += `
+      //      <li>
+      //       <span class="icon" style="color: white;"><i class="fa fa-facebook"
+      //                           aria-hidden="true"></i></span>
+      //                   <span class="text">${e.title}</span>
+      //               </li>`;
+      //   });
+      //   social.innerHTML = text;
+      // } else {
+      const socialCadre = document.getElementById("social_cadre");
+      if (socialCadre) {
+        socialCadre.style.display = "none";
       }
+      //   social.style.display = "none";
+      // }
     }
 
     const resume = document.getElementById("resume");
@@ -357,7 +359,7 @@ onMounted(() => {
     const education = document.getElementById("education");
     if (education) {
       text = "";
-      console.log(etape2);
+      console.log(etape3);
       if (etape2[1].data.length > 0) {
         etape2[1].data.forEach((e) => {
           text += `
@@ -415,7 +417,7 @@ onMounted(() => {
         award.innerHTML += company.innerHTML;
         award.innerHTML += date.innerHTML;
       }
-      console.log(award.innerHTML);
+      
       etape3[3].data.forEach((e, index: number) => {
         if (index > 0) {
           if (company && title && date) {
@@ -478,11 +480,12 @@ onMounted(() => {
     const element = document.getElementById("content");
     const preview = document.getElementById("preview");
     if (element && preview) {
+      element.style.width = "827px";
       element.style.height = `${
-        Math.ceil(element.getBoundingClientRect().height / 1054.4889) *
-        1054.4889
+        Math.ceil(element.getBoundingClientRect().height / 1170.4889) *
+        1170.4889
       }px`;
-      if (Math.ceil(element.getBoundingClientRect().height / 1054.4889) > 1) {
+      if (Math.ceil(element.getBoundingClientRect().height / 1170.4889) > 1) {
         const hr = document.createElement("div");
         hr.style.position = "absolute";
         hr.style.transform = "translateY(-50%)";
@@ -496,7 +499,7 @@ onMounted(() => {
 
         hr.innerText =
           "Page " +
-          Math.ceil(element.getBoundingClientRect().height / 1054.4889);
+          Math.ceil(element.getBoundingClientRect().height / 1170.4889);
         preview.append(hr);
       }
     }
@@ -539,7 +542,7 @@ const reloadPage = () => {
   <section
     class="container grid min-h-screen grid-cols-4 gap-8 p-10 translate-x-1 max-sm:flex max-xl:flex-col"
   >
-    <div class="col-span-1">
+    <div class="col-span-1 ">
       <BuilderPreviewTools
         :templateId="route.params.id"
         :isEditedPage="false"

@@ -85,14 +85,14 @@ const experience_fields = [
       </div>
     </template>
     <div class="space-y-3">
-      <div class="flex items-center justify-between text-sm">
+      <!-- <div class="flex items-center justify-between text-sm">
         <span @click="">Forgoten password ?</span>
         <span>
           <Button as-child variant="link" class="p-0">
             <nuxt-link to="/"> Get it back. </nuxt-link>
           </Button>
         </span>
-      </div>
+      </div> -->
       <div class="w-full">
         <Button class="w-full">
           <Mail class="w-4 h-4 mr-2" /> Log in with Email

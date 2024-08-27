@@ -71,15 +71,25 @@ const socials = [
   },
 ];
 
-
 onMounted(() => {
   const header = document.querySelector(".header");
   window.addEventListener("scroll", () => {
+    const currentScroll = window.scrollY;
     if (header) {
-      if (header.clientTop !== 0) {
+      if (currentScroll > 100) {
         header.classList.add("shadow-md");
       } else {
         header.classList.remove("shadow-md");
+      }
+
+      if (currentScroll > 100) {
+        header.classList.add("sticky");
+        header.classList.add("bg-white");
+        header.classList.remove("bg-background");
+      } else {
+        header.classList.remove("sticky");
+        header.classList.add("bg-background");
+        header.classList.remove("bg-white");
       }
     }
   });
@@ -102,7 +112,7 @@ onMounted(() => {
 }
 </style>
 <template>
-  <header class="sticky top-0 z-50 bg-white shadow-md header bg-background">
+  <header class="top-0 z-50 shadow-md header">
     <div class="container mx-auto max-w-screen-2xl xl:p-0">
       <header class="flex items-center justify-between py-3">
         <div class="flex items-center flex-1 gap-6">
@@ -117,7 +127,7 @@ onMounted(() => {
           <div class="hidden menu md:flex">
             <ul class="flex items-center gap-6 font-semibold capitalize">
               <li v-for="link in HeaderLink">
-                <nuxt-link :to="link.to" class="hover:text-secondary">
+                <nuxt-link :to="link.to" class="text-sm hover:text-secondary">
                   {{ link.text }}
                 </nuxt-link>
               </li>
@@ -190,14 +200,14 @@ onMounted(() => {
               <Button variant="ternary" class="">Upgrade</Button>
             </nuxt-link> -->
           </template>
-         
+
           <DropdownMenu>
             <DropdownMenuTrigger as-child>
               <Button
                 variant="link"
                 class="!p-0 !text-start !no-underline text-forground"
               >
-              <Languages class="" />
+                <Languages class="" />
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent class="w-56 border-gray-200">
@@ -210,7 +220,6 @@ onMounted(() => {
                   <span>English</span>
                 </DropdownMenuItem>
               </DropdownMenuGroup>
-          
             </DropdownMenuContent>
           </DropdownMenu>
           <template v-if="!user">
@@ -242,11 +251,13 @@ onMounted(() => {
                       ></NuxtLink
                     >
 
-                    /* <NuxtLink to="/pricing"
+                    /*
+                    <NuxtLink to="/pricing"
                       ><Button class="w-full border-none bg-primary/90"
                         >Pricing</Button
                       ></NuxtLink
-                    > */
+                    >
+                    */
 
                     <NuxtLink to="/about-us"
                       ><Button class="w-full border-none bg-primary/90"
@@ -264,7 +275,7 @@ onMounted(() => {
       </header>
     </div>
   </header>
-  <main class="py-20">
+  <main>
     <slot></slot>
   </main>
   <footer class="relative bg-[#E7C531]">
@@ -281,33 +292,37 @@ onMounted(() => {
           alt=""
           srcset=""
         />
-        <p class="p-4 text-xl font-semibold text-black/50">
+        <p class="p-4 font-semibold lg:w-1/2 text-black/80">
           CV Pro includes a robust Translation Module designed to enhance
           accessibility and global reach for our users. This feature allows
           seamless translation of CV content between English and French,
           catering to diverse linguistic preferences and facilitating broader
-          career opportunities
+          career opportunities 
         </p>
       </div>
-
-      <div class="grid py-6 font-semibold capitalize gap-9 md:grid-cols-5">
+      <div class="grid py-6 font-semibold gap-9 md:grid-cols-5">
         <ul v-for="link in FooterLink">
-          <li class="mb-3 text-3xl font-bold">{{ link.title }}</li>
+          <li class="mb-3 text-xl font-bold capitalize">{{ link.title }}</li>
           <li v-for="item in link.data" class="pl-5 my-2">
-            <nuxt-link :to="item.to" class="hover:text-secondary">
+            <nuxt-link :to="item.to" class="text-sm hover:text-secondary">
               {{ item.text }}
             </nuxt-link>
           </li>
         </ul>
-        <div>
-          <img src="assets/img/logo-footer.png" alt="" />
+        <div class="absolute top-0 right-0 transition-all translate-x-0 translate-y-32 opacity-15 lg:opacity-80">
+          <img src="assets/img/logo-footer.png"  alt="" />
         </div>
       </div>
-      <div class="my-5 p-0.5 rounded-full bg-[#1E1E1E]"></div>
-      <div class="flex flex-wrap gap-6 md:gap-20 place-content-center">
-        <nuxt-link v-for="img in socials" :href="img.url" :title="img.title">
-          <nuxt-img class="size-10" :src="img.img" :alt="img.title" />
-        </nuxt-link>
+      <h5 class="my-4 font-medium text-center text-stone-700">
+        Follow us on social media
+      </h5>
+      <hr class="mb-5 border-2 rounded-full border-stone-900" />
+      <div>
+        <div class="flex flex-wrap gap-6 md:gap-10 place-content-center">
+          <nuxt-link v-for="img in socials" :href="img.url" :title="img.title">
+            <nuxt-img class="size-10" :src="img.img" :alt="img.title" />
+          </nuxt-link>
+        </div>
       </div>
       <div>
         <img

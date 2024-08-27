@@ -11,10 +11,18 @@ import {
 } from "@/components/ui/dialog";
 import { RefreshCcwIcon } from "lucide-vue-next";
 const BASE_URL = useRuntimeConfig().public.backendAPI;
+useHead({
+  title: "Templates - CV PRO",
+  meta: [
+    {
+      name: "description",
+      content: "Our template models",
+    },
+  ],
+});
 
 const preventClose = (event: any) => {
   event.preventDefault();
-  console.log("ca marche !", event);
 };
 const aggred = ref(userAggreedPrivacies());
 
@@ -27,7 +35,6 @@ const { data, pending, error, refresh } = await useAsyncData<any>(
   () => $fetch(`${BASE_URL}templates/get/all`)
 );
 console.log(data);
-
 </script>
 <template>
   <Dialog :defaultOpen="!aggred">
@@ -119,7 +126,7 @@ console.log(data);
           <p>
             When required by law or in response to a valid legal request, such
             as a court order or subpoena. With your consent or at your
-            direction.
+            divection.
           </p>
           <h4>Data Security</h4>
 
@@ -174,99 +181,109 @@ console.log(data);
       </DialogFooter>
     </DialogContent>
   </Dialog>
-  <section class="bg-background">
-    <div
-      v-if="data"
-      class="container grid gap-10 py-10 md:grid-cols-2 lg:grid-cols-3 md:gap-10 md:py-20"
-    >
-      <Dialog v-for="template in data?.templates" href="/">
-        <DialogTrigger as-child>
-          <div
-            variant="outline"
-            class="transition-shadow duration-300 bg-white shadow-md cursor-pointer shadow-black/20 rounded-2xl overflow-clip hover:shadow-black/40 hover:shadow-2xl"
-          >
-            <DialogContent
-              class="sm:max-w-[425px] lg:max-w-4xl grid-rows-[auto_minmax(0,1fr)_auto] p-0 max-h-[80dvh]"
+  <section class="pt-20 bg-stone-50">
+    <h2 class="text-3xl font-semibold text-center">Our CV templates</h2>
+    <p class="text-center">Choose from our professional models</p>
+    <div class="container py-10 md:py-20">
+      <div class="mb-2">
+        <Button size="sm">with image</Button>
+        <Button class="mx-2"variant="outline" size="sm">without image</Button>
+      </div>
+      <div
+        v-if="data"
+        class="grid gap-10 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 md:gap-10"
+      >
+        <Dialog v-for="template in data?.templates" href="/">
+          <DialogTrigger as-child>
+            <div
+              variant="outline"
+              class="transition-shadow duration-300 bg-white shadow-md cursor-pointer shadow-black/20 rounded-2xl overflow-clip hover:shadow-black/40 hover:shadow-2xl"
             >
-              <div class="flex flex-col gap-4 px-6 py-4 overflow-y-auto lg:grid md:grid-cols-2">
-                <div class="col-span-1">
-                  <div class="aspect-[210/297]">
-                    <nuxt-img
-                      :src="'https://' + template.templateImagePath"
-                      class="w-full h-full object-content"
-                    />
+              <DialogContent
+                class="sm:max-w-[425px] lg:max-w-4xl grid-rows-[auto_minmax(0,1fr)_auto] p-0 max-h-[80dvh]"
+              >
+                <div
+                  class="flex flex-col gap-4 px-6 py-4 overflow-y-auto lg:grid md:grid-cols-2"
+                >
+                  <div class="col-span-1">
+                    <div class="aspect-[210/297]">
+                      <nuxt-img
+                        :src="'https://' + template.templateImagePath"
+                        class="w-full h-full object-content"
+                      />
+                    </div>
+                  </div>
+                  <div class="flex flex-col justify-between p-8">
+                    <div>
+                      <h2
+                        class="mb-4 text-3xl font-bold capitalize text-secondary"
+                      >
+                        {{ template.name }}
+                      </h2>
+                      <p class="mb-2" v-html="template.description"></p>
+                    </div>
+                    <div class="flex justify-end gap-4 mt-3">
+                      <nuxt-link
+                        class="flex-1"
+                        disabled
+                        :to="{
+                          name: 'templates-template-id',
+                          params: { id: template.templateId },
+                        }"
+                      >
+                        <Button type="submit" variant="outline" class="w-full">
+                          See in preview
+                        </Button>
+                      </nuxt-link>
+                      <nuxt-link
+                        class="flex-1"
+                        :to="{
+                          name: `app-cv-builder-step-id`,
+                          params: { id: 1 },
+                          query: { template_id: template.templateId },
+                        }"
+                      >
+                        <Button type="submit" class="w-full">
+                          Use this template
+                        </Button>
+                      </nuxt-link>
+                    </div>
                   </div>
                 </div>
-                <div class="flex flex-col justify-between p-8">
-                  <div>
-                    <h2
-                      class="mb-4 text-3xl font-bold capitalize text-secondary"
-                    >
-                      {{ template.name }}
-                    </h2>
-                    <p class="mb-2" v-html="template.description"></p>
-                  </div>
-                  <div class="flex justify-end gap-4 mt-3">
-                    <nuxt-link
-                      class="flex-1"
-                      disabled
-                      :to="{
-                        name: 'templates-template-id',
-                        params: { id: template.templateId },
-                      }"
-                    >
-                      <Button type="submit" variant="outline" class="w-full">
-                        See in preview
-                      </Button>
-                    </nuxt-link>
-                    <nuxt-link
-                      class="flex-1"
-                      :to="{
-                        name: `app-cv-builder-step-id`,
-                        params: { id: 1 },
-                        query: { template_id: template.templateId },
-                      }"
-                    >
-                      <Button type="submit" class="w-full">
-                        Use this template
-                      </Button>
-                    </nuxt-link>
-                  </div>
-                </div>
-              </div>
-            </DialogContent>
-            <div class="aspect-[210/207]">
+              </DialogContent>
               <nuxt-img
                 :src="'https://' + template.templateImagePath"
-                style="width: fit-content"
-                class="object-cover w-full h-full m-auto bg-contain"
+                style=""
+                class="w-full m-auto"
               />
+              <div class="h-full p-6 bg-stone-50">
+                <h2
+                  class="mb-2 text-xl font-semibold capitalize text-secondary"
+                >
+                  {{ template.name }}
+                </h2>
+                <p class="text-sm line-clamp-3">{{ template.description }}</p>
+              </div>
             </div>
-            <div class="p-6 bg-slate-200">
-              <h2 class="mb-2 text-xl font-semibold capitalize text-secondary">
-                {{ template.name }}
-              </h2>
-              <p class="text-sm line-clamp-3">{{ template.description }}</p>
-            </div>
+          </DialogTrigger>
+        </Dialog>
+      </div>
+      <div
+        v-else-if="error"
+        class="container flex py-4 text-2xl font-semibold text-center align-middle min-h-96"
+      >
+        No data yet
+      </div>
+      <div v-else>
+        <h3 class="text-2xl font-semibold">Is loading</h3>
+        <div class="grid gap-4 px-6 py-4 overflow-y-auto md:grid-cols-4">
+          <div
+            v-for="i of 4"
+            :key="i"
+            class="col-span-1 transition-all card is-loading h-96 hover:shadow-lg"
+          >
+            <div class="content"></div>
           </div>
-        </DialogTrigger>
-      </Dialog>
-    </div>
-    <div
-      v-else-if="error"
-      class="container flex py-4 text-2xl font-semibold text-center align-middle min-h-96"
-    >
-      No data yet
-    </div>
-    <div v-else>
-      <h3 class="text-2xl font-semibold">Is loading</h3>
-      <div class="grid gap-4 px-6 py-4 overflow-y-auto md:grid-cols-4">
-        <div
-          v-for="i of 4"
-          :key="i"
-          class="col-span-1 transition-all card is-loading h-96 hover:shadow-lg"
-        >
-          <div class="content"></div>
         </div>
       </div>
     </div>

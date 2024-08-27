@@ -4,32 +4,35 @@ import { ArrowLeft } from "lucide-vue-next";
 </script>
 
 <template>
-  <div class="min-h- overflow-auto text-white flex flex-col">
+  <div class="flex flex-col overflow-auto text-white min-h-">
     <header
-      class="z-10 sticky top-0 bg-gradient-to-l from-[#4E0F1F] to-[#B04964]"
+      class="z-10 sticky top-0 bg-gradient-to-l  from-[#4E0F1F] to-[#B04964]"
     >
-      <div class="container max-w-screen-2xl mx-auto">
-        <header class="flex justify- items-center py-3">
+      <div class="container mx-auto max-w-screen-2xl">
+        <header class="flex items-center py-3 justify-">
           <Button
             variant="outline"
             @click="$router.back()"
-            class="rounded-full space-x-2"
+            class="space-x-2 rounded-full"
           >
             <ArrowLeft />
             <span class="font-bold">Back</span>
           </Button>
-          <div class="flex-1">
+          <div class="flex-1 pt-10">
+            
+            <div
+              class="mt-3 text-center -translate-x-[25%] w-fit mx-auto "
+            >
             <nuxtImg
-              class="w-[60px] mx-auto -translate-x-[50%]"
+              class="w-[60px] mx-auto "
               src="img/logo-dark-theme.svg"
               alt=""
               srcset=""
             />
-            <h2
-              class="mt-3 text-center text-2xl -translate-x-[25%] w-fit mx-auto font-bold"
-            >
-              Choose a plan
-            </h2>
+              <div class="text-2xl font-bold">Choose a plan</div>
+              <div class="mt-5">⚠️ No automatic renewal ⚠️</div>
+            </div>
+        
           </div>
         </header>
       </div>

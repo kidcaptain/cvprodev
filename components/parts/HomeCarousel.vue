@@ -44,11 +44,11 @@ const { data, pending, error, refresh } = await useAsyncData(
     <Carousel class="relative w-full mx-auto" :opts="{ loop: true, }" @init-api="setApi" :plugins="[plugin]"
         @mouseenter="plugin.stop" @mouseleave="[plugin.reset(), plugin.play()];">
         <CarouselContent>
-            <CarouselItem class="md:basis-1/3" v-for="(template, index) in  data?.templates" :key="index">
+            <CarouselItem class="md:basis-1/4" v-for="(template, index) in  data?.templates" :key="index">
                 <div class="p-5 px-0">
                     <div class="transition-transform duration-500 rounded-lg shadow-lg templ group"
                         :class="index != 0 ? 'scale-75' : ''">
-                        <div class="flex md:aspect-[210/297] items-center justify-center p-0 border-none relative">
+                        <div class="flex w-full items-center justify-center p-0 border-none relative">
                             <nuxt-img class="object-cover w-full h-full " :src="'https://'+template.templateImagePath "
                                 :placeholder="[50, 25]" alt="" />
                             <div

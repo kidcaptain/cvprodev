@@ -79,8 +79,8 @@ const stop = watch(api, (api) => {
 
 <template>
     <section class="min-h-dvh my-28 md:my-0">
-        <div class="container md:flex items-center" :class="` ${reverse ? 'flex-row-reverse' : ''} `">
-            <div class=" flex-1 md:mx-12  overflow-clip shadow-xl bg-background w-full">
+        <div class="container md:flex gap-24 items-center" :class="` ${reverse ? 'flex-row-reverse' : ''} `">
+            <div class=" flex-1 md:mx-12  overflow-clip w-full">
                 <div v-if="img" class="aspect-[4/3] rounded-3xl ">
                     <nuxt-img class="w-full h-full" :src="img || ''" :placeholder="[50, 25]" alt="" />
                 </div>

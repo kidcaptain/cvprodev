@@ -10,18 +10,9 @@ export const FooterLink = [
         text: "Templates",
         to: "/",
       },
-    ],
-  },
-  {
-    title: "A propos",
-    data: [
       {
         text: "about Us",
         to: "/about-us",
-      },
-      {
-        text: "Terms",
-        to: "/templates",
       },
       {
         text: "Privacy Police",
@@ -55,6 +46,10 @@ export const HeaderLink = [
   {
     text: "Templates",
     to: "/templates",
+  },
+  {
+    text: "Pricings",
+    to: "/pricing",
   },
   {
     text: "About Us",

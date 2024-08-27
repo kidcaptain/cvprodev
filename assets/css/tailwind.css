@@ -36,7 +36,9 @@
   }
   
 .container {
-  @apply max-w-4xl xl:max-w-6xl 2xl:max-w-7xl
+  /* @apply max-w-4xl xl:max-w-6xl 2xl:max-w-7xl */
+  max-width: 896px;
+
 }
 @layer base {
   * {
@@ -44,6 +46,28 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+@media (min-width: 1280px)
+{
+  .container{
+    max-width: 1152px;
+  }
+}
+
+
+@media (min-width: 1536px)
+{
+  .container{
+    max-width: 1280px;
+  }
+}
+
+@media (min-width: 1800px)
+{
+  .container{
+    max-width: 1358px;
   }
 }
 

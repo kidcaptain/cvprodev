@@ -5,7 +5,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-
+import { useRoute as useNativeRoute } from "vue-router";
 import { ArrowRight, ArrowLeft, Trash, Edit } from "lucide-vue-next";
 import { useForm } from "vee-validate";
 import { toTypedSchema } from "@vee-validate/zod";
@@ -18,7 +18,9 @@ import Education from "@/components/builder/sub-forms/Education.vue";
 const emit = defineEmits(["submit"]);
 
 const { handleSubmit } = useForm({});
-
+useHead({
+  title: "Create CV Step2 - CV PRO",
+});
 const onSubmit = handleSubmit(() => {
   const values: any[] = [];
   accordionItems.value.forEach((element) => {
@@ -31,52 +33,71 @@ const onSubmit = handleSubmit(() => {
   window.localStorage.setItem("step_2", JSON.stringify(values));
   emit("submit");
 });
-onMounted(() => {
-    const step2 = window.localStorage.getItem("step_2");
-    console.log(step2)
-    if (step2) {
-      const etape2: {
-        title: string;
-        data: {
-          title: string;
-          company: string;
-          start_date: string;
-          end_date: string;
-          experience: string;
-          grade: string;
-          type: string;
-          professionalTasksPerformed: string;
-          jobTitle: string;
-          startDate: string;
-          endDate: string;
-        }[];
-      }[] = JSON.parse(`${step2}`);
-      var education :  any[]= [];
-      var professional :  any[]= [];
-      var experience :  any[]= [];
-      var personal :  any[]= [];
-      etape2.forEach((element) => {
-        if (element.title == "EDUCATION") {
-          education = element.data;
-        }
-        if (element.title == "PROFESSIONAL EXPERIENCE") {
-          experience = element.data;
-        }
-        if (element.title == "PROFESSIONAL SKILLS") {
-          professional = element.data;
-        }
-        if (element.title == "PERSONAL SKILLS") {
-          personal = element.data;
-        } 
-      });
-    
-      itemsEditable.value = experience;
-      accordionItems.value[1].datas = education;
-      accordionItems.value[2].datas = personal;
-      accordionItems.value[3].datas = professional;
+const route = useNativeRoute();
+
+const router = useRouter();
+const template = route.query.template_id;
+
+const showPreview = () => {
+  const values: any[] = [];
+  accordionItems.value.forEach((element) => {
+    if (element.title == "PROFESSIONAL EXPERIENCE") {
+      element.datas = itemsEditable.value;
     }
-  
+    values.push({ title: element.title, data: element.datas });
   });
+  // console.log(values);
+  window.localStorage.setItem("step_2", JSON.stringify(values));
+  router.push({
+    name: "app-cv-builder-preview-id",
+    params: { id: template?.toString() },
+  });
+};
+onMounted(() => {
+  const step2 = window.localStorage.getItem("step_2");
+  console.log(step2);
+  if (step2) {
+    const etape2: {
+      title: string;
+      data: {
+        title: string;
+        company: string;
+        start_date: string;
+        end_date: string;
+        experience: string;
+        grade: string;
+        type: string;
+        professionalTasksPerformed: string;
+        jobTitle: string;
+        startDate: string;
+        endDate: string;
+      }[];
+    }[] = JSON.parse(`${step2}`);
+    var education: any[] = [];
+    var professional: any[] = [];
+    var experience: any[] = [];
+    var personal: any[] = [];
+    etape2.forEach((element) => {
+      if (element.title == "EDUCATION") {
+        education = element.data;
+      }
+      if (element.title == "PROFESSIONAL EXPERIENCE") {
+        experience = element.data;
+      }
+      if (element.title == "PROFESSIONAL SKILLS") {
+        professional = element.data;
+      }
+      if (element.title == "PERSONAL SKILLS") {
+        personal = element.data;
+      }
+    });
+
+    itemsEditable.value = experience;
+    accordionItems.value[1].datas = education;
+    accordionItems.value[2].datas = personal;
+    accordionItems.value[3].datas = professional;
+  }
+});
 const onEdit = (e: Event) => {
   e.preventDefault();
   const data = {
@@ -86,7 +107,7 @@ const onEdit = (e: Event) => {
     endDate: endDate.value,
     professionalTasksPerformed: professionalTasksPerformed.value,
   };
- 
+
   var tab: any[] = itemsEditable.value;
   tab[itemEditable.value] = data;
   itemsEditable.value = tab;
@@ -158,10 +179,19 @@ const editSave = (item: any, index: number) => {
 
 <template>
   <div class="">
-    <form @submit="onSubmit" class="text-foreground">
+    <form @submit="onSubmit" class="relative text-foreground">
+      <Button
+        @click="showPreview"
+        type="button"
+        class="absolute top-0 right-0 text-lg bg-white rounded-full shadow-sm shadow-primary/20 text-primary"
+        variant="ghost"
+        size="sm"
+      >
+        Preview
+      </Button>
       <Accordion
         type="single"
-        class="w-full"
+        class="w-full pt-5"
         collapsible
         :default-value="defaultValue"
       >
@@ -326,7 +356,7 @@ const editSave = (item: any, index: number) => {
     </form>
     <div
       v-if="booll"
-      class="fixed top-0 left-0 flex items-end justify-center w-full h-full md:items-center bg-black/20"
+      class="fixed top-0 left-0 z-20 flex items-end justify-center w-full h-full md:items-center bg-black/20"
     >
       <div
         class="z-50 w-full p-5 mt-10 overflow-hidden bg-white rounded-md md:w-1/3 md:p-10"

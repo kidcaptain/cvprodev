@@ -19,12 +19,12 @@ const resolveComponent = () => {
   if (id == 1) return BuilderStep1;
   if (id == 2) return BuilderStep2;
   if (id == 3) return BuilderStep3;
-  if (id == 4) return BuilderStep4;
+  // if (id == 4) return BuilderStep4;
 };
 
 const formSubmission = (event: any) => {
   console.log(route.query.template_id);
-  if (id + 1 == 5) {
+  if (id + 1 == 4) {
    
     router.push({
       name: "app-cv-builder-preview-id",

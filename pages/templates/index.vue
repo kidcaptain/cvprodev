@@ -29,7 +29,7 @@ const aggred = ref(userAggreedPrivacies());
 const sumbitAggrement = () => {
   setPrivaciesAggrement(aggred.value);
 };
-
+const checkImage = ref(true);
 const { data, pending, error, refresh } = await useAsyncData<any>(
   "cv-templates-list",
   () => $fetch(`${BASE_URL}templates/get/all`)
@@ -186,11 +186,11 @@ console.log(data);
     <p class="text-center">Choose from our professional models</p>
     <div class="container py-10 md:py-20">
       <div class="mb-2">
-        <Button size="sm">with image</Button>
-        <Button class="mx-2"variant="outline" size="sm">without image</Button>
+        <Button @click="checkImage = true" size="sm">with image</Button>
+        <Button @click="checkImage = false" class="mx-2"variant="outline" size="sm">without image</Button>
       </div>
       <div
-        v-if="data"
+        v-if="data && checkImage"
         class="grid gap-10 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 md:gap-10"
       >
         <Dialog v-for="template in data?.templates" href="/">
@@ -223,18 +223,7 @@ console.log(data);
                       <p class="mb-2" v-html="template.description"></p>
                     </div>
                     <div class="flex justify-end gap-4 mt-3">
-                      <nuxt-link
-                        class="flex-1"
-                        disabled
-                        :to="{
-                          name: 'templates-template-id',
-                          params: { id: template.templateId },
-                        }"
-                      >
-                        <Button type="submit" variant="outline" class="w-full">
-                          See in preview
-                        </Button>
-                      </nuxt-link>
+                     
                       <nuxt-link
                         class="flex-1"
                         :to="{

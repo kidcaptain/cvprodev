@@ -81,7 +81,6 @@ onMounted(() => {
       } else {
         header.classList.remove("shadow-md");
       }
-
       if (currentScroll > 100) {
         header.classList.add("sticky");
         header.classList.add("bg-white");

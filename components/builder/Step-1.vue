@@ -3,18 +3,17 @@ import { ArrowRight, Camera } from "lucide-vue-next";
 import { useForm } from "vee-validate";
 import { toTypedSchema } from "@vee-validate/zod";
 import { Separator } from "@/components/ui/separator";
+import { useRoute as useNativeRoute } from "vue-router";
 import { Textarea } from "@/components/ui/textarea";
 import axios from "axios";
 import * as z from "zod";
 
-const formSchema = toTypedSchema(
-  z.object({
-
-  })
-);
+const formSchema = toTypedSchema(z.object({}));
 
 const emit = defineEmits(["submit"]);
-
+useHead({
+  title: "Create CV Step1 - CV PRO",
+});
 const { handleSubmit } = useForm({
   validationSchema: formSchema,
 });
@@ -48,13 +47,14 @@ onMounted(() => {
     (document.getElementById("objectif") as HTMLInputElement).value =
       etape1.objective;
   }
-  const input = (document.getElementById("firstname") as HTMLInputElement);
+  const input = document.getElementById("firstname") as HTMLInputElement;
   if (input) {
     input.focus();
   }
 });
 const onSubmit = handleSubmit((e: any) => {
-  const firstname = (document.getElementById("firstname") as HTMLInputElement).value;
+  const firstname = (document.getElementById("firstname") as HTMLInputElement)
+    .value;
   const lastname = (document.getElementById("lastname") as HTMLInputElement)
     .value;
   const title = (document.getElementById("title") as HTMLInputElement).value;
@@ -110,6 +110,7 @@ const filename = ref("");
 
 //   return { data: dataURL, date: todaysDate };
 // }
+const imageSelected = ref(false);
 async function uploadImage(e: any) {
   let fl_files = e.target.files;
   let fl_file = fl_files[0];
@@ -123,9 +124,68 @@ async function uploadImage(e: any) {
       window.localStorage.setItem("profileimage", reader.result as string);
     });
     reader.readAsDataURL(fl_file);
+    imageSelected.value = true;
   }
 }
 
+const destroyImage = () => {
+  const upload_file = document.getElementById("upload_file");
+  const upload_file_2 = document.getElementById("upload_file_2");
+  const avatar = document.getElementById("avatar");
+  if (upload_file && avatar && upload_file_2) {
+    (upload_file as any).src = (upload_file_2 as any).src;
+    (avatar as any).value = null;
+    imageSelected.value = false;
+    window.URL.revokeObjectURL("");
+  }
+};
+const route = useNativeRoute();
+
+const router = useRouter();
+const template = route.query.template_id;
+
+const showPreview = () => {
+  const firstname = (document.getElementById("firstname") as HTMLInputElement)
+    .value;
+  const lastname = (document.getElementById("lastname") as HTMLInputElement)
+    .value;
+  const title = (document.getElementById("title") as HTMLInputElement).value;
+  const yearOfExperience = (
+    document.getElementById("yearOfExperience") as HTMLInputElement
+  ).value;
+  const address = (document.getElementById("address") as HTMLInputElement)
+    .value;
+  const phone = (document.getElementById("phone") as HTMLInputElement).value;
+  const email = (document.getElementById("email") as HTMLInputElement).value;
+  const website = (document.getElementById("website") as HTMLInputElement)
+    .value;
+  const objective = (document.getElementById("objectif") as HTMLTextAreaElement)
+    .value;
+  const identifiant = (
+    document.getElementById("identifiant") as HTMLSelectElement
+  ).value;
+
+  const value = {
+    firstname: firstname,
+    lastname: lastname,
+    title: title,
+    yearOfExperience: yearOfExperience,
+    address: address,
+    phone: phone == "" ? "" : identifiant + " " + phone,
+    email: email,
+    website: website,
+    objective: objective,
+  };
+  window.localStorage.setItem("step_1", JSON.stringify(value));
+  // values.phone = phone + " " + values.phone;
+  if (filename.value) {
+    window.URL.revokeObjectURL(filename.value);
+  }
+  router.push({
+    name: "app-cv-builder-preview-id",
+    params: { id: template?.toString() },
+  });
+};
 const phone = ref();
 </script>
 
@@ -133,8 +193,17 @@ const phone = ref();
   <form
     @submit="onSubmit"
     enctype="multipart/form-data"
-    class="text-foreground"
+    class="relative text-foreground"
   >
+    <Button
+      @click="showPreview"
+      type="button"
+      class="absolute right-0 text-lg bg-white rounded-full shadow-sm shadow-primary/20 text-primary"
+      variant="ghost"
+      size="sm"
+    >
+      Preview
+    </Button>
     <div class="mx-auto w-00">
       <label for="avatar" class="mx-auto w-fit">
         <div
@@ -149,6 +218,13 @@ const phone = ref();
             id="upload_file"
             srcset=""
           />
+          <img
+            src="/assets/img/pics/placeholder.png"
+            class="hidden w-full h-full bg-contain"
+            alt=""
+            id="upload_file_2"
+            srcset=""
+          />
         </div>
       </label>
       <Input
@@ -159,6 +235,15 @@ const phone = ref();
         class="m-auto w-fit"
         @change="uploadImage"
       />
+      <div v-if="imageSelected" class="flex justify-center">
+        <button
+          type="button"
+          @click="destroyImage"
+          class="p-2 m-auto font-semibold text-red-600 w-fit"
+        >
+          Supprimer
+        </button>
+      </div>
     </div>
     <div class="my-6 space-y-6 md:grid md:grid-cols-2 md:gap-6 md:space-y-0">
       <!--      
@@ -169,7 +254,9 @@ const phone = ref();
       <!--    -->
       <FormField v-slot="{ componentField }" name="firstname">
         <FormItem>
-          <label>First Name</label>
+          <label title="required"
+            >First Name <span class="text-red-500">*</span></label
+          >
           <FormControl>
             <Input
               type="text"
@@ -184,7 +271,9 @@ const phone = ref();
       </FormField>
       <FormField v-slot="{ componentField }" name="lastname">
         <FormItem>
-          <label>Last Name</label>
+          <label title="required"
+            >Last Name <span class="text-red-500">*</span></label
+          >
           <FormControl>
             <Input
               type="text"
@@ -199,7 +288,9 @@ const phone = ref();
       </FormField>
       <FormField v-slot="{ componentField }" name="title">
         <FormItem>
-          <label>Title</label>
+          <label title="required"
+            >Title <span class="text-red-500">*</span></label
+          >
           <FormControl>
             <Input
               id="title"
@@ -213,7 +304,9 @@ const phone = ref();
       </FormField>
       <FormField v-slot="{ componentField }" name="experience">
         <FormItem>
-          <label>Years of experience</label>
+          <label title="required"
+            >Years of experience <span class="text-red-500">*</span></label
+          >
           <FormControl>
             <Input
               type="number"
@@ -241,43 +334,33 @@ const phone = ref();
         </FormItem>
       </FormField>
       <div>
-        <label for="" class="text-sm font-semibold">Phone Number</label>
-        <div class="flex items-center gap-2 mt-2">
-          <FormField class="basis-1/4" name="identifiant">
-            <FormItem>
-              <FormControl>
-                <div class="flex items-center gap-2">
-                  <select
-                    v-bind="phone"
-                    name="identifiant"
-                    id="identifiant"
-                    class="py-2 text-white rounded-md bg-primary"
-                  >
-                  <option value="+213">+213 ALGERIA</option>
-                  <option value="+244">+244 ANGOLA</option>
-                  <option value="+297">+297 ARUBA</option>
-                  <option value="+267">+267 BOTSWANA</option>
-                  <option value="+226">+226 BURKINA FASO</option>
-                  <option value="+257">+257 BURUNDI</option>
-                  <option value="+238">+238 CAPE VERDE</option>
-                  <option value="+236">+236 CENTRAL AFRICAN REPUBLIC</option>
-                  <option value="+235">+235 CHAD</option>
-                  <option value="+269">+269 COMOROS</option>
-                  <option value="+242">+242 CONGO</option>
-                  <option value="+225">+225 COTE D'IVOIRE</option>
-                    <option selected value="+237">+237 CAMEROON</option>
-                    
-                  </select>
-                </div>
-              </FormControl>
-            </FormItem>
-          </FormField>
-          <FormField
-            v-slot="{ componentField }"
-            class="basis-full"
-            name="phone"
+        <label for="" class="text-sm font-semibold" title="required"
+          >Phone Number <span class="text-red-500">*</span></label
+        >
+        <div class="flex items-center grid-cols-2 gap-2 mt-2">
+          <select
+            v-bind="phone"
+            name="identifiant"
+            style="width: 100px"
+            id="identifiant"
+            class="py-2 text-white rounded-md bg-primary"
           >
-            <FormItem>
+            <option value="+213">+213</option>
+            <option value="+244">+244</option>
+            <option value="+297">+297</option>
+            <option value="+267">+267</option>
+            <option value="+226">+226</option>
+            <option value="+257">+257</option>
+            <option value="+238">+238</option>
+            <option value="+236">+236</option>
+            <option value="+235">+235</option>
+            <option value="+269">+269</option>
+            <option value="+242">+242</option>
+            <option value="+225">+225</option>
+            <option selected value="+237">+237</option>
+          </select>
+          <FormField v-slot="{ componentField }" class="w-96" name="phone">
+            <FormItem class="w-96">
               <FormControl>
                 <Input
                   id="phone"
@@ -294,7 +377,7 @@ const phone = ref();
       </div>
       <FormField v-slot="{ componentField }" name="email">
         <FormItem>
-          <label>Email</label>
+          <label>Email Address</label>
           <FormControl>
             <Input type="text" id="email" v-bind="componentField" />
           </FormControl>
@@ -303,7 +386,7 @@ const phone = ref();
       </FormField>
       <FormField v-slot="{ componentField }" name="website">
         <FormItem>
-          <label>Website</label>
+          <label title="facultatif">Website (<span class="text-xs text-red-400">facultatif</span>)</label>
           <FormControl>
             <Input
               type="text"

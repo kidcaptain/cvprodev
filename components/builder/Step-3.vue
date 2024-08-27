@@ -14,17 +14,27 @@ import Certifications from "@/components/builder/sub-forms/Certifications.vue";
 import Hobbies from "@/components/builder/sub-forms/Hobbies.vue";
 import Languages from "@/components/builder/sub-forms/Languages.vue";
 import Award from "./sub-forms/Award.vue";
+import Project from "@/components/builder/sub-forms/Project.vue";
+import References from "@/components/builder/sub-forms/References.vue";
+import Network from "./sub-forms/Network.vue";
 
 const { handleSubmit } = useForm({});
 
 const emit = defineEmits(["submit"]);
-
+useHead({
+  title: "Create CV Step3 - CV PRO",
+});
 const onSubmit = handleSubmit(() => {
   const values: any[] = [];
-  accordionItems.value.forEach((element) => {
+  const values2: any[] = [];
+  accordionItems.value.forEach((element, index) => {
     values.push({ title: element.title, data: element.datas });
+    if(index > 4){
+      values2.push({ title: element.title, data: element.datas });
+    }
   });
   window.localStorage.setItem("step_3", JSON.stringify(values));
+  window.localStorage.setItem("step_4", JSON.stringify(values2));
   emit("submit");
 });
 
@@ -55,51 +65,103 @@ const accordionItems = ref([
     datas: Array<any>(),
     form: Award,
   },
+  {
+    value: "item-5",
+    title: "REFEREnces",
+    datas: Array<any>(),
+    form: References,
+  },
+  {
+    value: "item-6",
+    title: "Project",
+    datas: Array<any>(),
+    form: Project,
+  },
+  {
+    value: "item-7",
+    title: "Social network",
+    datas: Array<any>(),
+    form: Network,
+  },
 ]);
+
 onMounted(() => {
-    const step3 = window.localStorage.getItem("step_3");
-    console.log(step3)
-    if (step3) {
-      const etape2: {
-        title: string;
-        data: any[];
-      }[] = JSON.parse(`${step3}`);
-      var Languages :  any[]= [];
-      var Certifications :  any[]= [];
-      var Hobbies :  any[]= [];
-      var Award :  any[]= [];
-      etape2.forEach((element) => {
-        if (element.title == "Language") {
-          Languages = element.data;
-        }
-        if (element.title == "Hobbies and interests") {
-          Hobbies = element.data;
-        }
-        if (element.title == "Certifications") {
-          Certifications = element.data;
-        }
-        if (element.title == "AWARDS & HONORS") {
-          Award = element.data;
-        } 
-      });
-    
-      accordionItems.value[0].datas = Languages;
-      accordionItems.value[1].datas = Hobbies;
-      accordionItems.value[2].datas = Certifications;
-      accordionItems.value[3].datas = Award;
-    }
-  
-  });
+  const step3 = window.localStorage.getItem("step_3");
+  console.log(step3);
+  if (step3) {
+    const etape2: {
+      title: string;
+      data: any[];
+    }[] = JSON.parse(`${step3}`);
+    var Languages: any[] = [];
+    var Certifications: any[] = [];
+    var Hobbies: any[] = [];
+    var Award: any[] = [];
+    etape2.forEach((element) => {
+      if (element.title == "Language") {
+        Languages = element.data;
+      }
+      if (element.title == "Hobbies and interests") {
+        Hobbies = element.data;
+      }
+      if (element.title == "Certifications") {
+        Certifications = element.data;
+      }
+      if (element.title == "AWARDS & HONORS") {
+        Award = element.data;
+      }
+    });
+
+    accordionItems.value[0].datas = Languages;
+    accordionItems.value[1].datas = Hobbies;
+    accordionItems.value[2].datas = Certifications;
+    accordionItems.value[3].datas = Award;
+  }
+  const step4 = window.localStorage.getItem("step_4");
+  console.log(step4);
+  if (step4) {
+    const etape4: {
+      title: string;
+      data: any[];
+    }[] = JSON.parse(`${step4}`);
+    var references: any[] = [];
+    var project: any[] = [];
+    var network: any[] = [];
+
+    etape4.forEach((element) => {
+      if (element.title == "REFEREnces") {
+        references = element.data;
+      }
+      if (element.title == "Social network") {
+        network = element.data;
+      }
+      if (element.title == "Project") {
+        project = element.data;
+      }
+    });
+    accordionItems.value[0].datas = references;
+    accordionItems.value[1].datas = project;
+    accordionItems.value[2].datas = network;
+  }
+});
 const removeSaved = (item: number, index: number) => {
   accordionItems.value[item]?.datas.splice(index, 1);
 };
 </script>
 
 <template>
-  <form @submit="onSubmit" class="text-foreground">
+  <form @submit="onSubmit" class="relative text-foreground">
+    <Button
+      
+        class="absolute top-0 right-0 text-lg bg-white rounded-full shadow-sm shadow-primary/20 text-primary"
+        variant="ghost"
+        size="sm"
+      >
+        Preview
+      </Button>
     <Accordion
       type="single"
-      class="w-full"
+      class="w-full pt-8"
       collapsible
       :default-value="defaultValue"
     >
@@ -169,10 +231,8 @@ const removeSaved = (item: number, index: number) => {
                     "
                     class="border-secondary/50"
                   >
-                    <span class="font-semibold">
-                      Period:</span
-                    >
-                    {{ save.start_date }} /  {{ save.end_date }}
+                    <span class="font-semibold"> Period:</span>
+                    {{ save.start_date }} / {{ save.end_date }}
                   </h3>
                   <!-- <div
                     :class="
@@ -202,9 +262,7 @@ const removeSaved = (item: number, index: number) => {
                     "
                     class="border-secondary/50"
                   >
-                    <span class="font-semibold">
-                      Award or honor obtained:</span
-                    >
+                    <span class="font-semibold"> Award or honor obtained:</span>
                     {{ save.award }}
                   </h3>
                   <h3
@@ -213,9 +271,7 @@ const removeSaved = (item: number, index: number) => {
                     "
                     class="border-secondary/50"
                   >
-                    <span class="font-semibold">
-                      Date:</span
-                    >
+                    <span class="font-semibold"> Date:</span>
                     {{ save.start_date }}
                   </h3>
                   <!-- <div
@@ -231,11 +287,10 @@ const removeSaved = (item: number, index: number) => {
                   v-if="itemIndex == 1"
                   class="bg-secondary/5 hover:bg-secondary/10"
                 >
-                  <h3
-                  >
-                    <span class="font-semibold">Hobbies or interests:</span> {{  save.title || save.grade || save.type }}
+                  <h3>
+                    <span class="font-semibold">Hobbies or interests:</span>
+                    {{ save.title || save.grade || save.type }}
                   </h3>
-                
                 </div>
                 <div class="flex items-center justify-end gap-5 text-end">
                   <Button
@@ -272,7 +327,7 @@ const removeSaved = (item: number, index: number) => {
         </Button>
       </nuxt-link>
       <Button type="submit" size="sm">
-        <span>Next</span>
+        <span>Done</span>
         <ArrowRight />
       </Button>
     </div>

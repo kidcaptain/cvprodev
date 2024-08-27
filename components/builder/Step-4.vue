@@ -15,7 +15,10 @@ import References from "@/components/builder/sub-forms/References.vue";
 import Network from "./sub-forms/Network.vue";
 
 const { handleSubmit } = useForm({});
-
+useHead({
+  title: "Create CV Step4 - CV PRO",
+ 
+});
 const emit = defineEmits(["submit"]);
 onMounted(() => {
     const step4 = window.localStorage.getItem("step_4");

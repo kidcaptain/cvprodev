@@ -31,7 +31,7 @@ const { user, signOut } = useAuth()
           </nuxt-link>
           <div class="hidden menu md:flex">
             <nuxt-link to="/templates">
-              <Button class="" @click="$router.back()" variant="outline" to="/templates">Back </Button>
+              <Button class="" @click="$router.back()" variant="outline" >Back </Button>
             </nuxt-link>
           </div>
         </div>

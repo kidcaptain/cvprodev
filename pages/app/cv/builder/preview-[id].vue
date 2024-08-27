@@ -9,7 +9,10 @@ definePageMeta({
 });
 
 const route = useRoute();
-
+useHead({
+  title: "Preview CV - CV PRO",
+ 
+});
 const { data, error } = await useFetch<any>(
   "/api/templates/templateById?id=" + route.params.id
 );

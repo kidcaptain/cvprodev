@@ -143,7 +143,8 @@ const accordionItems = ref([
   {
     value: "item-3",
     title: "PERSONAL SKILLS",
-    description: "List the skills that are worth mentioning in relation to the position you are applying for.",
+    description:
+      "List the skills that are worth mentioning in relation to the position you are applying for.",
     datas: Array<any>(),
     content: "Yes! You can use the transition prop to configure the animation.",
     form: Skills,
@@ -151,7 +152,8 @@ const accordionItems = ref([
   {
     value: "item-4",
     title: "PROFESSIONAL SKILLS",
-    description: "List the skills that are worth mentioning in relation to the position you are applying for.",
+    description:
+      "List the skills that are worth mentioning in relation to the position you are applying for.",
     datas: Array<any>(),
     content: "Yes! You can use the transition prop to configure the animation.",
     form: Skills,
@@ -159,12 +161,13 @@ const accordionItems = ref([
   {
     value: "item-5",
     title: "LANGUAGES",
-    description: "List the languages ​​you are proficient in that are relevant to the position you are applying for.",
+    description:
+      "List the languages ​​you are proficient in that are relevant to the position you are applying for.",
     datas: Array<any>(),
     content: "Yes! You can use the transition prop to configure the animation.",
     form: Languages,
   },
-    {
+  {
     value: "item-6",
     title: "HOBBIES/INTERESTS",
     description: "List your hobbies and interests",
@@ -172,7 +175,7 @@ const accordionItems = ref([
     content: "Yes! You can use the transition prop to configure the animation.",
     form: Hobbies,
   },
-   {
+  {
     value: "item-7",
     title: "CERTIFICATIONS",
     description: "List your certifications.",
@@ -197,7 +200,6 @@ const accordionItems = ref([
     form: Project,
   },
 ]);
-
 
 const removeSaved = (item: number, index: number) => {
   accordionItems.value[item]?.datas.splice(index, 1);
@@ -270,7 +272,7 @@ const editSave = (item: any, index: number) => {
               <div>
                 <div
                   v-if="itemIndex == 0"
-                  class="flex p-2 flex-col-reverse overflow-y-auto max-h-52"
+                  class="flex p-2 flex-col-reverse overflow-y-auto max-h-64"
                 >
                   <div
                     v-for="(save, index) in itemsEditable"
@@ -343,7 +345,7 @@ const editSave = (item: any, index: number) => {
                     </div>
                   </div>
                 </div>
-                <div class="flex p-2 flex-col-reverse overflow-y-auto max-h-52">
+                <div class="flex p-2 flex-col-reverse overflow-y-auto max-h-64">
                   <div
                     v-for="(save, index) in item.datas"
                     :key="index"
@@ -359,7 +361,7 @@ const editSave = (item: any, index: number) => {
                       </h3>
                     </div>
 
-                    <div v-if="itemIndex == 1" >
+                    <div v-if="itemIndex == 1">
                       <h2 class="p-4 bg-primary text-white">
                         schools/institutions ({{ index + 1 }})
                       </h2>
@@ -391,6 +393,23 @@ const editSave = (item: any, index: number) => {
                           </h3>
                           <p class="elt px-4 py-2">{{ save.grade }}</p>
                         </div>
+                        <div v-if="save.field_of_study && save.field_of_study != ''" class="border-b border-b-stone-200 text-md">
+                          <h3
+                            class="font-bold uppercase px-4 py-2 bg-stone-100"
+                          >
+                            Field of study
+                          </h3>
+                          <p class="elt px-4 py-2">{{ save.field_of_study }}</p>
+                        </div>
+                        <div v-if="save.grade_obtained && save.grade_obtained != ''" class="border-b border-b-stone-200 text-md">
+                          <h3
+                            class="font-bold uppercase px-4 py-2 bg-stone-100"
+                          >
+                            Grade obtained
+                          </h3>
+                          <p class="elt px-4 py-2">{{ save.grade_obtained }}</p>
+                        </div>
+
                         <div class="border-b border-b-stone-200 text-md">
                           <h3
                             class="font-bold uppercase px-4 py-2 bg-stone-100"
@@ -399,13 +418,31 @@ const editSave = (item: any, index: number) => {
                           </h3>
                           <p class="elt px-4 py-2">{{ save.start_date }}</p>
                         </div>
-                        <div class="border-b border-b-stone-200 text-md">
+                        <div  class="border-b border-b-stone-200 text-md">
                           <h3
                             class="font-bold uppercase px-4 py-2 bg-stone-100"
                           >
                             Ending Date
                           </h3>
                           <p class="elt px-4 py-2">{{ save.end_date }}</p>
+                        </div>
+                        <div v-if="save.tasks_performed" class="text-md border-b border-b-stone-200">
+                          <h3
+                            class="font-bold uppercase px-4 py-2 bg-stone-100"
+                          >
+                            Tasks performed:
+                          </h3>
+                          <ul class="list-disc pl-10">
+                            <li
+                              class="elt my-1"
+                              v-for="(
+                                task, indexPerformed
+                              ) in save.tasks_performed"
+                              :key="indexPerformed"
+                            >
+                              {{ task }}
+                            </li>
+                          </ul>
                         </div>
                       </div>
                       <div class="flex bg-primary gap-2 px-4 py-2">

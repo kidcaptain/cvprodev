@@ -39,25 +39,33 @@ const defaultValues = ref({
 });
 
 const onSubmit = handleSubmit((values) => {
-  emit("submit", values);
-  const titleCertification = document.getElementById("titleCertification");
-  const gradeCertification = document.getElementById("gradeCertification");
-  const startDateCertification = document.getElementById(
-    "startDateCertification"
-  );
-  const endingDateCertification = document.getElementById(
-    "endingDateCertification"
-  );
-  console.log(endingDateCertification)
-  titleCertification.value = "";
-  gradeCertification.value = "";
-  startDateCertification.value = "";
-  endingDateCertification.value = "";
+  const date1 = new Date(values.start_date);
+  const date2 = new Date(values.end_date);
+  if (date1 < date2) {
+    messageError.value = ""
 
-  defaultValues.value.title = null;
-  defaultValues.value.grade = null;
-  defaultValues.value.start_date = null;
-  defaultValues.value.end_date = null;
+    emit("submit", values);
+    const titleCertification = document.getElementById("titleCertification");
+    const gradeCertification = document.getElementById("gradeCertification");
+    const startDateCertification = document.getElementById(
+      "startDateCertification"
+    );
+    const endingDateCertification = document.getElementById(
+      "endingDateCertification"
+    );
+
+    titleCertification.value = "";
+    gradeCertification.value = "";
+    startDateCertification.value = "";
+    endingDateCertification.value = "";
+
+    defaultValues.value.title = null;
+    defaultValues.value.grade = null;
+    defaultValues.value.start_date = null;
+    defaultValues.value.end_date = null;
+  }else{
+    messageError.value = "The start date is greater than the end date"
+  }
 });
 
 const experience_fields = [
@@ -89,10 +97,12 @@ const experience_fields = [
     id: "endingDateCertification",
   },
 ];
+const messageError = ref("");
 </script>
 
 <template>
   <form @submit="onSubmit">
+    <span class="text-red-500">{{ messageError }}</span>
     <div
       class="p-2 w-full grid grid-cols-2 gap-6 bg- border-l-2 border-secondary/50"
     >

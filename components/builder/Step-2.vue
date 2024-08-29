@@ -352,13 +352,32 @@ const editSave = (item: any, index: number) => {
                     class="gap-5 border mt-1 border-secondary"
                   >
                     <div
-                      v-if="itemIndex > 1"
-                      class="px-3 border-t-8 border-white"
+                      v-if="itemIndex == 2 || itemIndex == 3 || itemIndex == 5"
+                      class="p-2 list-decimal font-semibold flex gap-4"
+                      :class="
+                        index % 2 == 0
+                          ? 'bg-gray-400 text-black'
+                          : 'bg-gray-50 text-stone-800'
+                      "
                     >
-                      <h3 class="my-2 font-semibold">
-                        <span class="font-bold uppercase">Skill:</span>
-                        <p class="elt">{{ save.title }}</p>
-                      </h3>
+                      <div
+                        class="text-primary size-6 text-xs flex items-center justify-center shadow-xl bg-white rounded-full"
+                      >
+                        {{ 1 + index }}
+                      </div>
+                      <p class="elt">{{ save.title }}</p>
+                    </div>
+                    <div
+                      v-if="itemIndex == 4"
+                      class="p-2 list-decimal font-semibold flex gap-4"
+                    >
+                      <p class="elt">
+                        <span class="text-primary font-bold">{{
+                          save.title
+                        }}</span>
+                        (<span class="text-stone-700">{{ save.level }}</span
+                        >)
+                      </p>
                     </div>
 
                     <div v-if="itemIndex == 1">
@@ -393,7 +412,12 @@ const editSave = (item: any, index: number) => {
                           </h3>
                           <p class="elt px-4 py-2">{{ save.grade }}</p>
                         </div>
-                        <div v-if="save.field_of_study && save.field_of_study != ''" class="border-b border-b-stone-200 text-md">
+                        <div
+                          v-if="
+                            save.field_of_study && save.field_of_study != ''
+                          "
+                          class="border-b border-b-stone-200 text-md"
+                        >
                           <h3
                             class="font-bold uppercase px-4 py-2 bg-stone-100"
                           >
@@ -401,7 +425,12 @@ const editSave = (item: any, index: number) => {
                           </h3>
                           <p class="elt px-4 py-2">{{ save.field_of_study }}</p>
                         </div>
-                        <div v-if="save.grade_obtained && save.grade_obtained != ''" class="border-b border-b-stone-200 text-md">
+                        <div
+                          v-if="
+                            save.grade_obtained && save.grade_obtained != ''
+                          "
+                          class="border-b border-b-stone-200 text-md"
+                        >
                           <h3
                             class="font-bold uppercase px-4 py-2 bg-stone-100"
                           >
@@ -418,7 +447,7 @@ const editSave = (item: any, index: number) => {
                           </h3>
                           <p class="elt px-4 py-2">{{ save.start_date }}</p>
                         </div>
-                        <div  class="border-b border-b-stone-200 text-md">
+                        <div class="border-b border-b-stone-200 text-md">
                           <h3
                             class="font-bold uppercase px-4 py-2 bg-stone-100"
                           >
@@ -426,7 +455,10 @@ const editSave = (item: any, index: number) => {
                           </h3>
                           <p class="elt px-4 py-2">{{ save.end_date }}</p>
                         </div>
-                        <div v-if="save.tasks_performed" class="text-md border-b border-b-stone-200">
+                        <div
+                          v-if="save.tasks_performed"
+                          class="text-md border-b border-b-stone-200"
+                        >
                           <h3
                             class="font-bold uppercase px-4 py-2 bg-stone-100"
                           >
@@ -445,7 +477,9 @@ const editSave = (item: any, index: number) => {
                           </ul>
                         </div>
                       </div>
-                      <div class="flex bg-primary gap-2 px-4 py-2">
+                     
+                    </div>
+                    <div class="flex bg-primary gap-2 px-4 py-2">
                         <Button
                           @click="removeSaved(itemIndex, index)"
                           variant="outline"
@@ -457,7 +491,6 @@ const editSave = (item: any, index: number) => {
                           />Delete
                         </Button>
                       </div>
-                    </div>
                   </div>
                 </div>
               </div>

@@ -36,7 +36,10 @@ const defaultValues = ref({
 });
 
 const onSubmit = handleSubmit((values) => {
-  emit("submit", values);
+  emit("submit", {
+    title: values.title,
+    level: values.level,
+  });
   const titleLanguage = document.getElementById("titleLanguage");
   titleLanguage.value = "";
   const type = document.getElementById("levelLanguage");
@@ -50,7 +53,7 @@ const experience_fields = [
   {
     name: "title",
     label: "Language",
-    placeholder: "Type your skill here",
+    placeholder: "e.g French",
     type: "text",
     id: "titleLanguage",
     class: "col-span-1",

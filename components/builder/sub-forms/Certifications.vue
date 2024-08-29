@@ -87,13 +87,13 @@ const experience_fields = [
   {
     name: "start_date",
     label: "Starting Date",
-    type: "month",
+    type: "date",
     id: "startDateCertification",
   },
   {
     name: "end_date",
     label: "Ending Date",
-    type: "month",
+    type: "date",
     id: "endingDateCertification",
   },
 ];
@@ -116,13 +116,15 @@ const messageError = ref("");
           <FormItem :class="field.class">
             <FormLabel>{{ field.label }}</FormLabel>
             <FormControl>
-              <Textarea
-                v-if="field.type == 'textarea'"
+              <div v-if="field.type == 'date'">
+                <Textarea
+                
                 class="w-full"
                 v-bind="componentField"
                 :placeholder="field.placeholder"
                 :id="field.id"
               />
+              </div>
               <Input
                 v-else
                 :type="field.type ? field.type : 'text'"

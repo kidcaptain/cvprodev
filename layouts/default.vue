@@ -125,8 +125,12 @@ onMounted(() => {
           </nuxt-link>
           <div class="hidden menu md:flex">
             <ul class="flex items-center gap-6 font-semibold capitalize">
-              <li v-for="link in HeaderLink">
-                <nuxt-link :to="link.to"  active-class="text-primary font-bold" class=" hover:text-secondary">
+              <li v-for="link in HeaderLink" :key="link.text">
+                <nuxt-link
+                  :to="link.to"
+                  active-class="text-primary font-bold"
+                  class="hover:text-secondary"
+                >
                   {{ link.text }}
                 </nuxt-link>
               </li>
@@ -239,30 +243,15 @@ onMounted(() => {
               >
                 <DrawerClose>
                   <DrawerTitle class="flex flex-col gap-3">
-                    <NuxtLink to="/"
-                      ><Button class="w-full border-none bg-primary/90"
-                        >Home</Button
-                      ></NuxtLink
+                    <nuxt-link
+                      v-for="link in HeaderLink"
+                      :to="link.to"
+                      :key="link.text"
+                      active-class="text-primary bg-white font-bold"
+                      class="w-full border-none bg-primary/90"
                     >
-                    <NuxtLink to="/templates"
-                      ><Button class="w-full border-none bg-primary/90"
-                        >Create CV</Button
-                      ></NuxtLink
-                    >
-
-                    /*
-                    <NuxtLink to="/pricing"
-                      ><Button class="w-full border-none bg-primary/90"
-                        >Pricing</Button
-                      ></NuxtLink
-                    >
-                    */
-
-                    <NuxtLink to="/about-us"
-                      ><Button class="w-full border-none bg-primary/90"
-                        >About Us</Button
-                      ></NuxtLink
-                    >
+                      {{ link.text }}
+                    </nuxt-link>
                   </DrawerTitle>
                 </DrawerClose>
               </DrawerHeader>
@@ -296,7 +285,7 @@ onMounted(() => {
           accessibility and global reach for our users. This feature allows
           seamless translation of CV content between English and French,
           catering to diverse linguistic preferences and facilitating broader
-          career opportunities 
+          career opportunities
         </p>
       </div>
       <div class="grid py-6 font-semibold gap-9 md:grid-cols-5">
@@ -308,8 +297,10 @@ onMounted(() => {
             </nuxt-link>
           </li>
         </ul>
-        <div class="absolute top-0 right-0 transition-all translate-x-0 translate-y-32 opacity-15 lg:opacity-80">
-          <img src="assets/img/logo-footer.png"  alt="" />
+        <div
+          class="absolute top-0 right-0 transition-all translate-x-0 translate-y-32 opacity-15 lg:opacity-80"
+        >
+          <img src="assets/img/logo-footer.png" alt="" />
         </div>
       </div>
       <h5 class="my-4 font-medium text-center text-stone-700">

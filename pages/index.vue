@@ -87,7 +87,7 @@ const sections = [
   },
   {
     title: "Easy Payment",
-    img: "assets/img/pics/home/digital-payment.png",
+    img: "/img/pics/home/digital-payment.png",
     text: `Make your payments via Orange Money and Mtn Mobile Money and easily download your CVs in a few clicks.
 Don't wait any longer, start now`,
     btn: {

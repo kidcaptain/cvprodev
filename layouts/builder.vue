@@ -69,13 +69,8 @@ const steps = [
   },
   {
     id: 2,
-    title: "professionnal...",
+    title: "professionnal Information",
     icon: ClipboardList,
-  },
-  {
-    id: 3,
-    title: "language...",
-    icon: Languages,
   },
 ];
 const current_state = computed(() => route.params.id);
@@ -329,7 +324,7 @@ onMounted(() => {
               <ArrowLeft />
               <!-- <span class="font-thin">Back</span> -->
             </Button>
-           
+        
             <div class="flex items-start justify-between w-full gap-3">
               <template v-for="step in steps">
                 <nuxt-link
@@ -405,8 +400,8 @@ onMounted(() => {
                     <h4 class="text-xs font-semibold uppercase md:text-lg">
                       Step {{ step.id }}
                     </h4>
-                    <p class="text-sm capitalize md:text-sm">
-                      {{ step.title }}
+                    <p style="font-family: 'Times New Roman', Times, serif;" class="text-sm capitalize md:text-lg">
+                       {{ step.title }}
                     </p>
                   </div>
                 </nuxt-link>

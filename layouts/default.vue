@@ -115,7 +115,7 @@ onMounted(() => {
     <div class="container mx-auto max-w-screen-2xl xl:p-0">
       <header class="flex items-center justify-between py-3">
         <div class="flex items-center flex-1 gap-6">
-          <nuxt-link :to="'/'" class="logo">
+          <nuxt-link :to="'/'" class="logo" active-class="text-primary">
             <img
               class="size-12 md:size-16"
               src="@/assets/img/logo-white-theme.svg"
@@ -126,7 +126,7 @@ onMounted(() => {
           <div class="hidden menu md:flex">
             <ul class="flex items-center gap-6 font-semibold capitalize">
               <li v-for="link in HeaderLink">
-                <nuxt-link :to="link.to" class="text-sm hover:text-secondary">
+                <nuxt-link :to="link.to"  active-class="text-primary font-bold" class=" hover:text-secondary">
                   {{ link.text }}
                 </nuxt-link>
               </li>

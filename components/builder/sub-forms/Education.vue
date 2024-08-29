@@ -16,6 +16,7 @@ const formSchema = toTypedSchema(
   z.object({
     title: z.string().min(2).max(255),
     grade: z.string().min(2).max(255),
+    city: z.string(),
     start_date: z.string(),
     end_date: z.string(),
   })
@@ -36,6 +37,7 @@ const defaultValues = ref({
   grade: props.item?.grade,
   start_date: props.item?.start_date,
   end_date: props.item?.end_date,
+  city: props.item?.city,
 });
 
 const onSubmit = handleSubmit((values) => {
@@ -43,12 +45,14 @@ const onSubmit = handleSubmit((values) => {
   const grade = values.grade;
   const startDate = values.start_date;
   const endDate = values.end_date;
+  const city = values.city;
 
   emit("submit", {
     title: title,
     grade: grade,
     start_date: startDate,
     end_date: endDate,
+    city: city,
   });
   values.title = "";
   values.grade = "";
@@ -58,11 +62,19 @@ const onSubmit = handleSubmit((values) => {
   const gradeEducation = document.getElementById("gradeEducation");
   const startDateEducation = document.getElementById("startDateEducation");
   const endDateEducation = document.getElementById("endDateEducation");
-  if(titleEducation && gradeEducation && startDateEducation && endDateEducation){
-    endDateEducation.value = ""
-    startDateEducation.value = ""
-    titleEducation.value = ""
-    gradeEducation.value = ""
+  const cityEducation = document.getElementById("cityEducation");
+  if (
+    titleEducation &&
+    gradeEducation &&
+    startDateEducation &&
+    endDateEducation && 
+    cityEducation
+  ) {
+    endDateEducation.value = "";
+    startDateEducation.value = "";
+    titleEducation.value = "";
+    gradeEducation.value = "";
+    cityEducation.value = "";
   }
 });
 
@@ -74,6 +86,8 @@ const experience_fields = [
     type: "text",
     class: "col-span-2",
     id: "titleEducation",
+    facultative: true,
+    type: "text",
   },
   {
     name: "grade",
@@ -81,18 +95,33 @@ const experience_fields = [
     placeholder: "XXXXXX degree in XXXXXXXX",
     class: "col-span-2",
     id: "gradeEducation",
+    facultative: true,
+    type: "text",
+  },
+  {
+    name: "city",
+    label: "City",
+    placeholder: "",
+    class: "col-span-1",
+    id: "cityEducation",
+    facultative: true,
+    type: "text",
   },
   {
     name: "start_date",
     label: "Starting Date",
     type: "month",
     id: "startDateEducation",
+    facultative: true,
+    type: "text",
   },
   {
     name: "end_date",
     label: "Ending Date",
     type: "month",
     id: "endDateEducation",
+    facultative: true,
+    type: "text",
   },
 ];
 </script>
@@ -131,7 +160,9 @@ const experience_fields = [
         </FormField>
       </template>
       <div>
-        <Button class="px-6 space-x-3"> <Plus /> <span>Add </span> </Button>
+        <Button type="submit" class="w-fit px-2">
+          <Plus :size="15" /> <span>Add</span>
+        </Button>
       </div>
     </div>
   </form>

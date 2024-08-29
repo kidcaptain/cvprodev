@@ -40,7 +40,7 @@ onMounted(() => {
       etape1.yearOfExperience;
     (document.getElementById("address") as HTMLInputElement).value =
       etape1.address;
-    (document.getElementById("phone") as HTMLInputElement).value = etape1.phone;
+    (document.getElementById("phone") as HTMLInputElement).value = "";
     (document.getElementById("email") as HTMLInputElement).value = etape1.email;
     (document.getElementById("website") as HTMLInputElement).value =
       etape1.website;
@@ -187,6 +187,7 @@ const showPreview = () => {
   });
 };
 const phone = ref();
+const maritalStatus = ref();
 </script>
 
 <template>
@@ -318,21 +319,57 @@ const phone = ref();
           <FormMessage class="text-xs" />
         </FormItem>
       </FormField>
+      <div class="grid grid-cols-1 md:grid-cols-3 col-span-full gap-4">
+        <FormField v-slot="{ componentField }" name="age">
+          <FormItem class="col-span-1">
+            <label title="required">Age</label>
+            <FormControl>
+              <Input
+                type="number"
+                id="age"
+                v-bind="componentField"
+                placeholder="Your age"
+              />
+            </FormControl>
+            <FormMessage class="text-xs" />
+          </FormItem>
+        </FormField>
+        <FormField v-slot="{ componentField }" name="address">
+          <FormItem class="col-span-1">
+            <label>Marital status</label> <br />
+            <FormControl>
+              <select
+                v-bind="maritalStatus"
+                name="identifiant"
+                id="identifiant"
+                class="py-2 w-full px-4 text-white rounded-md bg-primary"
+              >
+                <option value="+213">Single</option>
+                <option value="+244">Married</option>
+                <option value="+297">Widowed</option>
+                <option value="+267">Divorced</option>
+              </select>
+            </FormControl>
+            <FormMessage class="text-xs" />
+          </FormItem>
+        </FormField>
+        <FormField v-slot="{ componentField }" name="address">
+          <FormItem>
+            <label>Address</label>
+            <FormControl>
+              <Input
+                id="address"
+                type="text"
+                placeholder="135 Montée Jouvence"
+                v-bind="componentField"
+              />
+            </FormControl>
+            <FormMessage class="text-xs" />
+          </FormItem>
+        </FormField>
+      </div>
       <Separator class="col-span-2 bg-gray-300 border-gray-300" />
-      <FormField v-slot="{ componentField }" name="address">
-        <FormItem>
-          <label>Address</label>
-          <FormControl>
-            <Input
-              id="address"
-              type="text"
-              placeholder="135 Montée Jouvence"
-              v-bind="componentField"
-            />
-          </FormControl>
-          <FormMessage class="text-xs" />
-        </FormItem>
-      </FormField>
+
       <div>
         <label for="" class="text-sm font-semibold" title="required"
           >Phone Number <span class="text-red-500">*</span></label
@@ -386,7 +423,10 @@ const phone = ref();
       </FormField>
       <FormField v-slot="{ componentField }" name="website">
         <FormItem>
-          <label title="facultatif">Website (<span class="text-xs text-red-400">facultatif</span>)</label>
+          <label title="facultatif"
+            >Website (<span class="text-xs text-red-400">facultatif</span
+            >)</label
+          >
           <FormControl>
             <Input
               type="text"
@@ -398,7 +438,21 @@ const phone = ref();
           <FormMessage class="text-xs" />
         </FormItem>
       </FormField>
-      <Separator class="col-span-2 bg-gray-300 border-gray-300" />
+      <FormField v-slot="{ componentField }" name="linkedinProfile">
+        <FormItem class="col-span-1">
+          <label title="required">LinkedIn profile</label>
+          <FormControl>
+            <Input
+              type="text"
+              id="linkedinProfile"
+              v-bind="componentField"
+              placeholder=""
+            />
+          </FormControl>
+          <FormMessage class="text-xs" />
+        </FormItem>
+      </FormField>
+      <!-- <Separator class="col-span-2 bg-gray-300 border-gray-300" /> -->
       <FormField
         v-slot="{ componentField }"
         name="objective"

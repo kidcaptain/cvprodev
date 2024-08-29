@@ -29,9 +29,7 @@ const onSubmit = (e: Event) => {
     const company = (companyExperience as HTMLInputElement).value;
     const startDate = (startDateExperience as HTMLInputElement).value;
     const endDate = (endDateExperience as HTMLInputElement).value;
-    const professionalTasksPerformed = (
-      experienceExperience as HTMLInputElement
-    ).value;
+    const professionalTasksPerformed = tasks.value;
 
     emit("submit", {
       jobTitle: jobTitle,
@@ -46,6 +44,7 @@ const onSubmit = (e: Event) => {
     (endDateExperience as HTMLInputElement).value = "";
     (experienceExperience as HTMLInputElement).value = "";
   }
+  tasks.value = []; 
 };
 
 const experience_fields = [
@@ -87,6 +86,30 @@ const experience_fields = [
     id: "experienceExperience",
   },
 ];
+
+const tasks = ref<string[]>([]);
+const indexToEdited = ref<number>(0);
+const isedited = ref(false);
+const task = ref("");
+const addTask = () => {
+  let tab: string[] = [];
+  tab = tasks.value;
+  if (isedited.value) {
+    tab[indexToEdited.value] = task.value;
+    tasks.value = tab;
+    task.value = "";
+    isedited.value = false;
+  } else {
+    tab.push(task.value);
+    tasks.value = tab;
+    task.value = "";
+  }
+};
+const getItem = (item: string, index: number) => {
+  isedited.value = true;
+  task.value = item;
+  indexToEdited.value = index;
+};
 </script>
 
 <template>
@@ -95,13 +118,14 @@ const experience_fields = [
       <div class="gap-6 md:grid md:grid-cols-2 md:space-y-0">
         <FormField name="company">
           <FormItem>
-            <FormLabel>Job Title</FormLabel>
+            <FormLabel class="">job Title</FormLabel>
             <FormControl>
               <Input
                 id="titleExperienceEdit"
                 type="text"
                 placeholder="Accountant"
                 required
+                class="first-letter:uppercase"
               />
             </FormControl>
             <FormMessage class="text-xs" />
@@ -117,6 +141,7 @@ const experience_fields = [
                 name="companyExperienceEdit"
                 placeholder="Exco cmr"
                 required
+                class="first-letter:uppercase"
               />
             </FormControl>
             <FormMessage class="text-xs" />
@@ -131,6 +156,7 @@ const experience_fields = [
                 required
                 name="startDateExperienceEdit"
                 type="month"
+                class="first-letter:uppercase"
               />
             </FormControl>
             <FormMessage class="text-xs" />
@@ -145,6 +171,7 @@ const experience_fields = [
                 required
                 name="endDateExperienceEdit"
                 type="month"
+                class="first-letter:uppercase"
               />
             </FormControl>
             <FormMessage class="text-xs" />
@@ -152,21 +179,44 @@ const experience_fields = [
         </FormField>
         <FormField name="experienceExperienceEdit" class="col-span-2">
           <FormItem class="col-span-2">
-            <FormLabel>Tasks & Job description</FormLabel>
+            <FormLabel>Tasks performed</FormLabel>
             <FormControl>
-              <textarea
-                class="w-full col-span-2 p-2 border border-black focus-within:bg-slate-100 focus-within:outline-none focus:outline-none"
+              <ul
                 id="experienceExperienceEdit"
-                name="experienceExperienceEdit"
-              ></textarea>
+                class="w-full h-20 overflow-y-auto col-span-2 min-h-20 bg-gray-50 p-2 border border-black"
+              >
+                <li
+                  v-for="(tache, index) in tasks"
+                  @click="getItem(tache, index)"
+                  :key="index"
+                >
+                  {{ tache }}
+                </li>
+              </ul>
+
+              <Input
+                placeholder="Add task"
+                type="text"
+                v-model="task"
+                class="first-letter:uppercase"
+              />
+              <Button
+                @click="addTask"
+                type="button"
+                size="sm"
+                variant="ghost"
+                class="w-fit border text-xs space-x-3"
+              >
+                {{!isedited   ? 'Add task' : 'Edit task'}}
+              </Button>
             </FormControl>
             <FormMessage class="text-xs" />
           </FormItem>
         </FormField>
       </div>
       <div>
-        <Button type="submit" class="px-6 space-x-3">
-          <Plus /> <span>Add</span>
+        <Button type="submit" class="w-fit px-2">
+          <Plus :size="15" /> <span>Add</span>
         </Button>
       </div>
     </div>

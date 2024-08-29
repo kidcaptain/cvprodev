@@ -42,17 +42,19 @@ const onSubmit = handleSubmit((values) => {
 const experience_fields = [
   {
     name: "title",
-    label: "Edit Skill",
-    placeholder: "Type your skill here",
+    label: "Type your hobby/interest here",
+    placeholder: "e.g. music, sports, reading",
     type: "text",
-    id: "hobbie",
+    id: "titleHobby",
   },
 ];
 </script>
 
 <template>
   <form @submit="onSubmit">
-    <div class="p-2 w-full flex gap-6 bg- border-l-2 border-secondary/50">
+    <div
+      class="p-2 w-full flex items-end gap-6 bg- border-l-2 border-secondary/50"
+    >
       <template v-for="field in experience_fields">
         <FormField
           v-slot="{ componentField }"
@@ -69,15 +71,16 @@ const experience_fields = [
                 :type="field.type ? field.type : 'text'"
                 :placeholder="field.placeholder"
                 v-bind="componentField"
+                required="false"
               />
             </FormControl>
             <FormMessage class="text-xs" />
           </FormItem>
         </FormField>
       </template>
-      <div class="flex items-end">
-        <Button class="px-6 space-x-3"> <Plus /> <span>Add </span> </Button>
-      </div>
+      <Button type="submit" class="w-fit px-2">
+        <Plus :size="15" /> <span>Add</span>
+      </Button>
     </div>
   </form>
 </template>

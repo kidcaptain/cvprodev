@@ -8,12 +8,16 @@ import {
 import { useRoute as useNativeRoute } from "vue-router";
 import { ArrowRight, ArrowLeft, Trash, Edit } from "lucide-vue-next";
 import { useForm } from "vee-validate";
-import { toTypedSchema } from "@vee-validate/zod";
 
 import Experience from "@/components/builder/sub-forms/Experience.vue";
 
 import Skills from "@/components/builder/sub-forms/Skills.vue";
 import Education from "@/components/builder/sub-forms/Education.vue";
+import Languages from "@/components/builder/sub-forms/Languages.vue";
+import Hobbies from "@/components/builder/sub-forms/Hobbies.vue";
+import Award from "@/components/builder/sub-forms/Award.vue";
+import Certifications from "@/components/builder/sub-forms/Certifications.vue";
+import Project from "@/components/builder/sub-forms/Project.vue";
 
 const emit = defineEmits(["submit"]);
 
@@ -120,6 +124,8 @@ const accordionItems = ref([
   {
     value: "item-1",
     title: "PROFESSIONAL EXPERIENCE",
+    description:
+      "List your positions in chronological order, starting with the most recent position held.",
     content: "Yes. It adheres to the WAI-ARIA design pattern.",
     datas: Array<any>(),
     form: Experience,
@@ -127,6 +133,8 @@ const accordionItems = ref([
   {
     value: "item-2",
     title: "EDUCATION",
+    description:
+      "List all the schools/institutions you have studied in. Mention anything that is relevant to the position you are applying for.",
     datas: Array<any>(),
     content:
       "Yes. It's unstyled by default, giving you freedom over the look and feel.",
@@ -135,6 +143,7 @@ const accordionItems = ref([
   {
     value: "item-3",
     title: "PERSONAL SKILLS",
+    description: "List the skills that are worth mentioning in relation to the position you are applying for.",
     datas: Array<any>(),
     content: "Yes! You can use the transition prop to configure the animation.",
     form: Skills,
@@ -142,11 +151,53 @@ const accordionItems = ref([
   {
     value: "item-4",
     title: "PROFESSIONAL SKILLS",
+    description: "List the skills that are worth mentioning in relation to the position you are applying for.",
     datas: Array<any>(),
     content: "Yes! You can use the transition prop to configure the animation.",
     form: Skills,
   },
+  {
+    value: "item-5",
+    title: "LANGUAGES",
+    description: "List the languages ​​you are proficient in that are relevant to the position you are applying for.",
+    datas: Array<any>(),
+    content: "Yes! You can use the transition prop to configure the animation.",
+    form: Languages,
+  },
+    {
+    value: "item-6",
+    title: "HOBBIES/INTERESTS",
+    description: "List your hobbies and interests",
+    datas: Array<any>(),
+    content: "Yes! You can use the transition prop to configure the animation.",
+    form: Hobbies,
+  },
+   {
+    value: "item-7",
+    title: "CERTIFICATIONS",
+    description: "List your certifications.",
+    datas: Array<any>(),
+    content: "Yes! You can use the transition prop to configure the animation.",
+    form: Certifications,
+  },
+  {
+    value: "item-8",
+    title: "AWARD & DISTINCTIONS",
+    description: "List your recognitions",
+    datas: Array<any>(),
+    content: "Yes! You can use the transition prop to configure the animation.",
+    form: Award,
+  },
+  {
+    value: "item-9",
+    title: "PROJECTS",
+    description: "List your recognitions",
+    datas: Array<any>(),
+    content: "Yes! You can use the transition prop to configure the animation.",
+    form: Project,
+  },
 ]);
+
 
 const removeSaved = (item: number, index: number) => {
   accordionItems.value[item]?.datas.splice(index, 1);
@@ -176,7 +227,14 @@ const editSave = (item: any, index: number) => {
   booll.value = true;
 };
 </script>
-
+<style scoped>
+.elt::first-letter {
+  text-transform: uppercase !important;
+}
+.btn-item:hover .icon {
+  color: brown;
+}
+</style>
 <template>
   <div class="">
     <form @submit="onSubmit" class="relative text-foreground">
@@ -200,67 +258,96 @@ const editSave = (item: any, index: number) => {
           :key="item.value"
           :value="item.value"
         >
-          <AccordionTrigger class="sticky font-bold">{{
-            item.title
-          }}</AccordionTrigger>
+          <AccordionTrigger class="sticky font-bold"
+            >{{ item.title }}
+          </AccordionTrigger>
+
           <AccordionContent class="md:pl-5">
+            <p class="mb-3">
+              {{ item.description }}
+            </p>
             <div class="space-y-2">
               <div>
                 <div
                   v-if="itemIndex == 0"
-                  class="flex flex-col-reverse overflow-y-auto max-h-52"
+                  class="flex p-2 flex-col-reverse overflow-y-auto max-h-52"
                 >
                   <div
                     v-for="(save, index) in itemsEditable"
                     :key="index"
-                    class="border-b bg-secondary/5"
+                    class="border my-1"
                   >
-                    <div class="p-4">
-                      <h2 class="my-2 text-md">
-                        <span class="font-bold uppercase">JobTitle:</span>
-                        {{ save.jobTitle }}
-                      </h2>
-                      <h2 class="my-2 text-md">
-                        <span class="font-bold uppercase">Company:</span>
-                        {{ save.company }}
-                      </h2>
-                      <h2 class="my-2 text-md">
-                        <span class="font-bold uppercase">Period:</span>
-                        {{ save.startDate }} -{{ save.endDate }}
-                      </h2>
-                      <h2 class="my-2 text-md">
-                        <span class="font-bold uppercase"
-                          >Tasks & Job description:</span
-                        >
-                      </h2>
-                      <p class="p-1">{{ save.professionalTasksPerformed }}</p>
+                    <div class="p-4 bg-primary text-white">
+                      Experience ({{ index + 1 }})
                     </div>
-                    <div class="flex gap-2 pb-2 pl-4">
-                      <Button
-                        @click="editSave(save, index)"
-                        variant="outline"
-                        class="p-1 bg-secondary hover:border-secondary h-fit hover:text-secondary"
-                        type="button"
-                        size="sm"
-                      >
-                        <Edit class="text-white size-4 hover:text-secondary"
-                      /></Button>
-                      <Button
-                        @click="removeSavedExperience(index)"
-                        variant="outline"
-                        class="p-1 bg-secondary hover:border-secondary h-fit hover:text-secondary"
-                        type="button"
-                      >
-                        <Trash class="text-white size-4 hover:text-secondary" />
-                      </Button>
+                    <div>
+                      <div class="border-b border-b-stone-200 text-md">
+                        <h3 class="font-bold uppercase px-4 py-2 bg-stone-100">
+                          Job Title
+                        </h3>
+                        <p class="elt px-4 py-2">{{ save.jobTitle }}</p>
+                      </div>
+                      <div class="text-md border-b border-b-stone-200">
+                        <h3 class="font-bold uppercase px-4 py-2 bg-stone-100">
+                          Company
+                        </h3>
+                        <p class="elt px-4 py-2">{{ save.company }}</p>
+                      </div>
+                      <div class="text-md border-b border-b-stone-200">
+                        <h3 class="font-bold uppercase px-4 py-2 bg-stone-100">
+                          Period
+                        </h3>
+                        <p class="elt px-4 py-2 font-semibold">
+                          {{ save.startDate }} - {{ save.endDate }}
+                        </p>
+                      </div>
+                      <div class="text-md border-b border-b-stone-200">
+                        <h3 class="font-bold uppercase px-4 py-2 bg-stone-100">
+                          Tasks performed:
+                        </h3>
+                        <ul class="list-disc pl-10">
+                          <li
+                            class="elt my-1"
+                            v-for="(
+                              task, indexPerformed
+                            ) in save.professionalTasksPerformed"
+                            :key="indexPerformed"
+                          >
+                            {{ task }}
+                          </li>
+                        </ul>
+                      </div>
+                      <div class="flex bg-primary gap-2 px-4 py-2">
+                        <Button
+                          @click="editSave(save, index)"
+                          variant="outline"
+                          class="p-1 btn-item flex gap-2 item-center text-white px-2 bg-yellow-500 hover:border-secondary h-fit hover:text-secondary"
+                          type="button"
+                          size="sm"
+                        >
+                          <Edit
+                            class="text-white icon size-4 hover:text-secondary"
+                          />Edit</Button
+                        >
+                        <Button
+                          @click="removeSavedExperience(index)"
+                          variant="outline"
+                          class="p-1 btn-item flex gap-2 item-center text-white bg-red-500 px-2 hover:border-secondary h-fit hover:text-secondary"
+                          type="button"
+                        >
+                          <Trash
+                            class="text-white icon size-4 hover:text-secondary"
+                          />Delete
+                        </Button>
+                      </div>
                     </div>
                   </div>
                 </div>
-                <div class="flex flex-col-reverse overflow-y-auto max-h-52">
+                <div class="flex p-2 flex-col-reverse overflow-y-auto max-h-52">
                   <div
                     v-for="(save, index) in item.datas"
                     :key="index"
-                    class="gap-5 border-b border-l-2 cursor-pointer border-secondary bg-secondary/5 hover:bg-secondary/10"
+                    class="gap-5 border mt-1 border-secondary"
                   >
                     <div
                       v-if="itemIndex > 1"
@@ -268,50 +355,71 @@ const editSave = (item: any, index: number) => {
                     >
                       <h3 class="my-2 font-semibold">
                         <span class="font-bold uppercase">Skill:</span>
-                        {{ save.title }}
+                        <p class="elt">{{ save.title }}</p>
                       </h3>
                     </div>
 
-                    <div v-if="itemIndex == 1" class="p-3">
-                      <h3
-                        class="my-2 font-semibold border-r border-secondary/50"
-                      >
-                        <span class="font-bold uppercase">Institution:</span>
-                        {{ save.title }}
-                      </h3>
-                      <h3
-                        class="my-2 font-semibold border-r border-secondary/50"
-                      >
-                        <span class="font-bold uppercase"
-                          >Degree obtained and grade:</span
+                    <div v-if="itemIndex == 1" >
+                      <h2 class="p-4 bg-primary text-white">
+                        schools/institutions ({{ index + 1 }})
+                      </h2>
+                      <div>
+                        <div class="border-b border-b-stone-200 text-md">
+                          <h3
+                            class="font-bold uppercase px-4 py-2 bg-stone-100"
+                          >
+                            Institution
+                          </h3>
+                          <p class="elt px-4 py-2">{{ save.title }}</p>
+                        </div>
+                        <div
+                          v-if="save.city && save.city != ''"
+                          class="border-b border-b-stone-200 text-md"
                         >
-                        {{ save.grade }}
-                      </h3>
-                      <h3
-                        class="my-2 font-semibold border-r border-secondary/50"
-                      >
-                        <span class="font-bold uppercase">Starting Date:</span>
-                        {{ save.start_date }}
-                      </h3>
-                      <h3
-                        class="my-2 font-semibold border-r border-secondary/50"
-                      >
-                        <span class="font-bold uppercase">Ending Date:</span>
-                        {{ save.end_date }}
-                      </h3>
-                    </div>
-
-                    <div
-                      class="flex items-center justify-start gap-3 p-4 text-end"
-                    >
-                      <Button
-                        @click="removeSaved(itemIndex, index)"
-                        variant="outline"
-                        class="p-1 bg-secondary hover:border-secondary h-fit hover:text-secondary"
-                        type="button"
-                      >
-                        <Trash class="text-white size-4 hover:text-secondary" />
-                      </Button>
+                          <h3
+                            class="font-bold uppercase px-4 py-2 bg-stone-100"
+                          >
+                            City
+                          </h3>
+                          <p class="elt px-4 py-2">{{ save.city }}</p>
+                        </div>
+                        <div class="border-b border-b-stone-200 text-md">
+                          <h3
+                            class="font-bold uppercase px-4 py-2 bg-stone-100"
+                          >
+                            Diploma obtained
+                          </h3>
+                          <p class="elt px-4 py-2">{{ save.grade }}</p>
+                        </div>
+                        <div class="border-b border-b-stone-200 text-md">
+                          <h3
+                            class="font-bold uppercase px-4 py-2 bg-stone-100"
+                          >
+                            Starting Date
+                          </h3>
+                          <p class="elt px-4 py-2">{{ save.start_date }}</p>
+                        </div>
+                        <div class="border-b border-b-stone-200 text-md">
+                          <h3
+                            class="font-bold uppercase px-4 py-2 bg-stone-100"
+                          >
+                            Ending Date
+                          </h3>
+                          <p class="elt px-4 py-2">{{ save.end_date }}</p>
+                        </div>
+                      </div>
+                      <div class="flex bg-primary gap-2 px-4 py-2">
+                        <Button
+                          @click="removeSaved(itemIndex, index)"
+                          variant="outline"
+                          class="p-1 btn-item flex gap-2 item-center text-white bg-red-500 px-2 hover:border-secondary h-fit hover:text-secondary"
+                          type="button"
+                        >
+                          <Trash
+                            class="text-white icon size-4 hover:text-secondary"
+                          />Delete
+                        </Button>
+                      </div>
                     </div>
                   </div>
                 </div>

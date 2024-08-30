@@ -12,7 +12,6 @@ const formSchema = toTypedSchema(
     company: z.string().min(2).max(255),
     start_date: z.string(),
     end_date: z.string(),
-    tasks: z.string().min(8),
   })
 );
 
@@ -31,26 +30,37 @@ const defaultValues = ref({
   company: props.item?.company,
   start_date: props.item?.start_date,
   end_date: props.item?.end_date,
-  tasks: props.item?.tasks,
 });
 
 const onSubmit = handleSubmit((values) => {
-  emit("submit", values);
-  const titleProject = document.getElementById("titleProject");
-  const companyProject = document.getElementById("companyProject");
-  const startDateProject = document.getElementById("startDateProject");
-  const tasksProject = document.getElementById("tasksProject");
-  const endDateProject = document.getElementById("endDateProject");
-  tasksProject.value = "";
-  startDateProject.value = "";
-  endDateProject.value = "";
-  companyProject.value = "";
-  titleProject.value = "";
-  defaultValues.value.title = null;
-  defaultValues.value.company = null;
-  defaultValues.value.start_date = null;
-  defaultValues.value.end_date = null;
-  defaultValues.value.tasks = null;
+  const date1 = new Date(values.start_date);
+  const date2 = new Date(values.end_date);
+  const tasksPerformed = tasks.value;
+  if (date1 < date2) {
+    messageError.value = "";
+    emit("submit", {
+      title: values.title,
+      company: values.company,
+      start_date: values.start_date,
+      end_date: values.end_date,
+      tasks: tasksPerformed,
+    });
+    tasks.value = [];
+    const titleProject = document.getElementById("titleProject");
+    const companyProject = document.getElementById("companyProject");
+    const startDateProject = document.getElementById("startDateProject");
+    const endDateProject = document.getElementById("endDateProject");
+    startDateProject.value = "";
+    endDateProject.value = "";
+    companyProject.value = "";
+    titleProject.value = "";
+    defaultValues.value.title = null;
+    defaultValues.value.company = null;
+    defaultValues.value.start_date = null;
+    defaultValues.value.end_date = null;
+  } else {
+    messageError.value = "The start date is greater than the end date";
+  }
 });
 
 const projects_fields = [
@@ -87,12 +97,37 @@ const projects_fields = [
     id: "tasksProject",
   },
 ];
+const tasks = ref([]);
+const indexToEdited = ref(0);
+const isedited = ref(false);
+const task = ref("");
+const addTask = () => {
+  let tab = [];
+  tab = tasks.value;
+  if (isedited.value) {
+    tab[indexToEdited.value] = task.value;
+    tasks.value = tab;
+    task.value = "";
+    isedited.value = false;
+  } else {
+    tab.push(task.value);
+    tasks.value = tab;
+    task.value = "";
+  }
+};
+const getItem = (item, index) => {
+  isedited.value = true;
+  task.value = item;
+  indexToEdited.value = index;
+};
+const messageError = ref("");
 </script>
 
 <template>
   <form @submit="onSubmit">
+    <span class="text-red-500">{{ messageError }}</span>
     <div
-      class="p-2 w-full md:grid md:grid-cols-2 gap-6 space-y-6 md:space-y-0 border-l-2 border-secondary/50"
+      class="w-full gap-6 p-2 space-y-6 border-l-2 md:grid md:grid-cols-2 md:space-y-0 border-secondary/50"
     >
       <template v-for="field in projects_fields">
         <FormField
@@ -104,14 +139,39 @@ const projects_fields = [
           <FormItem :class="field.class">
             <FormLabel>{{ field.label }}</FormLabel>
             <FormControl>
-              <Textarea
-                v-if="field.type == 'textarea'"
-                class="w-full"
-                v-bind="componentField"
-                :placeholder="field.placeholder"
-              ></Textarea>
+              <div v-if="field.type == 'textarea'">
+                <ul
+                  id="experienceExperienceEdit"
+                  class="w-full h-20 col-span-2 p-2 overflow-y-auto border border-black min-h-20 bg-gray-50"
+                >
+                  <li
+                    class="cursor-pointer"
+                    v-for="(tache, index) in tasks"
+                    @click="getItem(tache, index)"
+                    :key="index"
+                  >
+                    {{ tache }}
+                  </li>
+                </ul>
+                <Input
+                  placeholder="Add task"
+                  type="text"
+                  v-model="task"
+                  class="my-1"
+                />
+                <Button
+                  @click="addTask"
+                  type="button"
+                  size="sm"
+                  variant="ghost"
+                  class="space-x-3 text-xs border w-fit"
+                >
+                  {{ !isedited ? "Add task" : "Edit task" }}
+                </Button>
+              </div>
               <Input
                 v-else
+                :id="field.id"
                 :type="field.type ? field.type : 'text'"
                 :placeholder="field.placeholder"
                 v-bind="componentField"

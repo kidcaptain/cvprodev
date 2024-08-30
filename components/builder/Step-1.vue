@@ -199,17 +199,17 @@ const maritalStatus = ref();
     <Button
       @click="showPreview"
       type="button"
-      class="absolute right-0 text-lg bg-white rounded-full shadow-sm shadow-primary/20 text-primary"
+      class="absolute right-0 text-sm bg-white rounded-full shadow-sm md:text-lg shadow-primary/20 text-primary"
       variant="ghost"
       size="sm"
     >
       Preview
     </Button>
-    <div class="mx-auto w-00">
+    <div class="w-full mx-auto">
       <label for="avatar" class="mx-auto w-fit">
         <div
           id="updload_file"
-          class="grid mx-auto mb-2 overflow-hidden bg-gray-200 border border-gray-500 rounded-full cursor-pointer place-content-center size-36"
+          class="grid mx-auto mb-2 overflow-hidden bg-gray-200 border border-gray-500 rounded-full cursor-pointer size-24 place-content-center md:size-36"
         >
           <!-- <Camera class="text-white size-16" /> -->
           <img
@@ -233,7 +233,7 @@ const maritalStatus = ref();
         id="avatar"
         name="profile"
         type="file"
-        class="m-auto w-fit"
+        class="m-auto text-xs md:text-lg w-fit"
         @change="uploadImage"
       />
       <div v-if="imageSelected" class="flex justify-center">
@@ -247,12 +247,6 @@ const maritalStatus = ref();
       </div>
     </div>
     <div class="my-6 space-y-6 md:grid md:grid-cols-2 md:gap-6 md:space-y-0">
-      <!--      
-        <Separator
-          v-if="field.separator"
-          class="col-span-2 bg-gray-300 border-gray-300"
-        /> -->
-      <!--    -->
       <FormField v-slot="{ componentField }" name="firstname">
         <FormItem>
           <label title="required"
@@ -319,7 +313,7 @@ const maritalStatus = ref();
           <FormMessage class="text-xs" />
         </FormItem>
       </FormField>
-      <div class="grid grid-cols-1 md:grid-cols-3 col-span-full gap-4">
+      <div class="grid grid-cols-1 gap-4 md:grid-cols-3 col-span-full">
         <FormField v-slot="{ componentField }" name="age">
           <FormItem class="col-span-1">
             <label title="required">Age</label>
@@ -342,7 +336,7 @@ const maritalStatus = ref();
                 v-bind="maritalStatus"
                 name="identifiant"
                 id="identifiant"
-                class="py-2 w-full px-4 text-white rounded-md bg-primary"
+                class="w-full px-4 py-2 text-white rounded-md bg-primary"
               >
                 <option value="+213">Single</option>
                 <option value="+244">Married</option>
@@ -473,7 +467,7 @@ const maritalStatus = ref();
       </FormField>
     </div>
     <div class="flex justify-end">
-      <Button type="submit" class="px-12 space-x-4">
+      <Button type="submit" class="px-2 w-fit">
         <span>Next</span>
         <ArrowRight />
       </Button>

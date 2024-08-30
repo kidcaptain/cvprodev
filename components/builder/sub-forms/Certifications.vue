@@ -87,13 +87,15 @@ const experience_fields = [
   {
     name: "start_date",
     label: "Starting Date",
-    type: "date",
+    type: "text",
+    placeholder: "e.g 2024-01-20",
     id: "startDateCertification",
   },
   {
     name: "end_date",
     label: "Ending Date",
-    type: "date",
+    type: "text",
+    placeholder: "e.g 2024-02-20",
     id: "endingDateCertification",
   },
 ];
@@ -104,7 +106,7 @@ const messageError = ref("");
   <form @submit="onSubmit">
     <span class="text-red-500">{{ messageError }}</span>
     <div
-      class="p-2 w-full grid grid-cols-2 gap-6 bg- border-l-2 border-secondary/50"
+      class="grid w-full grid-cols-2 gap-6 p-2 border-l-2 bg- border-secondary/50"
     >
       <template v-for="field in experience_fields">
         <FormField
@@ -116,17 +118,9 @@ const messageError = ref("");
           <FormItem :class="field.class">
             <FormLabel>{{ field.label }}</FormLabel>
             <FormControl>
-              <div v-if="field.type == 'date'">
-                <Textarea
-                
-                class="w-full"
-                v-bind="componentField"
-                :placeholder="field.placeholder"
-                :id="field.id"
-              />
-              </div>
+             
               <Input
-                v-else
+                
                 :type="field.type ? field.type : 'text'"
                 :placeholder="field.placeholder"
                 v-bind="componentField"

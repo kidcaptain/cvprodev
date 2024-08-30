@@ -18,6 +18,7 @@ import Hobbies from "@/components/builder/sub-forms/Hobbies.vue";
 import Award from "@/components/builder/sub-forms/Award.vue";
 import Certifications from "@/components/builder/sub-forms/Certifications.vue";
 import Project from "@/components/builder/sub-forms/Project.vue";
+import References from "@/components/builder/sub-forms/References.vue";
 
 const emit = defineEmits(["submit"]);
 
@@ -193,8 +194,18 @@ const accordionItems = ref([
   },
   {
     value: "item-9",
+    title: "REFERENCES",
+    description:
+      "Mention major references that are relevant to the position you are applying for.",
+    datas: Array<any>(),
+    content: "Yes! You can use the transition prop to configure the animation.",
+    form: References,
+  },
+  {
+    value: "item-10",
     title: "PROJECTS",
-    description: "List your recognitions",
+    description:
+      "Mention major references that are relevant to the position you are applying for.",
     datas: Array<any>(),
     content: "Yes! You can use the transition prop to configure the animation.",
     form: Project,
@@ -240,18 +251,18 @@ const editSave = (item: any, index: number) => {
 <template>
   <div class="">
     <form @submit="onSubmit" class="relative text-foreground">
-      <Button
+      <!-- <Button
         @click="showPreview"
         type="button"
-        class="absolute top-0 right-0 text-lg bg-white rounded-full shadow-sm shadow-primary/20 text-primary"
+        class="absolute right-0 text-sm bg-white rounded-full shadow-sm md:text-lg shadow-primary/20 text-primary"
         variant="ghost"
         size="sm"
       >
         Preview
-      </Button>
+      </Button> -->
       <Accordion
         type="single"
-        class="w-full pt-5"
+        class="w-full pt-8"
         collapsible
         :default-value="defaultValue"
       >
@@ -272,44 +283,44 @@ const editSave = (item: any, index: number) => {
               <div>
                 <div
                   v-if="itemIndex == 0"
-                  class="flex p-2 flex-col-reverse overflow-y-auto max-h-64"
+                  class="flex flex-col-reverse p-2 overflow-y-auto max-h-64"
                 >
                   <div
                     v-for="(save, index) in itemsEditable"
                     :key="index"
-                    class="border my-1"
+                    class="my-1 border border-stone-200"
                   >
-                    <div class="p-4 bg-primary text-white">
+                    <div class="p-4 text-white bg-primary">
                       Experience ({{ index + 1 }})
                     </div>
                     <div>
                       <div class="border-b border-b-stone-200 text-md">
-                        <h3 class="font-bold uppercase px-4 py-2 bg-stone-100">
+                        <h3 class="px-4 py-2 font-bold uppercase bg-stone-100">
                           Job Title
                         </h3>
-                        <p class="elt px-4 py-2">{{ save.jobTitle }}</p>
+                        <p class="px-4 py-2 elt">{{ save.jobTitle }}</p>
                       </div>
-                      <div class="text-md border-b border-b-stone-200">
-                        <h3 class="font-bold uppercase px-4 py-2 bg-stone-100">
+                      <div class="border-b text-md border-b-stone-200">
+                        <h3 class="px-4 py-2 font-bold uppercase bg-stone-100">
                           Company
                         </h3>
-                        <p class="elt px-4 py-2">{{ save.company }}</p>
+                        <p class="px-4 py-2 elt">{{ save.company }}</p>
                       </div>
-                      <div class="text-md border-b border-b-stone-200">
-                        <h3 class="font-bold uppercase px-4 py-2 bg-stone-100">
+                      <div class="border-b text-md border-b-stone-200">
+                        <h3 class="px-4 py-2 font-bold uppercase bg-stone-100">
                           Period
                         </h3>
-                        <p class="elt px-4 py-2 font-semibold">
+                        <p class="px-4 py-2 font-semibold elt">
                           {{ save.startDate }} - {{ save.endDate }}
                         </p>
                       </div>
-                      <div class="text-md border-b border-b-stone-200">
-                        <h3 class="font-bold uppercase px-4 py-2 bg-stone-100">
+                      <div class="border-b text-md border-b-stone-200">
+                        <h3 class="px-4 py-2 font-bold uppercase bg-stone-100">
                           Tasks performed:
                         </h3>
-                        <ul class="list-disc pl-10">
+                        <ul class="pl-10 list-disc">
                           <li
-                            class="elt my-1"
+                            class="my-1 elt"
                             v-for="(
                               task, indexPerformed
                             ) in save.professionalTasksPerformed"
@@ -319,11 +330,11 @@ const editSave = (item: any, index: number) => {
                           </li>
                         </ul>
                       </div>
-                      <div class="flex bg-primary gap-2 px-4 py-2">
+                      <div class="flex gap-2 px-4 py-2">
                         <Button
                           @click="editSave(save, index)"
                           variant="outline"
-                          class="p-1 btn-item flex gap-2 item-center text-white px-2 bg-yellow-500 hover:border-secondary h-fit hover:text-secondary"
+                          class="flex gap-2 p-1 px-2 text-white bg-yellow-500 btn-item item-center hover:border-secondary h-fit hover:text-secondary"
                           type="button"
                           size="sm"
                         >
@@ -334,7 +345,7 @@ const editSave = (item: any, index: number) => {
                         <Button
                           @click="removeSavedExperience(index)"
                           variant="outline"
-                          class="p-1 btn-item flex gap-2 item-center text-white bg-red-500 px-2 hover:border-secondary h-fit hover:text-secondary"
+                          class="flex gap-2 p-1 px-2 text-white bg-red-500 btn-item item-center hover:border-secondary h-fit hover:text-secondary"
                           type="button"
                         >
                           <Trash
@@ -345,15 +356,15 @@ const editSave = (item: any, index: number) => {
                     </div>
                   </div>
                 </div>
-                <div class="flex p-2 flex-col-reverse overflow-y-auto max-h-64">
+                <div class="flex flex-col-reverse p-2 overflow-y-auto max-h-64">
                   <div
                     v-for="(save, index) in item.datas"
                     :key="index"
-                    class="gap-5 border mt-1 border-secondary"
+                    class="gap-5 mt-1 border border-stone-200"
                   >
                     <div
                       v-if="itemIndex == 2 || itemIndex == 3 || itemIndex == 5"
-                      class="p-2 list-decimal font-semibold flex gap-4"
+                      class="flex gap-4 p-2 font-semibold list-decimal"
                       :class="
                         index % 2 == 0
                           ? 'bg-gray-400 text-black'
@@ -361,7 +372,7 @@ const editSave = (item: any, index: number) => {
                       "
                     >
                       <div
-                        class="text-primary size-6 text-xs flex items-center justify-center shadow-xl bg-white rounded-full"
+                        class="flex items-center justify-center text-xs bg-white rounded-full shadow-xl text-primary size-6"
                       >
                         {{ 1 + index }}
                       </div>
@@ -369,10 +380,10 @@ const editSave = (item: any, index: number) => {
                     </div>
                     <div
                       v-if="itemIndex == 4"
-                      class="p-2 list-decimal font-semibold flex gap-4"
+                      class="flex gap-4 p-2 font-semibold list-decimal"
                     >
                       <p class="elt">
-                        <span class="text-primary font-bold">{{
+                        <span class="font-bold text-primary">{{
                           save.title
                         }}</span>
                         (<span class="text-stone-700">{{ save.level }}</span
@@ -380,37 +391,221 @@ const editSave = (item: any, index: number) => {
                       </p>
                     </div>
 
+                    <div v-if="itemIndex == 6">
+                      <h2 class="p-4 text-white bg-primary">
+                        certifications ({{ index + 1 }})
+                      </h2>
+                      <div>
+                        <div class="border-b border-b-stone-200 text-md">
+                          <h3
+                            class="px-4 py-2 font-bold uppercase bg-stone-100"
+                          >
+                            Institution
+                          </h3>
+                          <p class="px-4 py-2 elt">{{ save.title }}</p>
+                        </div>
+                        <div class="border-b border-b-stone-200 text-md">
+                          <h3
+                            class="px-4 py-2 font-bold uppercase bg-stone-100"
+                          >
+                            Degree obtained and grade
+                          </h3>
+                          <p class="px-4 py-2 elt">{{ save.grade }}</p>
+                        </div>
+                        <div class="border-b border-b-stone-200 text-md">
+                          <h3
+                            class="px-4 py-2 font-bold uppercase bg-stone-100"
+                          >
+                            Starting Date
+                          </h3>
+                          <p class="px-4 py-2 elt">{{ save.start_date }}</p>
+                        </div>
+                        <div class="border-b border-b-stone-200 text-md">
+                          <h3
+                            class="px-4 py-2 font-bold uppercase bg-stone-100"
+                          >
+                            Ending Date
+                          </h3>
+                          <p class="px-4 py-2 elt">{{ save.end_date }}</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div v-if="itemIndex == 7">
+                      <h2 class="p-4 text-white bg-primary">
+                        Award And Distinctions ({{ index + 1 }})
+                      </h2>
+                      <div>
+                        <div class="border-b border-b-stone-200 text-md">
+                          <h3
+                            class="px-4 py-2 font-bold uppercase bg-stone-100"
+                          >
+                            Institution/Company
+                          </h3>
+                          <p class="px-4 py-2 elt">{{ save.title }}</p>
+                        </div>
+                        <div class="border-b border-b-stone-200 text-md">
+                          <h3
+                            class="px-4 py-2 font-bold uppercase bg-stone-100"
+                          >
+                            Award or honor obtained
+                          </h3>
+                          <p class="px-4 py-2 elt">{{ save.award }}</p>
+                        </div>
+                        <div class="border-b border-b-stone-200 text-md">
+                          <h3
+                            class="px-4 py-2 font-bold uppercase bg-stone-100"
+                          >
+                            Date
+                          </h3>
+                          <p class="px-4 py-2 elt">{{ save.start_date }}</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div v-if="itemIndex == 8">
+                      <h2 class="p-4 text-white bg-primary">
+                        Reference ({{ index + 1 }})
+                      </h2>
+                      <div>
+                        <div class="border-b border-b-stone-200 text-md">
+                          <h3
+                            class="px-4 py-2 font-bold uppercase bg-stone-100"
+                          >
+                            Institution Name
+                          </h3>
+                          <p class="px-4 py-2 elt">{{ save.title }}</p>
+                        </div>
+                        <div class="border-b border-b-stone-200 text-md">
+                          <h3
+                            class="px-4 py-2 font-bold uppercase bg-stone-100"
+                          >
+                            Position Occupied
+                          </h3>
+                          <p class="px-4 py-2 elt">{{ save.position }}</p>
+                        </div>
+                        <div class="border-b border-b-stone-200 text-md">
+                          <h3
+                            class="px-4 py-2 font-bold uppercase bg-stone-100"
+                          >
+                            References's name
+                          </h3>
+                          <p class="px-4 py-2 elt">
+                            {{ save.references_name }}
+                          </p>
+                        </div>
+                        <div class="border-b border-b-stone-200 text-md">
+                          <h3
+                            class="px-4 py-2 font-bold uppercase bg-stone-100"
+                          >
+                            Reference's phone
+                          </h3>
+                          <p class="px-4 py-2 elt">
+                            {{ save.references_phone }}
+                          </p>
+                        </div>
+                        <div class="border-b border-b-stone-200 text-md">
+                          <h3
+                            class="px-4 py-2 font-bold uppercase bg-stone-100"
+                          >
+                            reference's Email
+                          </h3>
+                          <p class="px-4 py-2 elt">{{ save.email }}</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div v-if="itemIndex == 9">
+                      <h2 class="p-4 text-white bg-primary">
+                        Project ({{ index + 1 }})
+                      </h2>
+                      <div>
+                        <div class="border-b border-b-stone-200 text-md">
+                          <h3
+                            class="px-4 py-2 font-bold uppercase bg-stone-100"
+                          >
+                            Project Title
+                          </h3>
+                          <p class="px-4 py-2 elt">{{ save.title }}</p>
+                        </div>
+
+                        <div class="border-b border-b-stone-200 text-md">
+                          <h3
+                            class="px-4 py-2 font-bold uppercase bg-stone-100"
+                          >
+                            Company Name
+                          </h3>
+                          <p class="px-4 py-2 elt">{{ save.company }}</p>
+                        </div>
+
+                        <div class="border-b border-b-stone-200 text-md">
+                          <h3
+                            class="px-4 py-2 font-bold uppercase bg-stone-100"
+                          >
+                            Starting Date
+                          </h3>
+                          <p class="px-4 py-2 elt">{{ save.start_date }}</p>
+                        </div>
+                        <div class="border-b border-b-stone-200 text-md">
+                          <h3
+                            class="px-4 py-2 font-bold uppercase bg-stone-100"
+                          >
+                            Ending Date
+                          </h3>
+                          <p class="px-4 py-2 elt">{{ save.end_date }}</p>
+                        </div>
+                        <div
+                          v-if="save.tasks"
+                          class="border-b text-md border-b-stone-200"
+                        >
+                          <h3
+                            class="px-4 py-2 font-bold uppercase bg-stone-100"
+                          >
+                            Tasks performed:
+                          </h3>
+                          <ul class="pl-10 list-disc">
+                            <li
+                              class="my-1 elt"
+                              v-for="(
+                                task, indexPerformed
+                              ) in save.tasks"
+                              :key="indexPerformed"
+                            >
+                              {{ task }}
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+
                     <div v-if="itemIndex == 1">
-                      <h2 class="p-4 bg-primary text-white">
+                      <h2 class="p-4 text-white bg-primary">
                         schools/institutions ({{ index + 1 }})
                       </h2>
                       <div>
                         <div class="border-b border-b-stone-200 text-md">
                           <h3
-                            class="font-bold uppercase px-4 py-2 bg-stone-100"
+                            class="px-4 py-2 font-bold uppercase bg-stone-100"
                           >
                             Institution
                           </h3>
-                          <p class="elt px-4 py-2">{{ save.title }}</p>
+                          <p class="px-4 py-2 elt">{{ save.title }}</p>
                         </div>
                         <div
                           v-if="save.city && save.city != ''"
                           class="border-b border-b-stone-200 text-md"
                         >
                           <h3
-                            class="font-bold uppercase px-4 py-2 bg-stone-100"
+                            class="px-4 py-2 font-bold uppercase bg-stone-100"
                           >
                             City
                           </h3>
-                          <p class="elt px-4 py-2">{{ save.city }}</p>
+                          <p class="px-4 py-2 elt">{{ save.city }}</p>
                         </div>
                         <div class="border-b border-b-stone-200 text-md">
                           <h3
-                            class="font-bold uppercase px-4 py-2 bg-stone-100"
+                            class="px-4 py-2 font-bold uppercase bg-stone-100"
                           >
                             Diploma obtained
                           </h3>
-                          <p class="elt px-4 py-2">{{ save.grade }}</p>
+                          <p class="px-4 py-2 elt">{{ save.grade }}</p>
                         </div>
                         <div
                           v-if="
@@ -419,11 +614,11 @@ const editSave = (item: any, index: number) => {
                           class="border-b border-b-stone-200 text-md"
                         >
                           <h3
-                            class="font-bold uppercase px-4 py-2 bg-stone-100"
+                            class="px-4 py-2 font-bold uppercase bg-stone-100"
                           >
                             Field of study
                           </h3>
-                          <p class="elt px-4 py-2">{{ save.field_of_study }}</p>
+                          <p class="px-4 py-2 elt">{{ save.field_of_study }}</p>
                         </div>
                         <div
                           v-if="
@@ -432,41 +627,41 @@ const editSave = (item: any, index: number) => {
                           class="border-b border-b-stone-200 text-md"
                         >
                           <h3
-                            class="font-bold uppercase px-4 py-2 bg-stone-100"
+                            class="px-4 py-2 font-bold uppercase bg-stone-100"
                           >
                             Grade obtained
                           </h3>
-                          <p class="elt px-4 py-2">{{ save.grade_obtained }}</p>
+                          <p class="px-4 py-2 elt">{{ save.grade_obtained }}</p>
                         </div>
 
                         <div class="border-b border-b-stone-200 text-md">
                           <h3
-                            class="font-bold uppercase px-4 py-2 bg-stone-100"
+                            class="px-4 py-2 font-bold uppercase bg-stone-100"
                           >
                             Starting Date
                           </h3>
-                          <p class="elt px-4 py-2">{{ save.start_date }}</p>
+                          <p class="px-4 py-2 elt">{{ save.start_date }}</p>
                         </div>
                         <div class="border-b border-b-stone-200 text-md">
                           <h3
-                            class="font-bold uppercase px-4 py-2 bg-stone-100"
+                            class="px-4 py-2 font-bold uppercase bg-stone-100"
                           >
                             Ending Date
                           </h3>
-                          <p class="elt px-4 py-2">{{ save.end_date }}</p>
+                          <p class="px-4 py-2 elt">{{ save.end_date }}</p>
                         </div>
                         <div
                           v-if="save.tasks_performed"
-                          class="text-md border-b border-b-stone-200"
+                          class="border-b text-md border-b-stone-200"
                         >
                           <h3
-                            class="font-bold uppercase px-4 py-2 bg-stone-100"
+                            class="px-4 py-2 font-bold uppercase bg-stone-100"
                           >
                             Tasks performed:
                           </h3>
-                          <ul class="list-disc pl-10">
+                          <ul class="pl-10 list-disc">
                             <li
-                              class="elt my-1"
+                              class="my-1 elt"
                               v-for="(
                                 task, indexPerformed
                               ) in save.tasks_performed"
@@ -477,20 +672,19 @@ const editSave = (item: any, index: number) => {
                           </ul>
                         </div>
                       </div>
-                     
                     </div>
-                    <div class="flex bg-primary gap-2 px-4 py-2">
-                        <Button
-                          @click="removeSaved(itemIndex, index)"
-                          variant="outline"
-                          class="p-1 btn-item flex gap-2 item-center text-white bg-red-500 px-2 hover:border-secondary h-fit hover:text-secondary"
-                          type="button"
-                        >
-                          <Trash
-                            class="text-white icon size-4 hover:text-secondary"
-                          />Delete
-                        </Button>
-                      </div>
+                    <div class="flex justify-end gap-2 px-4 py-2 bg-white">
+                      <Button
+                        @click="removeSaved(itemIndex, index)"
+                        variant="outline"
+                        class="flex gap-2 p-1 px-2 text-white bg-red-500 btn-item item-center hover:border-secondary h-fit hover:text-secondary"
+                        type="button"
+                      >
+                        <Trash
+                          class="text-white icon size-4 hover:text-secondary"
+                        />Delete
+                      </Button>
+                    </div>
                   </div>
                 </div>
               </div>

@@ -61,7 +61,8 @@ const experience_fields = [
   {
     name: "start_date",
     label: "Date",
-    type: "month",
+    placeholder: "e.g 2024-02-03 or 2024-03 or 2024",
+    type: "text",
     class: "col-span-1",
     id: "startDateAward",
   },
@@ -78,7 +79,7 @@ const experience_fields = [
 <template>
   <form @submit="onSubmit">
     <div
-      class="grid w-full grid-cols-2 gap-6 p-2 border-l-2 bg- border-secondary/50"
+      class="grid items-end w-full grid-cols-2 gap-6 p-2 border-l-2 bg- border-secondary/50"
     >
       <template v-for="field in experience_fields">
         <FormField
@@ -90,15 +91,7 @@ const experience_fields = [
           <FormItem :class="field.class">
             <FormLabel>{{ field.label }}</FormLabel>
             <FormControl>
-              <Textarea
-                v-if="field.type == 'textarea'"
-                class="w-full"
-                v-bind="componentField"
-                :placeholder="field.placeholder"
-                :id="field.id"
-              />
               <Input
-                v-else
                 :type="field.type ? field.type : 'text'"
                 :placeholder="field.placeholder"
                 v-bind="componentField"
@@ -110,7 +103,7 @@ const experience_fields = [
         </FormField>
       </template>
       <div>
-        <Button class="px-6 space-x-3"> <Plus /> <span>Add </span> </Button>
+        <Button type="submit" class="px-2 w-fit"><Plus /> <span>Add </span> </Button>
       </div>
     </div>
   </form>

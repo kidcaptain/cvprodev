@@ -9,7 +9,7 @@ import * as z from "zod";
 const formSchema = toTypedSchema(
   z.object({
     title: z.string().min(2).max(255),
-    position: z.string().min(2).max(255),
+    position: z.string(),
     references_name: z.string(),
     references_phone: z.string(),
     email: z.string().email(),
@@ -125,8 +125,8 @@ const references_fields = [
         </FormField>
       </template>
       <div class="col-span-2">
-        <Button class="px-6 space-x-3">
-          <Plus /> <span>Add expérience</span>
+        <Button type="submit" class="px-2 w-fit">
+          <Plus :size="15" /> <span>Add reference</span>
         </Button>
       </div>
     </div>

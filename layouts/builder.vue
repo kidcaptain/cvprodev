@@ -431,11 +431,10 @@ onMounted(() => {
       </div>
     </header>
     <main class="bg-background">
-      <div class="container py-5">
+      <div class="container px-2 py-5">
         <div
-          class="max-w-3xl p-3 mx-auto bg-white shadow-lg md:p-8 rounded-xl text-foreground"
-        >
-          <slot></slot>
+          class="max-w-3xl p-3 px-4 mx-auto bg-white shadow-lg md:p-8 rounded-xl text-foreground"
+        ><slot></slot>
         </div>
       </div>
     </main>

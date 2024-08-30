@@ -193,9 +193,9 @@ const sections = [
         />
       </template>
       <section class=" my-28 md:my-0">
-        <div class="container md:flex gap-24 items-center">
-          <div class="flex-1 py-12 px-5">
-            <h2 class="text-4xl text-primary font-bold mb-6">
+        <div class="container items-center gap-24 md:flex">
+          <div class="flex-1 px-5 py-12">
+            <h2 class="mb-6 text-4xl font-bold text-primary">
               Easy Payment
             </h2>
             <div>
@@ -233,8 +233,8 @@ const sections = [
       </div>
     </section>
     <section class="py-20 bg-background">
-      <h3 class="mb-8 text-3xl text-center">
-        <span class="font-bold text-primary">CV PRO</span> is approved by job
+      <h3 class="mb-8 text-2xl text-center md:text-lg">
+        <span class="font-bold text-primary ">CV PRO</span> is approved by job
         seekers and recruiters
       </h3>
       <PartsTemoignage />

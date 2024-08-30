@@ -128,7 +128,7 @@ onMounted(() => {
               <li v-for="link in HeaderLink" :key="link.text">
                 <nuxt-link
                   :to="link.to"
-                  active-class="text-primary font-bold"
+                  active-class="font-bold text-primary"
                   class="hover:text-secondary"
                 >
                   {{ link.text }}
@@ -247,8 +247,8 @@ onMounted(() => {
                       v-for="link in HeaderLink"
                       :to="link.to"
                       :key="link.text"
-                      active-class="text-primary bg-white font-bold"
-                      class="w-full border-none bg-primary/90"
+                      active-class="font-bold bg-white text-primary"
+                      class="w-full p-2 border-none rounded-lg bg-primary/90"
                     >
                       {{ link.text }}
                     </nuxt-link>

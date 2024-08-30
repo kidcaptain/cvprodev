@@ -85,17 +85,7 @@ const sections = [
     },
     reverse: true,
   },
-  {
-    title: "Easy Payment",
-    img: "/img/pics/home/digital-payment.png",
-    text: `Make your payments via Orange Money and Mtn Mobile Money and easily download your CVs in a few clicks.
-Don't wait any longer, start now`,
-    btn: {
-      text: "Choosing your CV template",
-      to: "/templates",
-    },
-    reverse: true,
-  },
+
 ];
 </script>
 
@@ -202,7 +192,29 @@ Don't wait any longer, start now`,
           :variant="section.variant"
         />
       </template>
+      <section class=" my-28 md:my-0">
+        <div class="container md:flex gap-24 items-center">
+          <div class="flex-1 py-12 px-5">
+            <h2 class="text-4xl text-primary font-bold mb-6">
+              Easy Payment
+            </h2>
+            <div>
+              Make your payments via Orange Money and Mtn Mobile Money and
+              easily download your CVs in a few clicks. Don't wait any longer,
+              start now
+            </div>
+            <div class="mt-8" >
+              <nuxt-link to="/pricings">
+                <Button class="px-9" variant="outline">
+                  Choosing your CV template
+                </Button>
+              </nuxt-link>
+            </div>
+          </div>
+        </div>
+      </section>
     </section>
+
     <section
       class="text-center bg-background px-10 md:p-24 rounded-t-[50px] md:rounded-t-[300px]"
     >

@@ -33,8 +33,14 @@ const onSubmit = handleSubmit((values) => {
 const experience_fields = [
     {
         name: "title",
+        label: "Link",
+        placeholder: "e.g markAntoine48",
+        type: 'text',
+    },
+    {
+        name: "social",
         label: "Social network name",
-        placeholder: "Facebook",
+        placeholder: "facebook",
         type: 'text',
     },
 ]

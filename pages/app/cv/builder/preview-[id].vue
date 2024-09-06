@@ -3,6 +3,10 @@ import { SelectItem } from "radix-vue";
 
 import { useForm } from "vee-validate";
 // import type TemplateToPdf from "~/components/builder/preview/Template-to-pdf.vue";
+import TemplatesTemplate1 from "@/components/templates/template-1.vue";
+import TemplatesTemplate2 from "@/components/templates/template-2.vue";
+import TemplatesTemplate3 from "@/components/templates/template-3.vue";
+import TemplatesTemplate4 from "@/components/templates/template-4.vue";
 
 definePageMeta({
   layout: "template-preview",
@@ -11,16 +15,24 @@ definePageMeta({
 const route = useRoute();
 useHead({
   title: "Preview CV - CV PRO",
- 
 });
-const { data, error } = await useFetch<any>(
-  "/api/templates/templateById?id=" + route.params.id
-);
+
+// const { data, error } = await useFetch<any>(
+//   "/api/templates/templateById?id=" + route.params.id
+// );
+const id = route.params.id;
+
+const resolveComponent = () => {
+  if (id == '1') return TemplatesTemplate2;
+  if (id == "2") return TemplatesTemplate1;
+  if (id == '3') return TemplatesTemplate3;
+  if (id == '4') return TemplatesTemplate4;
+};
 
 const isRaedy = ref(false);
 
 // const pdfSection = ref<HTMLElement | null>(null);
-
+const datasTemplate = ref<any>();
 onMounted(() => {
   const step1 = window.localStorage.getItem("step_1");
   const step2 = window.localStorage.getItem("step_2");
@@ -54,11 +66,6 @@ onMounted(() => {
       }
     }
 
-    // const storage = sessionStorage;
-    // if ('image' in storage) {
-    //   (upload_file as HTMLImageElement).src = storage['image'];
-    // }
-
     const etape1: {
       firstname: string;
       lastname: string;
@@ -66,6 +73,8 @@ onMounted(() => {
       experience: string;
       address: string;
       phone: string;
+      linkedIn: string;
+      maritalStatus: string;
       email: string;
       website: string;
       objective: string;
@@ -86,18 +95,41 @@ onMounted(() => {
         experience: string;
         grade: string;
         type: string;
+        award: string;
+        grade: string;
+        city: string;
+        field_of_study: string;
+        grade_obtained: string;
+        level: string;
+        tasks: string;
+        references_name: string;
+        references_phone: string;
+        email: string;
+        position: string;
       }[];
     }[] = JSON.parse(step2);
+    datasTemplate.value = {
+      nom: etape1.firstname,
+      prenom: etape1.lastname,
+      title: etape1.title,
+      experience: etape1.experience,
+      address: etape1.address,
+      phone: etape1.phone,
+      linkedIn: etape1.linkedIn,
+      maritalStatus: etape1.maritalStatus,
+      email: etape1.email,
+      website: etape1.website,
+      resume: etape1.objective,
+      educations: etape2[1].data,
+      personalSkills: etape2[2].data,
+      professionalSkills: etape2[3].data,
+      languages: etape2[4].data,
+      hobbies: etape2[5].data,
+      workExperiences: etape2[0].data,
+      references: etape2[8].data,
+    };
 
-    const etape3: {
-      title: string;
-      data: any[];
-    }[] = JSON.parse(step3);
-
-    const etape4: {
-      title: string;
-      data: any[];
-    }[] = JSON.parse(step4);
+    console.log(datasTemplate.value);
 
     const firstname = document.getElementById("firstname");
     if (firstname) {
@@ -130,6 +162,22 @@ onMounted(() => {
       address.innerText = etape1.address;
       if (!etape1.address) {
         address.style.display = "none";
+      }
+    }
+
+    const maritalStatus = document.getElementById("maritalStatus");
+    if (maritalStatus) {
+      maritalStatus.innerText = etape1.maritalStatus;
+      if (!etape1.maritalStatus) {
+        maritalStatus.style.display = "none";
+      }
+    }
+
+    const linkedIn = document.getElementById("linkedIn");
+    if (linkedIn) {
+      linkedIn.innerText = etape1.linkedIn;
+      if (!etape1.linkedIn) {
+        linkedIn.style.display = "none";
       }
     }
 
@@ -187,11 +235,11 @@ onMounted(() => {
     const language = document.getElementById("language");
     if (language) {
       var text = "";
-      if (etape3[0].data.length > 0) {
-        etape3[0].data.forEach((e) => {
+      if (etape2[4].data.length > 0) {
+        etape2[4].data.forEach((e) => {
           text += ` <li>
                         <span class="text">${e.title}</span><br>
-                        <i style="text-decoration: none; font-style: italic; font-size: small;">${e.type}</i>
+                        <i style="text-decoration: none; font-style: italic; font-size: small;">${e.level}</i>
                     </li>`;
         });
         language.innerHTML = text;
@@ -207,8 +255,8 @@ onMounted(() => {
     const hobbies = document.getElementById("hobbies");
     if (hobbies) {
       var text = "";
-      if (etape3[1].data.length > 0) {
-        etape3[1].data.forEach((e) => {
+      if (etape2[5].data.length > 0) {
+        etape2[5].data.forEach((e) => {
           text += `<li class="point2_template">${e.title}</li>`;
         });
         hobbies.innerHTML = text;
@@ -224,8 +272,8 @@ onMounted(() => {
     const achievements = document.getElementById("achievements");
     if (achievements) {
       var text = "";
-      if (etape4[1].data.length > 0) {
-        etape4[1].data.forEach((e) => {
+      if (etape2[7].data.length > 0) {
+        etape2[7].data.forEach((e) => {
           text += `<li class="point2_template">${e.title}</li>`;
         });
         achievements.innerHTML = text;
@@ -244,8 +292,8 @@ onMounted(() => {
     );
     if (references) {
       var text = "";
-      if (etape4[0].data.length > 0) {
-        etape4[0].data.forEach((e) => {
+      if (etape2[8].data.length > 0) {
+        etape2[8].data.forEach((e) => {
           text += `<li class="point2_template">${
             e.references_name
           }(<span style="font-size: 12px; opacity: 0.8;">${
@@ -267,8 +315,8 @@ onMounted(() => {
     }
     if (referencesLeftRight) {
       var text = "";
-      if (etape4[0].data.length > 0) {
-        etape4[0].data.forEach((e) => {
+      if (etape2[8].data.length > 0) {
+        etape2[8].data.forEach((e) => {
           text += `<li class="point2_template">${
             e.references_name
           }(<span style="font-size: 12px; opacity: 0.8;">${
@@ -295,8 +343,8 @@ onMounted(() => {
       // social.style.display = "none"
 
       // var text = "";
-      // if (etape4[2].data.length > 0) {
-      //   etape4[2].data.forEach((e) => {
+      // if (etape2[2].data.length > 0) {
+      //   etape2[2].data.forEach((e) => {
       //     text += `
       //      <li>
       //       <span class="icon" style="color: white;"><i class="fa fa-facebook"
@@ -339,12 +387,14 @@ onMounted(() => {
 
                         </div>
                         <div class="left-align">
-                            <p style="color: grey;"><i>${e.startDate} – ${e.endDate}</i></p>
+                            <p style="color: grey;"><i>${e.startDate} – ${
+            e.endDate
+          }</i></p>
                             <p>Cameroon</p>
                         </div>
                     </div><br>
                      <P style="padding: 0 50px; opacity: 0.7; font-size: 14px;" >
-                        ${e.professionalTasksPerformed}
+                        ${e.professionalTasksPerformed.toString()}
                     </P><br>`;
         });
         work_experience.innerHTML = text;
@@ -362,7 +412,7 @@ onMounted(() => {
     const education = document.getElementById("education");
     if (education) {
       text = "";
-      console.log(etape3);
+      console.log(etape2);
       if (etape2[1].data.length > 0) {
         etape2[1].data.forEach((e) => {
           text += `
@@ -384,8 +434,8 @@ onMounted(() => {
     const certifications = document.getElementById("certifications");
     if (certifications) {
       text = "";
-      if (etape3[2].data.length > 0) {
-        etape3[2].data.forEach((e) => {
+      if (etape2[6].data.length > 0) {
+        etape2[6].data.forEach((e) => {
           text += `
         <p>${e.title}</p>
                 <p style="color: grey;"><i>${e.end_date}</i></p><br>
@@ -412,16 +462,16 @@ onMounted(() => {
       const title = document.querySelector(".award_title");
       const date = document.querySelector(".award_date");
       if (company && title && date) {
-        title.innerHTML = etape3[3].data[0].title;
-        company.innerHTML = etape3[3].data[0].award;
-        date.innerHTML = etape3[3].data[0].start_date;
+        title.innerHTML = etape2[7].data[0].title;
+        company.innerHTML = etape2[7].data[0].award;
+        date.innerHTML = etape2[7].data[0].start_date;
         award.innerHTML = "";
         award.innerHTML += title.innerHTML;
         award.innerHTML += company.innerHTML;
         award.innerHTML += date.innerHTML;
       }
-      
-      etape3[3].data.forEach((e, index: number) => {
+
+      etape2[7].data.forEach((e, index: number) => {
         if (index > 0) {
           if (company && title && date) {
             title.innerHTML = e.title;
@@ -435,77 +485,33 @@ onMounted(() => {
       });
       award.innerHTML = text;
     }
-    if (awardLeftRight) {
-      text = "";
 
-      const company = document.querySelector(".award_company");
-      const title = document.querySelector(".award_title");
-      const date = document.querySelector(".award_date");
-      awardLeftRight.innerHTML = "";
-
-      etape3[3].data.forEach((e, index: number) => {
-        if (index % 2 == 0) {
-          text += `
-          <div class="left-column_template">
-            <div class="content_template">
-                <div class="vertical-line_template">
-                    <p class="award_company">${e.title}</p>
-                    <p class="red_text_template award_title"><i>${
-                      e.award
-                    }</i></p>
-                      <p class=<"award_date" style="color: grey;"><i>${reformDateByMonth(
-                        e.start_date
-                      )}</i></p>
-                  </div>
-              </div>
-          </div>
-                    `;
-        } else {
-          text += `
-          <div class="right-column_template">
-            <div class="content_template">
-                <div class="vertical-line_template">
-                    <p class="award_company">${e.title}</p>
-                    <p class="red_text_template award_title"><i>${
-                      e.award
-                    }</i></p>
-                      <p class=<"award_date" style="color: grey;"><i>${reformDateByMonth(
-                        e.start_date
-                      )}</i></p>
-                  </div>
-              </div>
-          </div>
-                    `;
-        }
-      });
-      awardLeftRight.innerHTML = text;
-    }
     const element = document.getElementById("content");
     const preview = document.getElementById("preview");
-    if (element && preview) {
-      element.style.width = "827px";
-      element.style.height = `${
-        Math.ceil(element.getBoundingClientRect().height / 1170.4889) *
-        1170.4889
-      }px`;
-      if (Math.ceil(element.getBoundingClientRect().height / 1170.4889) > 1) {
-        const hr = document.createElement("div");
-        hr.style.position = "absolute";
-        hr.style.transform = "translateY(-50%)";
-        hr.style.top = "50%";
-        hr.style.backgroundColor = "#faf4f4";
-        hr.style.padding = "5px 0";
-        hr.style.width = "100%";
-        hr.style.textAlign = "center";
-        hr.style.minWidth = "816.3px";
-        hr.style.fontSize = "14px";
+    // if (element && preview) {
+    //   element.style.width = "827px";
+    //   element.style.height = `${
+    //     Math.ceil(element.getBoundingClientRect().height / 1170.4889) *
+    //     1170.4889
+    //   }px`;
+    //   if (Math.ceil(element.getBoundingClientRect().height / 800) > 1) {
+    //     const hr = document.createElement("div");
+    //     hr.style.position = "absolute";
+    //     hr.style.transform = "translateY(-50%)";
+    //     hr.style.top = "50%";
+    //     hr.style.backgroundColor = "#faf4f4";
+    //     hr.style.padding = "5px 0";
+    //     hr.style.width = "100%";
+    //     hr.style.textAlign = "center";
+    //     hr.style.minWidth = "816.3px";
+    //     hr.style.fontSize = "14px";
 
-        hr.innerText =
-          "Page " +
-          Math.ceil(element.getBoundingClientRect().height / 1170.4889);
-        preview.append(hr);
-      }
-    }
+    //     hr.innerText =
+    //       "Page " +
+    //       Math.ceil(element.getBoundingClientRect().height / 1170.4889);
+    //     preview.append(hr);
+    //   }
+    // }
   }
 
   isRaedy.value = true;
@@ -545,17 +551,24 @@ const reloadPage = () => {
   <section
     class="container grid min-h-screen grid-cols-4 gap-8 p-10 translate-x-1 max-sm:flex max-xl:flex-col"
   >
-    <div class="col-span-1 ">
+    <div class="col-span-1">
       <BuilderPreviewTools
         :templateId="route.params.id"
         :isEditedPage="false"
       />
     </div>
-    <section id="preview" class="relative col-span-3 overflow-auto printme">
-      <div v-if="data" class="min-h-screen">
-        <TemplateToPdf v-html="data.html"></TemplateToPdf>
+    <section
+      id="preview"
+      class="relative min-h-screen bg-white col-span-3 p-4 overflow-auto printme"
+    >
+    <!-- v-if="data" -->
+      <div  class="min-h-screen" >
+        <!-- <TemplateToPdf v-html="data.html"></TemplateToPdf> -->
+        <button id="download-pdf" hidden>Download PDF</button>
+        <component :is="resolveComponent()" v-bind="datasTemplate"></component>
+         <!-- <TemplatesTemplate6  v-bind="datasTemplate" c></TemplatesTemplate6> -->
       </div>
-      <div v-else-if="error" class="font-semibold text-center">
+      <!-- <div v-else-if="error" class="font-semibold text-center">
         <h3>Not find Template</h3>
         <h4>
           Check Your Network And
@@ -564,35 +577,22 @@ const reloadPage = () => {
           >
           a Page
         </h4>
-      </div>
-      <div v-else>
+      </div> -->
+      <!-- <div v-else>
         <div class="w-full min-h-screen transition-all card is-loading">
           <div class="content"></div>
         </div>
-      </div>
+      </div> -->
     </section>
   </section>
 </template>
 <style scoped>
-.card {
-  background: #fff;
-  border-radius: 5px;
+.container_template {
+  width: fit-content;
+  min-height: 1054.4889px;
+  min-width: 816.3px;
+  max-width: 1000.3px;
 }
-.card .content {
-  padding: 20px 30px;
-  height: 100%;
-}
-.card.is-loading .content {
-  background: #eee;
-  background: linear-gradient(110deg, #ececec 8%, #f5f5f5 18%, #ececec 33%);
-  border-radius: 5px;
-  background-size: 200% 100%;
-  animation: 1.5s shine linear infinite;
-}
+</style>  import type { TemplatesTemplate1 } from "#build/components";
+import type template3Vue from "@/components/templates/template-3.vue";
 
-@keyframes shine {
-  to {
-    background-position-x: -200%;
-  }
-}
-</style>

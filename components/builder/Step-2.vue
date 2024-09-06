@@ -563,9 +563,7 @@ const editSave = (item: any, index: number) => {
                           <ul class="pl-10 list-disc">
                             <li
                               class="my-1 elt"
-                              v-for="(
-                                task, indexPerformed
-                              ) in save.tasks"
+                              v-for="(task, indexPerformed) in save.tasks"
                               :key="indexPerformed"
                             >
                               {{ task }}

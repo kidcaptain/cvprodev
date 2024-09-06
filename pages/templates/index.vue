@@ -35,6 +35,73 @@ const { data, pending, error, refresh } = await useAsyncData<any>(
   () => $fetch(`${BASE_URL}templates/get/all`)
 );
 console.log(data);
+import image1 from 'assets/img/pics/model1.png'
+import image2 from 'assets/img/pics/model2.png'
+import image3 from 'assets/img/pics/model3.png'
+import image4 from 'assets/img/pics/model4.png'
+import image5 from 'assets/img/pics/model5.png'
+import image6 from 'assets/img/pics/model6.png'
+import image7 from 'assets/img/pics/model7.png'
+const cvs = [
+  {
+    id: "1",
+    title: "Blue and white theme template",
+    desccription:
+      "Modèle de thème bleu et blanc avec possibilité de changer de thème de couleur",
+    img: image1,
+    type: "with"
+  },
+  {
+    id: "2",
+    title: "Soft and vintage",
+    desccription:
+      "Template black and white with image ",
+    img: image2 ,
+    type: "with"
+  },
+  {
+    id: "3",
+    title: "Soft and vintage",
+    desccription:
+      "Template black and white with image ",
+    img: image3 ,
+    type: "with"
+  },
+  {
+    id: "4",
+    title: "Soft and vintage",
+    desccription:
+      "Template black and white with image ",
+    img: image4 ,
+    type: "with"
+  },
+  {
+    id: "5",
+    title: "Juila Manson",
+    desccription:
+      "Template Juila Manson ",
+    img: image5 ,
+    type: "with"
+  },
+  {
+    id: "6",
+    title: "Juila Manson",
+    desccription:
+      "Template Juila Manson ",
+    img: image6 ,
+    type: "with"
+  },
+  {
+    id: "7",
+    title: "Juila Manson",
+    desccription:
+      "Template Juila Manson ",
+    img: image7 ,
+    type: "with"
+  },
+
+  
+];
 </script>
 <template>
   <Dialog :defaultOpen="!aggred">
@@ -184,17 +251,23 @@ console.log(data);
   <section class="pt-20 bg-stone-50">
     <h2 class="text-3xl font-semibold text-center">Our CV templates</h2>
     <p class="text-center">Choose from our professional models</p>
-    <div class="container py-10 md:py-20">
+    <div class="container max-h-[80dvh] py-10 md:py-20">
       <div class="mb-2">
         <Button @click="checkImage = true" size="sm">with image</Button>
-        <Button @click="checkImage = false" class="mx-2"variant="outline" size="sm">without image</Button>
+        <Button
+          @click="checkImage = false"
+          class="mx-2"
+          variant="outline"
+          size="sm"
+          >without image</Button
+        >
       </div>
       <div
-        v-if="data && checkImage"
-        class="grid gap-10 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 md:gap-10"
+       
+        class="grid gap-10 mt-4 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 md:gap-10"
       >
-        <Dialog v-for="template in data?.templates" href="/">
-          <DialogTrigger as-child>
+        <Dialog v-if="checkImage" v-for="template in cvs">
+          <DialogTrigger as-child v-if="template.type == 'with'">
             <div
               variant="outline"
               class="transition-shadow duration-300 bg-white shadow-md cursor-pointer shadow-black/20 rounded-2xl overflow-clip hover:shadow-black/40 hover:shadow-2xl"
@@ -207,10 +280,14 @@ console.log(data);
                 >
                   <div class="col-span-1">
                     <div class="aspect-[210/297]">
-                      <nuxt-img
-                        :src="'https://' + template.templateImagePath"
+                      <img
+                        :src="template.img"
                         class="w-full h-full object-content"
                       />
+                      <!-- <img
+                        :src="'https://' + template.img"
+                        class="w-full h-full object-content"
+                      /> -->
                     </div>
                   </div>
                   <div class="flex flex-col justify-between p-8">
@@ -218,18 +295,17 @@ console.log(data);
                       <h2
                         class="mb-4 text-3xl font-bold capitalize text-secondary"
                       >
-                        {{ template.name }}
+                        {{ template.title }}
                       </h2>
                       <p class="mb-2" v-html="template.description"></p>
                     </div>
                     <div class="flex justify-end gap-4 mt-3">
-                     
                       <nuxt-link
                         class="flex-1"
                         :to="{
                           name: `app-cv-builder-step-id`,
                           params: { id: 1 },
-                          query: { template_id: template.templateId },
+                          query: { template_id: template.id },
                         }"
                       >
                         <Button type="submit" class="w-full">
@@ -240,8 +316,8 @@ console.log(data);
                   </div>
                 </div>
               </DialogContent>
-              <nuxt-img
-                :src="'https://' + template.templateImagePath"
+              <img
+                  :src="template.img"
                 style=""
                 class="w-full m-auto"
               />
@@ -249,7 +325,69 @@ console.log(data);
                 <h2
                   class="mb-2 text-xl font-semibold capitalize text-secondary"
                 >
-                  {{ template.name }}
+                  {{ template.title }}
+                </h2>
+                <p class="text-sm line-clamp-3">{{ template.description }}</p>
+              </div>
+            </div>
+          </DialogTrigger>
+        </Dialog>
+        <Dialog v-else v-for="template in cvs">
+          <DialogTrigger as-child v-if="template.type == 'without'">
+            <div
+              variant="outline"
+              class="transition-shadow duration-300 bg-white shadow-md cursor-pointer shadow-black/20 rounded-2xl overflow-clip hover:shadow-black/40 hover:shadow-2xl"
+            >
+              <DialogContent
+                class="sm:max-w-[425px] lg:max-w-4xl grid-rows-[auto_minmax(0,1fr)_auto] p-0 max-h-[80dvh]"
+              >
+                <div
+                  class="flex flex-col gap-4 px-6 py-4 overflow-y-auto lg:grid md:grid-cols-2"
+                >
+                  <div class="col-span-1">
+                    <div class="aspect-[210/297]">
+                      <img
+                        :src="template.img"
+                        class="w-full h-full object-content"
+                      />
+                    </div>
+                  </div>
+                  <div class="flex flex-col justify-between p-8">
+                    <div>
+                      <h2
+                        class="mb-4 text-3xl font-bold capitalize text-secondary"
+                      >
+                        {{ template.title }}
+                      </h2>
+                      <p class="mb-2" v-html="template.description"></p>
+                    </div>
+                    <div class="flex justify-end gap-4 mt-3">
+                      <nuxt-link
+                        class="flex-1"
+                        :to="{
+                          name: `app-cv-builder-step-id`,
+                          params: { id: 1 },
+                          query: { template_id: template.id },
+                        }"
+                      >
+                        <Button type="submit" class="w-full">
+                          Use this template
+                        </Button>
+                      </nuxt-link>
+                    </div>
+                  </div>
+                </div>
+              </DialogContent>
+              <img
+                :src="template.img"
+                style=""
+                class="w-full m-auto"
+              />
+              <div class="h-full p-6 bg-stone-50">
+                <h2
+                  class="mb-2 text-xl font-semibold capitalize text-secondary"
+                >
+                  {{ template.title }}
                 </h2>
                 <p class="text-sm line-clamp-3">{{ template.description }}</p>
               </div>
@@ -257,7 +395,7 @@ console.log(data);
           </DialogTrigger>
         </Dialog>
       </div>
-      <div
+      <!-- <div
         v-else-if="error"
         class="container flex py-4 text-2xl font-semibold text-center align-middle min-h-96"
       >
@@ -274,7 +412,7 @@ console.log(data);
             <div class="content"></div>
           </div>
         </div>
-      </div>
+      </div> -->
     </div>
   </section>
 </template>

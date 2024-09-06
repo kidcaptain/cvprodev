@@ -55,9 +55,7 @@ const props = defineProps<{
 const typeBinding = ref<string>("PDF");
 const currentLanguage = ref<string>("en");
 
-const defaultValues = ref<any>({
-  name: "mon cv",
-});
+const defaultValues = ref();
 const download_field = [
   {
     name: "name",
@@ -501,29 +499,30 @@ const submitCV = async () => {
 
 const print = async () => {
   if (session.value != null) {
-    const download = document.getElementById("download-pdf");
-    if (download) {
-      download.addEventListener("click", () => {
-        const element = document.getElementById("content");
-        if (element) {
-          const options = {
-            filename: defaultValues.value.name,
-            margin: 0,
-            image: { type: "jpeg", quality: 0.98 },
-            html2canvas: { scale: 2 },
-            jsPDF: {
-              unit: "in",
-              format: "letter",
-              orientation: "portrait",
-            },
-          };
-          // @ts-ignore
-          html2pdf().set(options).from(element).save();
-        }
-      });
-      download.click();
-    } else {
-    }
+  console.log(defaultValues)
+  const download = document.getElementById("download-pdf");
+  if (download) {
+    download.addEventListener("click", () => {
+      const element = document.getElementById("content");
+      if (element) {
+        const options = {
+          filename: defaultValues.value,
+          margin: 0,
+          image: { type: "jpeg", quality: 0.98 },
+          html2canvas: { scale: 2 },
+          jsPDF: {
+            unit: "in",
+            format: "letter",
+            orientation: "portrait",
+          },
+        };
+        // @ts-ignore
+        html2pdf().set(options).from(element).save();
+      }
+    });
+    download.click();
+  } else {
+  }
   } else {
     if (confirm("Log in to use this feature")) {
       router.push("/auth/login");
@@ -757,43 +756,17 @@ const navigatorGet = (textToCopy: string) => {
         >
       </div>
       <div v-if="tab2">
-        <template v-for="field in download_field">
-          <FormField
-            v-slot="{ componentField }"
-            name="download"
-            class="w-full p-2 mt-2 text-sm rounded-md focus-visible:outline-none focus-visible:ring-2 ring-pink-900"
-            :value="defaultValues[field.name]"
-          >
-            <FormItem class="mb-4 text-sm text-left">
-              <FormLabel>{{ field.label }}</FormLabel>
-              <FormControl>
-                <FormControl>
-                  <select
-                    class="w-full p-2 mt-2 text-sm rounded-md focus-visible:outline-none focus-visible:ring-2 ring-pink-900"
-                    v-if="field.type == 'select'"
-                    v-model="typeBinding"
-                  >
-                    <option
-                      v-for="item in field.options"
-                      :value="item.value.toString()"
-                    >
-                      {{ item.text.toString() }}
-                    </option>
-                    <!-- <option value="en">English</option> -->
-                  </select>
-                  <Input
-                    v-else
-                    :type="field.type ? field.type : 'text'"
-                    :placeholder="field.placeholder"
-                    v-bind="componentField"
-                  />
-                </FormControl>
-              </FormControl>
-              <FormMessage class="text-xs" />
-            </FormItem>
-          </FormField>
-        </template>
-        <Button size="sm" @click="print()">Download</Button>
+        <div>
+          <label>File Name</label>
+          <Input
+           class="w-full p-2 mt-2 text-sm rounded-md focus-visible:outline-none focus-visible:ring-2 ring-pink-900"
+            type="text"
+            placeholder=""
+            v-model="defaultValues"
+          />
+        </div>
+     
+        <Button size="sm" class="mt-2" @click="print()">Print in pdf</Button>
       </div>
       <div v-if="tab3">
         <div class="flex items-center w-full gap-2 p-2 bg-white">
@@ -902,18 +875,17 @@ const navigatorGet = (textToCopy: string) => {
             <option value="small">Small</option>
           </select>
         </div>
-    
+
         <div>
           <label for="optionBackgroundPosition">Color</label>
-          <input type="color"
+          <input
+            type="color"
             class="w-full p-2 mt-2 text-sm rounded-md focus-visible:outline-none focus-visible:ring-2 ring-pink-900"
             v-model="optionBackgroundColor"
             @change="backgroundOptionColor"
             name="optionBackgroundNoRepeat"
-          >
-           
+          />
         </div>
-
       </div>
     </div>
   </div>

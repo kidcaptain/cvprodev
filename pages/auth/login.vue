@@ -37,12 +37,17 @@ interface FormDatas {
 const formData = reactive<FormDatas>({});
 
 const login = handleSubmit((values) => {
-  signIn("credentials", values).catch((err) => {
-    console.log("errur", err);
-    setErrors({
-      email: "Invalid Credentials",
+  signIn("credentials", values)
+    .catch((err) => {
+      // history.back()
+      console.log("", err);
+      setErrors({
+        email: "Invalid Credentials",
+      })
+    })
+    .then((e) => {
+      history.back()
     });
-  });
 });
 
 const experience_fields = [

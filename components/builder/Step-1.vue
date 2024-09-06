@@ -164,6 +164,12 @@ const showPreview = () => {
   const identifiant = (
     document.getElementById("identifiant") as HTMLSelectElement
   ).value;
+  const maritalStatus = (
+    document.getElementById("maritalStatus") as HTMLSelectElement
+  ).value;
+    const linkedinProfile = (
+    document.getElementById("linkedinProfile") as HTMLSelectElement
+  ).value;
 
   const value = {
     firstname: firstname,
@@ -174,6 +180,8 @@ const showPreview = () => {
     phone: phone == "" ? "" : identifiant + " " + phone,
     email: email,
     website: website,
+    maritalStatus: maritalStatus,
+    linkedIn: linkedinProfile,
     objective: objective,
   };
   window.localStorage.setItem("step_1", JSON.stringify(value));
@@ -334,14 +342,14 @@ const maritalStatus = ref();
             <FormControl>
               <select
                 v-bind="maritalStatus"
-                name="identifiant"
-                id="identifiant"
+                name="maritalStatus"
+                id="maritalStatus"
                 class="w-full px-4 py-2 text-white rounded-md bg-primary"
               >
-                <option value="+213">Single</option>
-                <option value="+244">Married</option>
-                <option value="+297">Widowed</option>
-                <option value="+267">Divorced</option>
+                <option value="single">Single</option>
+                <option value="married">Married</option>
+                <option value="widowed">Widowed</option>
+                <option value="divorced">Divorced</option>
               </select>
             </FormControl>
             <FormMessage class="text-xs" />

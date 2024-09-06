@@ -107,7 +107,7 @@ h1 span {
       >
         <div>
           <h1 class="text-3xl font-bold">
-            <span id="firstname">{{ nom }}</span>
+            <span id="firstname">{{ nom }} </span> 
             <span id="lastname">{{ prenom }}</span>
           </h1>
           <p id="title" style="color: #4b9ab0; font-size: 18px">

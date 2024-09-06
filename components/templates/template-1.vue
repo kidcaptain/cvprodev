@@ -210,6 +210,47 @@ const reformDateByMonth = (str) => {
           </li>
         </ul>
       </div>
+      <div class="mt-4" v-if="awards && awards.length > 0">
+        <h2
+          class="mb-3 text-2xl font-semibold uppercase border-b-4 border-b-stone-400"
+        >
+          Awards and Distinctions
+        </h2>
+        <ul class="flex flex-col">
+          <li v-for="award in awards">
+            <div class="grid grid-cols-5">
+              <div class="col-span-5">
+                <h3 class="font-semibold">
+                  {{ award.title }} | {{ award.award }}
+                </h3>
+                <h3>
+                  {{ award.start_date }}
+                </h3>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="mt-4" v-if="projects && projects.length > 0">
+        <h2
+          class="mb-3 text-2xl font-semibold uppercase border-b-4 border-b-stone-400"
+        >
+          Projects
+        </h2>
+        <ul class="flex flex-col">
+          <li v-for="project in projects">
+            <div class="grid grid-cols-5">
+              <div class="col-span-5">
+                <h3 class="font-semibold">{{ project.company }}</h3>
+                <h3>
+                  {{ project.start_date }} –
+                  {{ project.end_date }}
+                </h3>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
     </div>
   </main>
 </template>

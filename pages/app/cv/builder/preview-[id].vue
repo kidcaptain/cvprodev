@@ -605,6 +605,4 @@ const reloadPage = () => {
   min-width: 816.3px;
   max-width: 1000.3px;
 }
-</style>  import type { TemplatesTemplate1 } from "#build/components";
-import type template3Vue from "@/components/templates/template-3.vue";
-
+</style> 

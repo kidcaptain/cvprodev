@@ -66,7 +66,7 @@ onMounted(() => {
       const imageProfile = document.getElementById("image_profil");
       if (imageProfile) {
         imageProfile.style.backgroundImage = "url(" + base64 + ")";
-        imageProfile.style.margin = "auto";
+        // imageProfile.style.margin = "auto";
       }
     } else {
       if (upload_file) {

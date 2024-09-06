@@ -19,6 +19,9 @@ export default {
     hobbies: Array,
     workExperiences: Array,
     references: Array,
+    awards: Array,
+    certifications: Array,
+    projects: Array,
   },
 };
 

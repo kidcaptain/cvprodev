@@ -251,7 +251,7 @@ const cvs = [
   <section class="pt-20 bg-stone-50">
     <h2 class="text-3xl font-semibold text-center">Our CV templates</h2>
     <p class="text-center">Choose from our professional models</p>
-    <div class="container max-h-[80dvh] py-10 md:py-20">
+    <div class="container min-h-[80dvh] py-10 md:py-20">
       <div class="mb-2">
         <Button @click="checkImage = true" size="sm">with image</Button>
         <Button

@@ -63,18 +63,18 @@ onMounted(() => {
       if (upload_file) {
         (upload_file as HTMLImageElement).src = base64;
       }
-      const image_profil = document.getElementById("image_profil");
-      if (image_profil) {
-        image_profil.style.backgroundImage = "url(" + base64 + ")";
-        image_profil.style.margin = "auto";
+      const imageProfile = document.getElementById("image_profil");
+      if (imageProfile) {
+        imageProfile.style.backgroundImage = "url(" + base64 + ")";
+        imageProfile.style.margin = "auto";
       }
     } else {
       if (upload_file) {
         upload_file.style.display = "none";
       }
-      const image_profil = document.getElementById("image_profil");
-      if (image_profil) {
-        image_profil.style.display = "none";
+      const imageProfile = document.getElementById("image_profil");
+      if (imageProfile) {
+        imageProfile.style.display = "none";
       }
     }
 
@@ -139,6 +139,9 @@ onMounted(() => {
       hobbies: etape2[5].data,
       workExperiences: etape2[0].data,
       references: etape2[8].data,
+      awards: etape2[7].data,
+      certifications: etape2[6].data,
+      projects: etape2[9].data,
     };
 
     console.log(datasTemplate.value);

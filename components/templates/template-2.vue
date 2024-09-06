@@ -133,7 +133,7 @@ h1 span {
             gap: 40px;
           "
         >
-          <li
+          <li  v-if="address"
             class="flex gap-2 items-center border-b-8 pb-6"
             style="border-bottom: 4px #4b9ab0 solid"
             id="address_cadre"
@@ -162,12 +162,12 @@ h1 span {
               </svg>
             </div>
             <div>
-              <p id="address" v-if="address">
+              <p id="address">
                 {{ address }}
               </p>
             </div>
           </li>
-          <li
+          <li  v-if="phone"
             class="flex gap-2 items-center border-b-8 pb-6"
             style="border-bottom: 4px #4b9ab0 solid"
             id="phone_cadre"
@@ -200,7 +200,7 @@ h1 span {
               </p>
             </div>
           </li>
-          <li
+          <li  v-if="email || website"
             class="flex gap-2 items-center border-b-8 pb-6"
             style="border-bottom: 4px #4b9ab0 solid"
             id="email_cadre"
@@ -258,7 +258,7 @@ h1 span {
           class="flex flex-col col-span-3 gap-2 px-10"
           id="work_experience_cadre"
         >
-          <div>
+          <div v-if="educations && educations.length > 0">
             <svg
               width="32px"
               height="32px"
@@ -314,7 +314,7 @@ h1 span {
               </ul>
             </div>
           </div>
-          <div>
+          <div v-if="languages && languages.length > 0">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="32px"
@@ -547,7 +547,7 @@ h1 span {
               </div>
             </div>
           </div>
-          <div>
+          <div v-if="professionalSkills && professionalSkills.length > 0">
             <div class="flex items-center gap-2">
               <svg
                 width="32px"
@@ -595,7 +595,7 @@ h1 span {
               </ul>
             </div>
           </div>
-          <div>
+          <div v-if="personalSkills && personalSkills.length">
             <div class="flex items-center gap-2">
               <svg
                 width="32px"

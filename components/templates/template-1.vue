@@ -19,6 +19,9 @@ export default {
     hobbies: Array,
     workExperiences: Array,
     references: Array,
+    awards: Array,
+    certifications: Array,
+    projects: Array,
   },
 };
 
@@ -91,7 +94,7 @@ const reformDateByMonth = (str) => {
                 {{ resume }}
               </p>
             </div>
-            <div v-if="educations">
+            <div v-if="educations && educations.length > 0">
               <h2
                 class="mb-3 text-2xl font-semibold uppercase border-b-4 border-b-stone-400"
               >
@@ -127,7 +130,7 @@ const reformDateByMonth = (str) => {
         </div>
         <div></div>
         <div class="flex flex-col col-span-3 gap-4">
-          <div>
+          <div v-if="personalSkills && personalSkills.length > 0">
             <h2
               class="mb-3 text-2xl font-semibold uppercase border-b-4 border-b-stone-400"
             >
@@ -141,7 +144,7 @@ const reformDateByMonth = (str) => {
               </ul>
             </div>
           </div>
-          <div>
+          <div v-if="professionalSkills && professionalSkills.length > 0">
             <h2
               class="mb-3 text-2xl font-semibold uppercase border-b-4 border-b-stone-400"
             >
@@ -153,7 +156,7 @@ const reformDateByMonth = (str) => {
               </li>
             </ul>
           </div>
-          <div>
+          <div v-if="languages && languages.length > 0">
             <h2
               class="mb-3 text-2xl font-semibold uppercase border-b-4 border-b-stone-400"
             >
@@ -171,7 +174,7 @@ const reformDateByMonth = (str) => {
           </div>
         </div>
       </div>
-      <div class="mt-4">
+      <div class="mt-4" v-if="workExperiences && workExperiences.length > 0">
         <h2
           class="mb-3 text-2xl font-semibold uppercase border-b-4 border-b-stone-400"
         >

@@ -61,7 +61,11 @@ h1 span {
 * {
   font-family: "Poppins", sans-serif;
 }
-
+h1,
+h2,
+h3 {
+  color: rgb(6, 57, 111);
+}
 .container_template {
   z-index: -1;
   position: relative;
@@ -84,7 +88,7 @@ h1 span {
 }
 </style>
 <template>
-  <div id="content" class="bg-white">
+  <div class="bg-white" id="content">
     <div
       class="top_Side_template"
       style="
@@ -134,7 +138,7 @@ h1 span {
           "
         >
           <li
-            class="flex gap-2 items-center border-b-8 pb-6"
+            class="flex gap-2 items-center border-b-8 border-b-blue-400 pb-6"
             style="border-bottom: 4px #4b9ab0 solid"
             id="address_cadre"
           >
@@ -168,7 +172,7 @@ h1 span {
             </div>
           </li>
           <li
-            class="flex gap-2 items-center border-b-8 pb-6"
+            class="flex gap-2 items-center border-b-8 border-b-blue-400 pb-6"
             style="border-bottom: 4px #4b9ab0 solid"
             id="phone_cadre"
           >
@@ -201,7 +205,7 @@ h1 span {
             </div>
           </li>
           <li
-            class="flex gap-2 items-center border-b-8 pb-6"
+            class="flex gap-2 items-center border-b-8 border-b-blue-400 pb-6"
             style="border-bottom: 4px #4b9ab0 solid"
             id="email_cadre"
           >

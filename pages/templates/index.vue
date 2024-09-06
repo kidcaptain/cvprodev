@@ -42,61 +42,89 @@ import image4 from 'assets/img/pics/model4.png'
 import image5 from 'assets/img/pics/model5.png'
 import image6 from 'assets/img/pics/model6.png'
 import image7 from 'assets/img/pics/model7.png'
+import image8 from 'assets/img/pics/model8.png'
+import image9 from 'assets/img/pics/model9.png'
+import image12 from 'assets/img/pics/model12.png'
+import image13 from 'assets/img/pics/model13.png'
 const cvs = [
   {
     id: "1",
-    title: "Blue and white theme template",
-    desccription:
-      "Modèle de thème bleu et blanc avec possibilité de changer de thème de couleur",
+    title: "Classic Elegant (blue)",
+    description:
+      " A timeless and sophisticated design, highlighting your experience and skills with a touch of modernity. Perfect for positions in conservative industries",
     img: image1,
     type: "with"
   },
   {
     id: "2",
-    title: "Soft and vintage",
-    desccription:
-      "Template black and white with image ",
+    title: "Modern Minimalist",
+    description:
+      " A clean and contemporary style, emphasizing essential information. Ideal for creative candidates and positions in technology companies.",
     img: image2 ,
     type: "with"
   },
   {
     id: "3",
-    title: "Soft and vintage",
-    desccription:
-      "Template black and white with image ",
+    title: "Professional and Structured",
+    description:
+      "A well-organized and easy-to-read layout, showcasing your experience clearly and concisely. Suitable for all types of positions.",
     img: image3 ,
     type: "with"
   },
   {
     id: "4",
-    title: "Soft and vintage",
-    desccription:
-      "Template black and white with image ",
+    title: "Skills-Based",
+    description:
+      "A design highlighting your technical skills and accomplishments. Ideal for candidates in IT, engineering, and scientific fields.",
     img: image4 ,
     type: "without"
   },
   {
     id: "5",
-    title: "Juila Manson",
-    desccription:
-      "Template Juila Manson ",
-    img: image5 ,
+    title: "Functional",
+    description:
+      "A flexible template allowing you to customize each section to your needs. Ideal for candidates with varied work experiences.",
+    img: image6 ,
     type: "with"
   },
   {
     id: "6",
-    title: "Juila Manson",
-    desccription:
-      "Template Juila Manson ",
-    img: image6 ,
+    title: "Clean and Bright:",
+    description:
+      "An airy and visually appealing design, highlighting your key information. Perfect for candidates looking to make a positive first impression.",
+    img: image7 ,
     type: "with"
   },
   {
     id: "7",
     title: "Juila Manson",
-    desccription:
+    description:
       "Template Juila Manson ",
-    img: image7 ,
+    img: image8 ,
+    type: "without"
+  },
+  {
+    id: "8",
+    title: "Juila Manson",
+    description:
+      "Template Juila Manson ",
+    img: image9 ,
+    type: "without"
+  },
+  {
+    id: "12",
+    title: "Classic Elegant (Primary)",
+    description:
+      "A timeless and sophisticated design, highlighting your experience and skills with a touch of modernity. Perfect for positions in conservative industries",
+    img: image12 ,
+    type: "with"
+  },
+  {
+    id: "13",
+    title: "Modern Minimalist (blue)",
+    description:
+      "A clean and contemporary style, emphasizing essential information. Ideal for creative candidates and positions in technology companies.",
+    img: image13 ,
     type: "with"
   },
 

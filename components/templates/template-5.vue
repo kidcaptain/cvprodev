@@ -206,18 +206,14 @@ const reformDateByMonth = (str) => {
                   >{{ education.start_date }} - {{ education.end_date }}</span
                 >
               </li>
-              <li>
-                <h3 class="font-semibold">Master in software engineering</h3>
-                <h3 class="italic">University Carl II</h3>
-                <span class="italic">2020-2022</span>
-              </li>
+            
             </ul>
           </li>
           <li v-if="languages && languages.length > 0">
             <h2
               class="w-full p-2 mb-3 font-semibold text-center text-white uppercase rounded-full bg-stone-900"
             >
-              Personal Skills
+              Languages
             </h2>
             <ul class="flex flex-col gap-1 px-6" style="list-style: disc">
               <li v-for="language in languages">

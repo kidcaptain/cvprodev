@@ -73,7 +73,7 @@ const cvs = [
     desccription:
       "Template black and white with image ",
     img: image4 ,
-    type: "with"
+    type: "without"
   },
   {
     id: "5",

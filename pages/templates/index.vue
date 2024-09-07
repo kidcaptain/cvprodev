@@ -44,6 +44,7 @@ import image6 from 'assets/img/pics/model6.png'
 import image7 from 'assets/img/pics/model7.png'
 import image8 from 'assets/img/pics/model8.png'
 import image9 from 'assets/img/pics/model9.png'
+import image11 from 'assets/img/pics/model11.png'
 import image12 from 'assets/img/pics/model12.png'
 import image13 from 'assets/img/pics/model13.png'
 const cvs = [
@@ -97,7 +98,7 @@ const cvs = [
   },
   {
     id: "7",
-    title: "Juila Manson",
+    title: "Nature-Inspired",
     description:
       "Template Juila Manson ",
     img: image8 ,
@@ -125,6 +126,15 @@ const cvs = [
     description:
       "A clean and contemporary style, emphasizing essential information. Ideal for creative candidates and positions in technology companies.",
     img: image13 ,
+    type: "with"
+  },
+
+  {
+    id: "10",
+    title: "Modern Minimalist",
+    description:
+      "A clean and contemporary style, emphasizing essential information. Ideal for creative candidates and positions in technology companies.",
+    img: image11 ,
     type: "with"
   },
 

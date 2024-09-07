@@ -54,42 +54,46 @@ onMounted(() => {
 });
 const onSubmit = handleSubmit((e: any) => {
   const firstname = (document.getElementById("firstname") as HTMLInputElement)
-    .value;
-  const lastname = (document.getElementById("lastname") as HTMLInputElement)
-    .value;
-  const title = (document.getElementById("title") as HTMLInputElement).value;
-  const yearOfExperience = (
-    document.getElementById("yearOfExperience") as HTMLInputElement
-  ).value;
-  const address = (document.getElementById("address") as HTMLInputElement)
-    .value;
-  const phone = (document.getElementById("phone") as HTMLInputElement).value;
-  const email = (document.getElementById("email") as HTMLInputElement).value;
-  const website = (document.getElementById("website") as HTMLInputElement)
-    .value;
-  const objective = (document.getElementById("objectif") as HTMLTextAreaElement)
-    .value;
-  const identifiant = (
-    document.getElementById("identifiant") as HTMLSelectElement
-  ).value;
-
-  const value = {
-    firstname: firstname,
-    lastname: lastname,
-    title: title,
-    yearOfExperience: yearOfExperience,
-    address: address,
-    phone: phone == "" ? "" : identifiant + " " + phone,
-    email: email,
-    website: website,
-    objective: objective,
-  };
-  window.localStorage.setItem("step_1", JSON.stringify(value));
-  // values.phone = phone + " " + values.phone;
-  if (filename.value) {
-    window.URL.revokeObjectURL(filename.value);
+      .value;
+    const lastname = (document.getElementById("lastname") as HTMLInputElement)
+      .value;
+    const title = (document.getElementById("title") as HTMLInputElement).value;
+    const yearOfExperience = (
+      document.getElementById("yearOfExperience") as HTMLInputElement
+    ).value;
+    const address = (document.getElementById("address") as HTMLInputElement)
+      .value;
+    const phone = (document.getElementById("phone") as HTMLInputElement).value;
+    const email = (document.getElementById("email") as HTMLInputElement).value;
+    const website = (document.getElementById("website") as HTMLInputElement)
+      .value;
+    const objective = (
+      document.getElementById("objectif") as HTMLTextAreaElement
+    ).value;
+    const identifiant = (
+      document.getElementById("identifiant") as HTMLSelectElement
+    ).value;
+  if (phone != "") {
+    const value = {
+      firstname: firstname,
+      lastname: lastname,
+      title: title,
+      yearOfExperience: yearOfExperience,
+      address: address,
+      phone: phone == "" ? "" : identifiant + " " + phone,
+      email: email,
+      website: website,
+      objective: objective,
+    };
+    window.localStorage.setItem("step_1", JSON.stringify(value));
+    // values.phone = phone + " " + values.phone;
+    if (filename.value) {
+      window.URL.revokeObjectURL(filename.value);
+    }
+    emit("submit");
+  }else{
+    alert("Please fill in the required fields")
   }
-  emit("submit");
 });
 
 const filename = ref("");
@@ -167,7 +171,7 @@ const showPreview = () => {
   const maritalStatus = (
     document.getElementById("maritalStatus") as HTMLSelectElement
   ).value;
-    const linkedinProfile = (
+  const linkedinProfile = (
     document.getElementById("linkedinProfile") as HTMLSelectElement
   ).value;
 
@@ -336,9 +340,9 @@ const maritalStatus = ref();
             <FormMessage class="text-xs" />
           </FormItem>
         </FormField>
-        <FormField v-slot="{ componentField }" name="address">
+        <FormField v-slot="{ componentField }" name="marital">
           <FormItem class="col-span-1">
-            <label>Marital status</label> <br />
+            <label>Marital status </label> <br />
             <FormControl>
               <select
                 v-bind="maritalStatus"
@@ -357,7 +361,7 @@ const maritalStatus = ref();
         </FormField>
         <FormField v-slot="{ componentField }" name="address">
           <FormItem>
-            <label>Address</label>
+            <label>Address <span class="text-red-500">*</span></label>
             <FormControl>
               <Input
                 id="address"
@@ -416,7 +420,7 @@ const maritalStatus = ref();
       </div>
       <FormField v-slot="{ componentField }" name="email">
         <FormItem>
-          <label>Email Address</label>
+          <label>Email Address <span class="text-red-500">*</span></label>
           <FormControl>
             <Input type="text" id="email" v-bind="componentField" />
           </FormControl>
@@ -426,7 +430,7 @@ const maritalStatus = ref();
       <FormField v-slot="{ componentField }" name="website">
         <FormItem>
           <label title="facultatif"
-            >Website (<span class="text-xs text-red-400">facultatif</span
+            >Website (<span class="text-xs text-stone-400">facultatif</span
             >)</label
           >
           <FormControl>

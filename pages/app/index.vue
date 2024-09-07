@@ -55,7 +55,111 @@ const data = await $fetch<any>(BASE_URL + "cv/get/all")
   .catch((err) => {
     console.log(err);
   });
+import image1 from "assets/img/pics/model1.png";
+import image2 from "assets/img/pics/model2.png";
+import image3 from "assets/img/pics/model3.png";
+import image4 from "assets/img/pics/model4.png";
+import image5 from "assets/img/pics/model5.png";
+import image6 from "assets/img/pics/model6.png";
+import image7 from "assets/img/pics/model7.png";
+import image8 from "assets/img/pics/model8.png";
+import image9 from "assets/img/pics/model9.png";
+import image11 from "assets/img/pics/model11.png";
+import image12 from "assets/img/pics/model12.png";
+import image13 from "assets/img/pics/model13.png";
+const cvs = [
+  {
+    id: "1",
+    title: "Classic Elegant (blue)",
+    description:
+      " A timeless and sophisticated design, highlighting your experience and skills with a touch of modernity. Perfect for positions in conservative industries",
+    img: image1,
+    type: "with"
+  },
+  {
+    id: "2",
+    title: "Modern Minimalist",
+    description:
+      " A clean and contemporary style, emphasizing essential information. Ideal for creative candidates and positions in technology companies.",
+    img: image2 ,
+    type: "with"
+  },
+  {
+    id: "3",
+    title: "Professional and Structured",
+    description:
+      "A well-organized and easy-to-read layout, showcasing your experience clearly and concisely. Suitable for all types of positions.",
+    img: image3 ,
+    type: "with"
+  },
+  {
+    id: "4",
+    title: "Skills-Based",
+    description:
+      "A design highlighting your technical skills and accomplishments. Ideal for candidates in IT, engineering, and scientific fields.",
+    img: image4 ,
+    type: "without"
+  },
+  {
+    id: "5",
+    title: "Functional",
+    description:
+      "A flexible template allowing you to customize each section to your needs. Ideal for candidates with varied work experiences.",
+    img: image6 ,
+    type: "with"
+  },
+  {
+    id: "6",
+    title: "Clean and Bright:",
+    description:
+      "An airy and visually appealing design, highlighting your key information. Perfect for candidates looking to make a positive first impression.",
+    img: image7 ,
+    type: "with"
+  },
+  {
+    id: "7",
+    title: "Nature-Inspired",
+    description:
+      "Template Juila Manson ",
+    img: image8 ,
+    type: "without"
+  },
+  {
+    id: "8",
+    title: "Juila Manson",
+    description:
+      "Template Juila Manson ",
+    img: image9 ,
+    type: "without"
+  },
+  {
+    id: "12",
+    title: "Classic Elegant (Primary)",
+    description:
+      "A timeless and sophisticated design, highlighting your experience and skills with a touch of modernity. Perfect for positions in conservative industries",
+    img: image12 ,
+    type: "with"
+  },
+  {
+    id: "13",
+    title: "Modern Minimalist (blue)",
+    description:
+      "A clean and contemporary style, emphasizing essential information. Ideal for creative candidates and positions in technology companies.",
+    img: image13 ,
+    type: "with"
+  },
 
+  {
+    id: "10",
+    title: "Modern Minimalist",
+    description:
+      "A clean and contemporary style, emphasizing essential information. Ideal for creative candidates and positions in technology companies.",
+    img: image11 ,
+    type: "with"
+  },
+
+  
+];
 const deleteCv = async (val: any) => {
   if (confirm("Do you want to delete this CV?")) {
     const cvData = {
@@ -107,6 +211,10 @@ const deleteCv = async (val: any) => {
 const reload = () => {
   window.location.reload();
 };
+const stringToArray = (str: string)=>{
+  const array : string[]= JSON.parse(str);
+  return array[1]
+}
 </script>
 
 <template>
@@ -150,14 +258,14 @@ const reload = () => {
         class="relative grid grid-cols-4 gap-10 p-4 py-12 max-sm:grid-cols-1 max-lg:grid-cols-2"
       >
         <div
-          class="aspect-[210/297] overflow-hidden hover:shadow-lg relative border-none hover: rounded-3xl"
+          class="relative p-5 overflow-hidden bg-white border-none hover:shadow-lg hover: rounded-xl"
           v-for="i in getData"
         >
           <div
             class="relative z-10 flex flex-col items-center justify-center w-full h-full m-auto max-w-72"
           >
             <h1
-              class="my-8 font-semibold text-center text-black max-lg:text-xl"
+              class="font-semibold text-center text-black max-lg:text-xl"
             >
               Create at {{ i?.createdAt }}
             </h1>
@@ -166,8 +274,8 @@ const reload = () => {
               <NuxtLink
                 class="p-2 text-black border-2 rounded-md border-secondary hover:bg-white bg-white/70 hover:text-secondary hover:border-2 hover:border-white"
                 :to="{
-                  name: `app-view-id`,
-                  params: { id: `${i?.cvsUuid}` },
+                  name: `app-cv-builder-preview-id`,
+                  params: { id:  i.yearsOfExperience},
                 }"
               >
                 <Eye :size="14" />
@@ -180,12 +288,12 @@ const reload = () => {
               </Button>
             </div>
           </div>
-          <div class="absolute top-0 left-0 z-0 w-full h-full opacity-80">
+          <!-- <div class="absolute top-0 left-0 z-0 w-full h-full opacity-80">
             <img
               :src="'https://' + i?.templateImagePath"
               class="w-full h-full border-none rounded-3xl"
             />
-          </div>
+          </div> -->
         </div>
         <!-- <div
           class="aspect-[210/297] relative overflow-hidden bg-primary rounded-3xl"

@@ -274,14 +274,6 @@ const submitCV = async () => {
         endDate: string;
       }[];
     }[] = JSON.parse(`${step2}`);
-    const etape3: {
-      title: string;
-      data: any[];
-    }[] = JSON.parse(`${step3}`);
-    const etape4: {
-      title: string;
-      data: any[];
-    }[] = JSON.parse(`${step4}`);
     const educations: {
       institution: string;
       degree: string;
@@ -333,7 +325,7 @@ const submitCV = async () => {
       | null
       | any = [];
 
-    etape4[0].data.forEach((e) => {
+    etape2[8].data.forEach((e) => {
       references.push({
         institutionName: e.title,
         referenceFunction: e.position,
@@ -371,7 +363,7 @@ const submitCV = async () => {
       | null
       | any = [];
 
-    etape3[0].data.forEach((e) => {
+    etape2[4].data.forEach((e) => {
       languages.push({
         language: e.title,
         abilityLevel: e.type,
@@ -383,7 +375,7 @@ const submitCV = async () => {
     }
     var hobbies: string[] | null | any = [];
 
-    etape3[1].data.forEach((e) => {
+    etape2[5].data.forEach((e) => {
       hobbies.push(e.title);
     });
 
@@ -400,7 +392,7 @@ const submitCV = async () => {
       | null
       | any = [];
 
-    etape3[2].data.forEach((e) => {
+    etape2[6].data.forEach((e) => {
       certification.push({
         institutionName: e.title,
         yearObtained: e.end_date,
@@ -421,7 +413,7 @@ const submitCV = async () => {
       | null
       | any = [];
 
-    etape3[3].data.forEach((e) => {
+    etape2[7].data.forEach((e) => {
       award.push({
         award: e.award,
         yearObtained: e.start_date,
@@ -442,7 +434,7 @@ const submitCV = async () => {
       | null
       | any = [];
 
-    etape3[3].data.forEach((e) => {
+    etape2[9].data.forEach((e) => {
       project.push({
         projectTitle: e.title + "",
         projectTasksPerformed: e.tasks + "",
@@ -454,15 +446,15 @@ const submitCV = async () => {
       project = null;
     }
 
-    console.log(etape1, etape2, etape3, etape4);
+    console.log(etape1, etape2);
     const cvData = {
       userId: session.value?.uid,
-      templateId: props.templateId,
+      templateId:  "d6be0bb5-2fed-4e4b-b98c-7d0b10dec356",
       picturePath: image != "" ? image : null,
       profileInformations: JSON.stringify({
         name: `${etape1.firstname} ${etape1.lastname}`,
         title: etape1.title,
-        yearsOfExperience: etape1.yearOfExperience,
+        yearsOfExperience: props.templateId,
         phone: etape1.phone,
         address: etape1.address,
         email: etape1.email,

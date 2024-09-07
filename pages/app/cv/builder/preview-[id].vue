@@ -13,6 +13,10 @@ import TemplatesTemplate6 from "@/components/templates/template-6.vue";
 import TemplatesTemplate7 from "@/components/templates/template-7.vue";
 import TemplatesTemplate8 from "@/components/templates/template-8.vue";
 
+import TemplatesTemplate12 from "@/components/templates/template-12.vue";
+import TemplatesTemplate13 from "@/components/templates/template-13.vue";
+import TemplatesTemplate14 from "@/components/templates/template-14.vue";
+
 definePageMeta({
   layout: "template-preview",
 });
@@ -37,8 +41,9 @@ const resolveComponent = () => {
   if (id == '7') return TemplatesTemplate7;
   if (id == '8') return TemplatesTemplate8;
   if (id == '9') return TemplatesTemplate9;
-  if (id == '12') return TemplatesTemplate8;
-  if (id == '13') return TemplatesTemplate9;
+  if (id == '12') return TemplatesTemplate12;
+  if (id == '13') return TemplatesTemplate13;
+  if (id == '14') return TemplatesTemplate14;
 };
 
 const isRaedy = ref(false);
@@ -574,14 +579,14 @@ const reloadPage = () => {
     </div>
     <section
       id="preview"
-      class="relative min-h-screen bg-white col-span-3 p-4 overflow-auto printme"
+      class="relative min-h-screen col-span-3 p-4 overflow-auto bg-white printme"
     >
     <!-- v-if="data" -->
       <div  class="min-h-screen" >
         <!-- <TemplateToPdf v-html="data.html"></TemplateToPdf> -->
         <button id="download-pdf" hidden>Download PDF</button>
        <component :is="resolveComponent()" v-bind="datasTemplate"></component> 
-        <!--   <TemplatesTemplate12  v-bind="datasTemplate" c></TemplatesTemplate12> -->
+          <!-- <TemplatesTemplate14  v-bind="datasTemplate" c></TemplatesTemplate14> -->
       </div>
       <!-- <div v-else-if="error" class="font-semibold text-center">
         <h3>Not find Template</h3>

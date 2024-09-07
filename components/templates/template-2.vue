@@ -668,7 +668,7 @@ h1 span {
                 </g>
               </svg>
               <h2 class="text-color-steal text-xl font-bold">
-                Professional Experience
+                Projects
               </h2>
             </div>
             <div style="margin-top: 10px" class="flex pl-12 flex-col gap-2">

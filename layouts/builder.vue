@@ -54,7 +54,6 @@ import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 
 const route = useNativeRoute();
 
-
 const template_id = route.query?.template_id;
 
 if (!template_id) {
@@ -126,7 +125,6 @@ onMounted(() => {
     }
   });
 });
-
 </script>
 <style scoped>
 .quicklink {
@@ -313,18 +311,17 @@ onMounted(() => {
       <div class="w-full mx-auto max-w-screen-2xl">
         <header class="relative items-center pt-4">
           <ScrollArea
-            class="relative max-w-3xl p-3 mx-auto bg-white shadow-lg md:p-8 rounded-xl"
+            class="relative max-w-3xl mx-auto bg-white shadow-lg p-2 px-4 rounded-xl"
           >
             <Button
               variant="outline"
               size="sm"
               @click="$router.back()"
-              class="mb-4 space-x-2 bg-white rounded-full shadow-sm border-stone-100 shadow-primary/20 hover:text-white hover:bg-primary"
+              class=" space-x-2 bg-white rounded-full shadow-sm border-stone-100 shadow-primary/20 hover:text-white hover:bg-primary"
             >
               <ArrowLeft />
               <!-- <span class="font-thin">Back</span> -->
             </Button>
-        
             <div class="flex items-start justify-between w-full gap-3">
               <template v-for="step in steps">
                 <nuxt-link
@@ -337,7 +334,7 @@ onMounted(() => {
                           query: { template_id: template_id },
                         }
                   "
-                  class="flex flex-col items-center group"
+                  class="flex  w-fit h-fit flex-col items-center group"
                   :class="`
                                             ${
                                               parseInt(
@@ -356,7 +353,7 @@ onMounted(() => {
                                         `"
                 >
                   <div
-                    class="p-1 transition-transform duration-200 border rounded-full md:size-20 size-14 group-hover:scale-105"
+                    class="p-1 w-fit h-fit transition-transform duration-200 border rounded-full md:size-14 size-14 group-hover:scale-105"
                     :class="`
                                             ${
                                               parseInt(
@@ -375,7 +372,7 @@ onMounted(() => {
                                         `"
                   >
                     <div
-                      class="grid w-full h-full p-3 border rounded-full place-content-center"
+                      class="flex justify-center items-center w-full h-full  p-3 border rounded-full "
                       :class="`
                                             ${
                                               parseInt(
@@ -393,15 +390,18 @@ onMounted(() => {
                                             }
                                         `"
                     >
-                      <component :is="step.icon" />
+                      <component :is="step.icon"   />
                     </div>
                   </div>
                   <div class="mt-2 text-center">
-                    <h4 class="text-xs font-semibold uppercase md:text-lg">
+                    <h4 class=" font-semibold uppercase ">
                       Step {{ step.id }}
                     </h4>
-                    <p style="font-family: 'Times New Roman', Times, serif;" class="text-sm capitalize md:text-lg">
-                       {{ step.title }}
+                    <p
+                      style="font-family: 'Times New Roman', Times, serif"
+                      class=" capitalize "
+                    >
+                      {{ step.title }}
                     </p>
                   </div>
                 </nuxt-link>
@@ -434,7 +434,8 @@ onMounted(() => {
       <div class="container px-2 py-5">
         <div
           class="max-w-3xl p-3 px-4 mx-auto bg-white shadow-lg md:p-8 rounded-xl text-foreground"
-        ><slot></slot>
+        >
+          <slot></slot>
         </div>
       </div>
     </main>

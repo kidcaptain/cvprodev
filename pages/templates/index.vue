@@ -64,14 +64,14 @@ const cvs = [
     img: image2 ,
     type: "with"
   },
-  {
-    id: "3",
-    title: "Professional and Structured",
-    description:
-      "A well-organized and easy-to-read layout, showcasing your experience clearly and concisely. Suitable for all types of positions.",
-    img: image3 ,
-    type: "with"
-  },
+  // {
+  //   id: "3",
+  //   title: "Professional and Structured",
+  //   description:
+  //     "A well-organized and easy-to-read layout, showcasing your experience clearly and concisely. Suitable for all types of positions.",
+  //   img: image3 ,
+  //   type: "with"
+  // },
   {
     id: "4",
     title: "Skills-Based",

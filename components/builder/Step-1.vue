@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ArrowRight, Camera } from "lucide-vue-next";
+import { ArrowRight, Camera, Trash } from "lucide-vue-next";
 import { useForm } from "vee-validate";
 import { toTypedSchema } from "@vee-validate/zod";
 import { Separator } from "@/components/ui/separator";
@@ -39,8 +39,10 @@ onMounted(() => {
     (document.getElementById("yearOfExperience") as HTMLInputElement).value =
       etape1.yearOfExperience;
     (document.getElementById("address") as HTMLInputElement).value =
-      etape1.address;
-    (document.getElementById("phone") as HTMLInputElement).value = "";
+      etape1.address; 
+    (
+      document.getElementById("phone") as HTMLInputElement
+    ).value = "";
     (document.getElementById("email") as HTMLInputElement).value = etape1.email;
     (document.getElementById("website") as HTMLInputElement).value =
       etape1.website;
@@ -54,25 +56,27 @@ onMounted(() => {
 });
 const onSubmit = handleSubmit((e: any) => {
   const firstname = (document.getElementById("firstname") as HTMLInputElement)
-      .value;
-    const lastname = (document.getElementById("lastname") as HTMLInputElement)
-      .value;
-    const title = (document.getElementById("title") as HTMLInputElement).value;
-    const yearOfExperience = (
-      document.getElementById("yearOfExperience") as HTMLInputElement
-    ).value;
-    const address = (document.getElementById("address") as HTMLInputElement)
-      .value;
-    const phone = (document.getElementById("phone") as HTMLInputElement).value;
-    const email = (document.getElementById("email") as HTMLInputElement).value;
-    const website = (document.getElementById("website") as HTMLInputElement)
-      .value;
-    const objective = (
-      document.getElementById("objectif") as HTMLTextAreaElement
-    ).value;
-    const identifiant = (
-      document.getElementById("identifiant") as HTMLSelectElement
-    ).value;
+    .value;
+  const lastname = (document.getElementById("lastname") as HTMLInputElement)
+    .value;
+  const title = (document.getElementById("title") as HTMLInputElement).value;
+  const yearOfExperience = (
+    document.getElementById("yearOfExperience") as HTMLInputElement
+  ).value;
+  const address = (document.getElementById("address") as HTMLInputElement)
+    .value;
+  const phone = (document.getElementById("phone") as HTMLInputElement).value;
+  const email = (document.getElementById("email") as HTMLInputElement).value;
+  const website = (document.getElementById("website") as HTMLInputElement)
+    .value;
+  const objective = (document.getElementById("objectif") as HTMLTextAreaElement)
+    .value;
+  const identifiant = (
+    document.getElementById("identifiant") as HTMLSelectElement
+  ).value;
+  if (!isImage) {
+    destroyImage();
+  }
   if (phone != "") {
     const value = {
       firstname: firstname,
@@ -91,8 +95,8 @@ const onSubmit = handleSubmit((e: any) => {
       window.URL.revokeObjectURL(filename.value);
     }
     emit("submit");
-  }else{
-    alert("Please fill in the required fields")
+  } else {
+    alert("Please fill in the required fields");
   }
 });
 
@@ -141,10 +145,20 @@ const destroyImage = () => {
     (avatar as any).value = null;
     imageSelected.value = false;
     window.URL.revokeObjectURL("");
+    window.localStorage.setItem("profileimage", "");
   }
+
+  window.URL.revokeObjectURL("");
 };
 const route = useNativeRoute();
-
+const isImage = ref(false);
+const noImage = () => {
+  if (isImage.value == true) {
+    isImage.value = false;
+  } else {
+    isImage.value = true;
+  }
+};
 const router = useRouter();
 const template = route.query.template_id;
 
@@ -217,7 +231,7 @@ const maritalStatus = ref();
     >
       Preview
     </Button>
-    <div class="w-full mx-auto">
+    <div v-if="isImage" class="w-full mx-auto">
       <label for="avatar" class="mx-auto w-fit">
         <div
           id="updload_file"
@@ -254,9 +268,21 @@ const maritalStatus = ref();
           @click="destroyImage"
           class="p-2 m-auto font-semibold text-red-600 w-fit"
         >
-          Supprimer
+          <Trash></Trash>
         </button>
       </div>
+    </div>
+    <div class="gap-2 flex justify-center items-center w-full">
+      <label>No image</label>
+      <Input
+        accept="image/png, image/jpeg, image/jpg"
+        id="avatar"
+        name="profile"
+        type="checkbox"
+        :checked="!isImage"
+        class="text-xs p-4 md:text-lg w-fit"
+        @change="isImage = !isImage"
+      />
     </div>
     <div class="my-6 space-y-6 md:grid md:grid-cols-2 md:gap-6 md:space-y-0">
       <FormField v-slot="{ componentField }" name="firstname">

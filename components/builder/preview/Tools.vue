@@ -758,7 +758,7 @@ const navigatorGet = (textToCopy: string) => {
           />
         </div>
      
-        <Button size="sm" class="mt-2" @click="print()">Print in pdf</Button>
+        <Button size="sm" class="mt-2" @click="print()">Download in pdf</Button>
       </div>
       <div v-if="tab3">
         <div class="flex items-center w-full gap-2 p-2 bg-white">

@@ -43,63 +43,70 @@ const defaultValues = ref({
   field_of_study: props.item?.field_of_study,
   grade_obtained: props.item?.grade_obtained,
 });
-
+const messageError = ref("");
 const onSubmit = handleSubmit((values) => {
-  const title = values.title;
-  const grade = values.grade;
-  const startDate = values.start_date;
-  const endDate = values.end_date;
-  const city = values.city;
-  const fieldOfStudy = values.field_of_study;
-  const gradeOfObtained = values.grade_obtained;
-  const tasksPerformed = tasks.value;
-  tasks.value = []; 
-  emit("submit", {
-    title: title,
-    grade: grade,
-    start_date: startDate,
-    end_date: endDate,
-    city: city,
-    field_of_study: fieldOfStudy,
-    grade_obtained: gradeOfObtained,
-    tasks_performed: tasksPerformed
-  });
-  values.title = "";
-  values.grade = "";
-  values.start_date = "";
-  values.end_date = "";
-  values.city = "";
-  values.field_of_study = "";
-  values.grade_obtained = "";
-  const titleEducation = document.getElementById("titleEducation");
-  const gradeEducation = document.getElementById("gradeEducation");
-  const startDateEducation = document.getElementById("startDateEducation");
-  const endDateEducation = document.getElementById("endDateEducation");
-  const cityEducation = document.getElementById("cityEducation");
-  const gradeObtainedEducation = document.getElementById(
-    "gradeObtainedEducation"
-  );
-  const fieldOfStudyEducation = document.getElementById(
-    "fieldOfStudyEducation"
-  );
-  if (
-    titleEducation &&
-    gradeEducation &&
-    startDateEducation &&
-    endDateEducation &&
-    cityEducation &&
-    fieldOfStudyEducation &&
-    gradeObtainedEducation
-  ) {
-    endDateEducation.value = "";
-    startDateEducation.value = "";
-    titleEducation.value = "";
-    gradeEducation.value = "";
-    cityEducation.value = "";
-    fieldOfStudyEducation.value = "";
-    gradeObtainedEducation.value = "";
-  }
+  const date1 = new Date(values.start_date);
+  const date2 = new Date(values.end_date);
+  if (date1 < date2) {
+    messageError.value = "";
 
+    const title = values.title;
+    const grade = values.grade;
+    const startDate = values.start_date;
+    const endDate = values.end_date;
+    const city = values.city;
+    const fieldOfStudy = values.field_of_study;
+    const gradeOfObtained = values.grade_obtained;
+    const tasksPerformed = tasks.value;
+    tasks.value = [];
+    emit("submit", {
+      title: title,
+      grade: grade,
+      start_date: startDate,
+      end_date: endDate,
+      city: city,
+      field_of_study: fieldOfStudy,
+      grade_obtained: gradeOfObtained,
+      tasks_performed: tasksPerformed,
+    });
+    values.title = "";
+    values.grade = "";
+    values.start_date = "";
+    values.end_date = "";
+    values.city = "";
+    values.field_of_study = "";
+    values.grade_obtained = "";
+    const titleEducation = document.getElementById("titleEducation");
+    const gradeEducation = document.getElementById("gradeEducation");
+    const startDateEducation = document.getElementById("startDateEducation");
+    const endDateEducation = document.getElementById("endDateEducation");
+    const cityEducation = document.getElementById("cityEducation");
+    const gradeObtainedEducation = document.getElementById(
+      "gradeObtainedEducation"
+    );
+    const fieldOfStudyEducation = document.getElementById(
+      "fieldOfStudyEducation"
+    );
+    if (
+      titleEducation &&
+      gradeEducation &&
+      startDateEducation &&
+      endDateEducation &&
+      cityEducation &&
+      fieldOfStudyEducation &&
+      gradeObtainedEducation
+    ) {
+      endDateEducation.value = "";
+      startDateEducation.value = "";
+      titleEducation.value = "";
+      gradeEducation.value = "";
+      cityEducation.value = "";
+      fieldOfStudyEducation.value = "";
+      gradeObtainedEducation.value = "";
+    }
+  } else {
+    messageError.value = "The start date is greater than the end date";
+  }
 });
 
 const experience_fields = [
@@ -149,15 +156,7 @@ const experience_fields = [
     facultative: true,
     type: "text",
   },
-  {
-    name: "taskPerformed",
-    label: "Tasks performed",
-    placeholder: "",
-    class: "col-span-2",
-    type: "textarea",
-    id: "taskPerformedEducation",
-    facultative: true,
-  },
+
   {
     name: "start_date",
     label: "Starting Date",
@@ -176,6 +175,16 @@ const experience_fields = [
     id: "endDateEducation",
     facultative: true,
   },
+  {
+    name: "taskPerformed",
+    label: "Tasks performed",
+    placeholder: "",
+    class: "col-span-2",
+    type: "textarea",
+    id: "taskPerformedEducation",
+    facultative: true,
+  },
+
 ];
 const tasks = ref([]);
 const indexToEdited = ref(0);
@@ -204,6 +213,7 @@ const getItem = (item, index) => {
 
 <template>
   <form @submit="onSubmit">
+    <span class="text-red-500">{{ messageError }}</span>
     <div
       class="w-full gap-6 p-2 space-y-6 border-l-2 md:grid md:grid-cols-2 md:space-y-0 border-secondary/50"
     >

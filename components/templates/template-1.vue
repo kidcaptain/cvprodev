@@ -77,7 +77,7 @@ const reformDateByMonth = (str) => {
         <div>
           <div
             id="image_profil"
-            class="photo_template rounded-full size-24 bg-stone-800"
+            class="photo_template bg-cover rounded-full size-24 bg-stone-800"
           ></div>
         </div>
       </div>

@@ -147,7 +147,7 @@ const sections = [
               <Button class="px-4 w-fit">Create my CV</Button>
             </nuxt-link>
             <nuxt-link class="w-fit" to="/templates">
-              <Button class="px-4 w-fit" variant="outline"> Edit my CV </Button>
+              <Button class="px-4 w-fit" variant="outline"> See example </Button>
             </nuxt-link>
           </div>
         </div>

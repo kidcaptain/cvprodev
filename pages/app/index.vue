@@ -84,14 +84,14 @@ const cvs = [
     img: image2 ,
     type: "with"
   },
-  {
-    id: "3",
-    title: "Professional and Structured",
-    description:
-      "A well-organized and easy-to-read layout, showcasing your experience clearly and concisely. Suitable for all types of positions.",
-    img: image3 ,
-    type: "with"
-  },
+  // {
+  //   id: "3",
+  //   title: "Professional and Structured",
+  //   description:
+  //     "A well-organized and easy-to-read layout, showcasing your experience clearly and concisely. Suitable for all types of positions.",
+  //   img: image3 ,
+  //   type: "with"
+  // },
   {
     id: "4",
     title: "Skills-Based",
@@ -255,10 +255,10 @@ const stringToArray = (str: string)=>{
 
       <div
         v-if="getData?.length > 0"
-        class="relative grid grid-cols-4 gap-10 p-4 py-12 max-sm:grid-cols-1 max-lg:grid-cols-2"
+        class="relative flex gap-4"
       >
         <div
-          class="relative p-5 overflow-hidden bg-white border-none hover:shadow-lg hover: rounded-xl"
+          class="relative max-w-96 p-5 overflow-hidden col-span-1 bg-white border-none hover:shadow-lg hover: rounded-xl"
           v-for="i in getData"
         >
           <div

@@ -210,6 +210,9 @@ onMounted(() => {
             <FormMessage class="text-xs" />
           </FormItem>
         </FormField>
+        <div class="col-span-2">
+          <BuilderSubFormsTextEditor/>
+        </div>
         <!-- <div class="col-span-2">
           <div class="editor-commands">
             <ul class="flex flex-wrap gap-2 rounded-xl">

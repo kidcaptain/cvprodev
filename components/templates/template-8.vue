@@ -74,10 +74,10 @@ const reformDateByMonth = (str) => {
     <section class="relative h-full col-span-7 p-4">
       <div class="h-full">
         <div class="py-2">
-          <h1 class="text-3xl font-bold text-color-steal">
+          <h1 contenteditable="" class="text-3xl font-bold text-color-steal">
             {{ nom }} {{ prenom }}
           </h1>
-          <h2 class="mt-2 text-xl font-semibold text-color-steal">
+          <h2 contenteditable="" class="mt-2 text-xl font-semibold text-color-steal">
             {{ title }}
           </h2>
         </div>
@@ -108,7 +108,7 @@ const reformDateByMonth = (str) => {
                 </g>
               </svg>
             </div>
-            <span>{{ phone }}</span>
+            <span contenteditable="">{{ phone }}</span>
           </li>
           <li v-if="email" class="flex items-center gap-2 py-2">
             <div
@@ -149,7 +149,7 @@ const reformDateByMonth = (str) => {
                 </g>
               </svg>
             </div>
-            <span>{{ email }}</span>
+            <span contenteditable="">{{ email }}</span>
           </li>
           <li v-if="address" class="flex items-center gap-2 py-2">
             <div
@@ -177,7 +177,7 @@ const reformDateByMonth = (str) => {
                 </g>
               </svg>
             </div>
-            <span>{{ address }}</span>
+            <span contenteditable="">{{ address }}</span>
           </li>
           <li v-if="website" class="flex items-center gap-2 py-2">
             <div
@@ -206,12 +206,12 @@ const reformDateByMonth = (str) => {
                 </g>
               </svg>
             </div>
-            <a href="julia-dev.com" target="_blank" rel="noopener noreferrer">{{
+            <a href="julia-dev.com" target="_blank" rel="noopener noreferrer"  contenteditable="">{{
               website
             }}</a>
           </li>
         </ul>
-        <div class="mt-4">
+        <div class="mt-4" contenteditable="">
           {{ resume }}
         </div>
         <ul
@@ -271,22 +271,22 @@ const reformDateByMonth = (str) => {
                   >
                     <span
                       class="absolute -left-52 z-10 text-white font-semibold"
-                    >
+                      contenteditable="">
                       {{ workExperience.startDate }} -
                       {{ workExperience.endDate }}
                     </span>
                     <span
                       class="before:content-[''] font-bold point before:left-6 before:rounded-full before:size-5 before:absolute"
-                      >{{ workExperience.jobTitle }}</span
+                      contenteditable="" >{{ workExperience.jobTitle }}</span
                     >
-                    <span>{{ workExperience.company }}</span>
+                    <span contenteditable="">{{ workExperience.company }}</span>
                   </div>
                   <h2 class="my-1 font-bold">Key Achievements</h2>
 
                   <ul style="list-style: disc" class="pl-6">
                     <li
                       v-for="task in workExperience.professionalTasksPerformed"
-                    >
+                      contenteditable="" >
                       {{ task }}
                     </li>
                   </ul>
@@ -348,17 +348,17 @@ const reformDateByMonth = (str) => {
                   >
                     <span
                       class="absolute -left-52 z-10 text-white font-semibold"
-                    >
+                      contenteditable="">
                       {{ education.start_date }} -
                       {{ education.end_date }}
                     </span>
                     <span
                       class="before:content-[''] font-bold point before:left-6 before:rounded-full before:size-5 before:absolute"
-                      >{{ education.title }}, {{ education.city }}</span
+                      contenteditable="" >{{ education.title }}, {{ education.city }}</span
                     >
                     <h2 class="my-1 font-bold">{{ education.grade }}</h2>
                     <ul style="list-style: disc" class="pl-6">
-                      <li v-for="task in education.tasks_performed">
+                      <li v-for="task in education.tasks_performed" contenteditable="">
                         {{ task }}
                       </li>
                     </ul>
@@ -419,7 +419,7 @@ const reformDateByMonth = (str) => {
                   class="flex flex-row items-center justify-between"
                   v-for="language in languages"
                 >
-                  <span
+                  <span contenteditable=""
                     class="before:content-[''] point before:left-6 before:rounded-full before:size-5 before:absolute"
                     >{{ language.title }}</span
                   >
@@ -508,7 +508,7 @@ const reformDateByMonth = (str) => {
                 >
                   <span
                     class="before:content-[''] point before:left-6 before:rounded-full before:size-5 before:absolute"
-                  >
+                    contenteditable="" >
                     {{ personalSkill.title }}</span
                   >
                   <div class="flex gap-2">
@@ -576,7 +576,7 @@ const reformDateByMonth = (str) => {
                 >
                   <span
                     class="before:content-[''] point before:left-6 before:rounded-full before:size-5 before:absolute"
-                  >
+                    contenteditable="" >
                     {{ professionalSkill.title }}</span
                   >
                   <div class="flex gap-2">

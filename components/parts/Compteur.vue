@@ -56,15 +56,16 @@ const transformNumber = (nbr: number) => {
 //     nombre.value += 100;
 //   }, 1000);
 // }
-compteur.value = transformNumber(props.number);
+
+compteur.value = transformNumber(props.number * 512);
 </script>
 
 <template>
-  <div class="flex gap-2 transition-all justify-center italic" >
+  <div class="flex gap-2 transition-all justify-center italic">
     <template v-for="(nbr, index) in compteur" :key="index">
       <div
         v-for="elt of nbr"
-        class=" p-2 rounded-md bg-white "
+        class="p-2 rounded-md bg-white"
         :key="index + nbr"
       >
         {{ elt }}

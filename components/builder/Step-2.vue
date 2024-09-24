@@ -6,7 +6,14 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { useRoute as useNativeRoute } from "vue-router";
-import { ArrowRight, ArrowLeft, Trash, Edit } from "lucide-vue-next";
+import {
+  ArrowRight,
+  ArrowLeft,
+  Trash,
+  Edit,
+  ArrowBigUp,
+  ArrowBigDown,
+} from "lucide-vue-next";
 import { useForm } from "vee-validate";
 
 import Experience from "@/components/builder/sub-forms/Experience.vue";
@@ -59,8 +66,8 @@ const showPreview = () => {
   });
 };
 onMounted(() => {
+
   const step2 = window.localStorage.getItem("step_2");
-  console.log(step2);
   if (step2) {
     const etape2: {
       title: string;
@@ -229,15 +236,57 @@ const company = ref<string>();
 const startDate = ref<string>();
 const endDate = ref<string>();
 const professionalTasksPerformed = ref<string>();
+const upTab = (item: any, index: number, list: any[]) => {
+  let tab = list;
+  if (index + 1 < tab.length) {
+    tab[index] = tab[index + 1];
+    tab[index + 1] = item;
+  } else {
+  }
+};
 
+const downTab = (item: any, index: number, list: any[]) => {
+  let tab = list;
+  if (index - 1 >= 0) {
+    tab[index] = tab[index - 1];
+    tab[index - 1] = item;
+  }
+};
 const editSave = (item: any, index: number) => {
-  itemEditable.value = index;
+  booll.value = true;
+  setTimeout(() => {
+    itemEditable.value = index;
   jobTitle.value = item.jobTitle;
   company.value = item.company;
   startDate.value = item.startDate;
   endDate.value = item.endDate;
   professionalTasksPerformed.value = item.professionalTasksPerformed;
-  booll.value = true;
+
+  
+  var commandButtons = document.querySelectorAll(".element-editor");
+  console.log( commandButtons)
+  for (var i = 0; i < commandButtons.length; i++) {
+    commandButtons[i].addEventListener("mousedown", function (e: any) {
+      console.log(e)
+      e.preventDefault();
+     
+      if (e.target) {
+        var commandName = e.target.getAttribute("data-command");
+        if (commandName === "html") {
+          var commandArgument = e.target.getAttribute("data-command-argument");
+          document.execCommand("formatBlock", false, commandArgument);
+        } else {
+          document.execCommand(commandName, false);
+        }
+        console.log(document.querySelector(".editor-2"));
+        const editor = document.querySelector(".editor-2");
+        if (editor) {
+          editor.focus();
+        }
+      }
+    });
+  }
+  }, 2000);
 };
 </script>
 <style scoped>
@@ -247,19 +296,22 @@ const editSave = (item: any, index: number) => {
 .btn-item:hover .icon {
   color: brown;
 }
+
+.editor-2 {
+  min-height: 150px;
+  width: 100%;
+  border: 1px solid black;
+}
+.element-editor {
+  background-color: white;
+  border: 1px solid silver;
+  padding: 8px;
+}
+
 </style>
 <template>
   <div class="">
     <form @submit="onSubmit" class="relative text-foreground">
-      <!-- <Button
-        @click="showPreview"
-        type="button"
-        class="absolute right-0 text-sm bg-white rounded-full shadow-sm md:text-lg shadow-primary/20 text-primary"
-        variant="ghost"
-        size="sm"
-      >
-        Preview
-      </Button> -->
       <Accordion
         type="single"
         class="w-full pt-8"
@@ -318,19 +370,32 @@ const editSave = (item: any, index: number) => {
                         <h3 class="px-4 py-2 font-bold uppercase bg-stone-100">
                           Tasks performed:
                         </h3>
-                        <ul class="pl-10 list-disc">
-                          <li
-                            class="my-1 elt"
-                            v-for="(
-                              task, indexPerformed
-                            ) in save.professionalTasksPerformed"
-                            :key="indexPerformed"
-                          >
-                            {{ task }}
-                          </li>
-                        </ul>
+                        <div
+                          v-html="save.professionalTasksPerformed"
+                          class="px-4 py-2"
+                        ></div>
                       </div>
                       <div class="flex gap-2 px-4 py-2">
+                        <Button
+                          @click="downTab(save, index, itemsEditable)"
+                          variant="outline"
+                          class="flex gap-2 p-1 px-2 text-white btn-item bg-primary item-center hover:border-secondary h-fit hover:text-secondary"
+                          type="button"
+                          size="sm"
+                        >
+                          <ArrowBigDown
+                            class="text-white icon size-4 hover:text-secondary"
+                        /></Button>
+                        <Button
+                          @click="upTab(save, index, itemsEditable)"
+                          variant="outline"
+                          class="flex gap-2 p-1 px-2 text-white btn-item bg-primary item-center hover:border-secondary h-fit hover:text-secondary"
+                          type="button"
+                          size="sm"
+                        >
+                          <ArrowBigUp
+                            class="text-white icon size-4 hover:text-secondary"
+                        /></Button>
                         <Button
                           @click="editSave(save, index)"
                           variant="outline"
@@ -560,19 +625,10 @@ const editSave = (item: any, index: number) => {
                           >
                             Tasks performed:
                           </h3>
-                          <ul class="pl-10 list-disc">
-                            <li
-                              class="my-1 elt"
-                              v-for="(task, indexPerformed) in save.tasks"
-                              :key="indexPerformed"
-                            >
-                              {{ task }}
-                            </li>
-                          </ul>
+                          <div v-html="save.tasks" class="px-4 py-2"></div>
                         </div>
                       </div>
                     </div>
-
                     <div v-if="itemIndex == 1">
                       <h2 class="p-4 text-white bg-primary">
                         schools/institutions ({{ index + 1 }})
@@ -657,21 +713,34 @@ const editSave = (item: any, index: number) => {
                           >
                             Tasks performed:
                           </h3>
-                          <ul class="pl-10 list-disc">
-                            <li
-                              class="my-1 elt"
-                              v-for="(
-                                task, indexPerformed
-                              ) in save.tasks_performed"
-                              :key="indexPerformed"
-                            >
-                              {{ task }}
-                            </li>
-                          </ul>
+                          <div
+                            v-html="save.tasks_performed"
+                            class="px-4 py-2"
+                          ></div>
                         </div>
                       </div>
                     </div>
                     <div class="flex justify-end gap-2 px-4 py-2 bg-white">
+                      <Button
+                        @click="downTab(save, index, item.datas)"
+                        variant="outline"
+                        class="flex gap-2 p-1 px-2 text-white btn-item bg-primary item-center hover:border-secondary h-fit hover:text-secondary"
+                        type="button"
+                        size="sm"
+                      >
+                        <ArrowBigDown
+                          class="text-white icon size-4 hover:text-secondary"
+                      /></Button>
+                      <Button
+                        @click="upTab(save, index, item.datas)"
+                        variant="outline"
+                        class="flex gap-2 p-1 px-2 text-white btn-item bg-primary item-center hover:border-secondary h-fit hover:text-secondary"
+                        type="button"
+                        size="sm"
+                      >
+                        <ArrowBigUp
+                          class="text-white icon size-4 hover:text-secondary"
+                      /></Button>
                       <Button
                         @click="removeSaved(itemIndex, index)"
                         variant="outline"
@@ -781,15 +850,76 @@ const editSave = (item: any, index: number) => {
               />
             </div>
 
-            <div class="w-full col-span-2">
+            <div class="w-full col-span-2 mt-2">
               <label class="text-sm">Tasks & Job description</label>
 
-              <textarea
-                name="experienceExperienceEdit"
+              <div class="editor-commands-2 mt-4">
+                <ul class="flex gap-5 flex-wrap">
+                  <li>
+                    <a data-command="undo" class="cursor-pointer element-editor">Undo</a>
+                  </li>
+                  <li>
+                    <a data-command="redo" class="cursor-pointer element-editor">Redo</a>
+                  </li>
+                  <li>
+                    <a
+                      data-command="insertHorizontalRule"
+                      class="cursor-pointer element-editor"
+                      >hr</a
+                    >
+                  </li>
+                  <li>
+                    <a data-command="bold" class="cursor-pointer element-editor">Bold</a>
+                  </li>
+                  <li>
+                    <a data-command="italic" class="cursor-pointer element-editor">Italic</a>
+                  </li>
+                  <li>
+                    <a data-command="underline" class="cursor-pointer element-editor"
+                      >Underline</a
+                    >
+                  </li>
+                  <li>
+                    <a data-command="strikeThrough" class="cursor-pointer element-editor"
+                      >strike through</a
+                    >
+                  </li>
+                  <li><a data-command="justifyLeft" class="element-editor cursor-pointer">justifyLeft</a></li>
+                  <li><a data-command="justifyCenter" class="element-editor cursor-pointer">justifyCenter</a></li>
+                  <li>
+                    <a data-command="justifyRight" class="cursor-pointer element-editor"
+                      >justify right</a
+                    >
+                  </li>
+                  <li>
+                    <a data-command="justifyFull" class="cursor-pointer element-editor"
+                      >justify full</a
+                    >
+                  </li>
+                  <li>
+                    <a data-command="indent" class="cursor-pointer element-editor">indent</a>
+                  </li>
+                  <li>
+                    <a data-command="outdent" class="cursor-pointer element-editor">outdent</a>
+                  </li>
+                  <li>
+                    <a data-command="subscript" class="cursor-pointer element-editor"
+                      >subscript</a
+                    >
+                  </li>
+                  <li>
+                    <a data-command="superscript" class="cursor-pointer element-editor"
+                      >superscript</a
+                    >
+                  </li>
+                </ul>
+              </div>
+              <div
+                v-html="professionalTasksPerformed"
+                class="editor-2 mt-8 p-2"
                 id="experienceExperienceEdit"
-                class="w-full col-span-2 p-1 border border-black rounded-md focus-within:outline-none focus-within:border"
-                v-model="professionalTasksPerformed"
-              ></textarea>
+                contenteditable="true"
+              ></div>
             </div>
           </div>
           <div class="flex items-center p-4">

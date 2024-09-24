@@ -106,11 +106,11 @@ h1 span {
         "
       >
         <div>
-          <h1 class="text-3xl font-bold">
+          <h1 class="text-3xl font-bold" contenteditable="">
             <span id="firstname">{{ nom }} </span> 
             <span id="lastname">{{ prenom }}</span>
           </h1>
-          <p id="title" style="color: #4b9ab0; font-size: 18px">
+          <p id="title" contenteditable="" style="color: #4b9ab0; font-size: 18px">
             {{ title }}
           </p>
         </div>
@@ -166,7 +166,7 @@ h1 span {
               </svg>
             </div>
             <div>
-              <p id="address">
+              <p id="address" contenteditable="">
                 {{ address }}
               </p>
             </div>
@@ -200,7 +200,7 @@ h1 span {
               </svg>
             </div>
             <div>
-              <p id="phone">
+              <p id="phone" contenteditable="">
                 {{ phone }}
               </p>
             </div>
@@ -248,8 +248,8 @@ h1 span {
               </svg>
             </div>
             <div>
-              <p>
-                <span id="email">{{ email }}</span
+              <p contenteditable="">
+                <span id="email" >{{ email }}</span
                 ><br />
                 <span>{{ website }}</span>
               </p>
@@ -308,10 +308,10 @@ h1 span {
                 style="list-style: none; margin-top: 10px; padding: 0"
               >
                 <li v-for="education in educations">
-                  <h3 class="text-color-steal font-semibold">
+                  <h3 class="text-color-steal font-semibold" contenteditable="">
                     {{ education.grade }}
                   </h3>
-                  <p>
+                  <p contenteditable="">
                     {{ education.title }}<br />
                     {{ education.start_date }} - {{ education.end_date }}<br />
                     {{ education.city }}
@@ -352,8 +352,8 @@ h1 span {
               <h2 class="text-color-steal text-xl font-bold">Languages</h2>
               <ul>
                 <li v-for="language in languages">
-                  <h3>{{ language.title }}</h3>
-                  <span class="text-color-steal text-sm">{{
+                  <h3 contenteditable="">{{ language.title }}</h3>
+                  <span contenteditable="" class="text-color-steal text-sm">{{
                     language.level
                   }}</span>
                 </li>
@@ -390,7 +390,7 @@ h1 span {
             <div style="margin-top: 10px">
               <h2 class="text-color-steal text-xl font-bold">Hobbies</h2>
               <ul class="pl-5" style="list-style: disc">
-                <li v-for="hobby in hobbies">{{ hobby.title }}</li>
+                <li contenteditable="" v-for="hobby in hobbies">{{ hobby.title }}</li>
               </ul>
             </div>
           </div>
@@ -424,7 +424,7 @@ h1 span {
             <div style="margin-top: 10px">
               <h2 class="text-color-steal text-xl font-bold">Awards</h2>
               <ul class="pl-5" style="list-style: disc">
-                <li v-for="award in awards">
+                <li v-for="award in awards" contenteditable="">
                   <h2>{{ award.title }}</h2>
                   <h3>{{ award.award }}</h3>
                 </li>
@@ -517,18 +517,18 @@ h1 span {
                   class="grid grid-cols-5 gap-2 before:content-[''] point before:left-10 before:translate-y-2 before:rounded-full before:w-8 before:h-1 before:absolute"
                 >
                   <div class="col-span-2">
-                    <h3 class="text-color-steal text-xl font-semibold">
+                    <h3 class="text-color-steal text-xl font-semibold" contenteditable="">
                       {{ workExperience.company }}
                     </h3>
-                    <h4>{{ workExperience.jobTitle }}</h4>
-                    <h4>
+                    <h4 contenteditable="">{{ workExperience.jobTitle }}</h4>
+                    <h4 contenteditable="">
                       {{ workExperience.startDate }} –
                       {{ workExperience.endDate }}
                     </h4>
                   </div>
                   <div class="col-span-3">
                     <ul>
-                      <li
+                      <li contenteditable=""
                         v-for="task in workExperience.professionalTasksPerformed"
                       >
                         {{ task }}
@@ -581,7 +581,7 @@ h1 span {
             </div>
             <div style="margin-top: 10px" class="pl-12">
               <ul class="pl-5" style="list-style: disc">
-                <li v-for="professionalSkill in professionalSkills">
+                <li contenteditable="" v-for="professionalSkill in professionalSkills">
                   {{ professionalSkill.title }}
                 </li>
               </ul>
@@ -629,7 +629,7 @@ h1 span {
             </div>
             <div style="margin-top: 10px" class="pl-12">
               <ul class="pl-5" style="list-style: disc">
-                <li v-for="personalSkill in personalSkills">
+                <li contenteditable="" v-for="personalSkill in personalSkills">
                   {{ personalSkill.title }}
                 </li>
               </ul>
@@ -677,11 +677,11 @@ h1 span {
                 class="grid grid-cols-5 gap-2 before:content-[''] point before:left-10 before:translate-y-2 before:rounded-full before:w-8 before:h-1 before:absolute"
               >
                 <div class="col-span-2">
-                  <h3 class="text-color-steal text-xl font-semibold">
+                  <h3 contenteditable="" class="text-color-steal text-xl font-semibold">
                     {{ project.company }}
                   </h3>
-                  <h4>{{ project.title }}</h4>
-                  <h4>
+                  <h4 contenteditable="">{{ project.title }}</h4>
+                  <h4 contenteditable="">
                     {{ project.start_date }} –
                     {{ project.end_date }}
                   </h4>
@@ -731,11 +731,11 @@ h1 span {
                 class="grid grid-cols-5 gap-2 before:content-[''] point before:left-10 before:translate-y-2 before:rounded-full before:w-8 before:h-1 before:absolute"
               >
                 <div class="col-span-2">
-                  <h3 class="text-color-steal text-xl font-semibold">
+                  <h3 contenteditable="" class="text-color-steal text-xl font-semibold">
                     {{ certification.title }}
                   </h3>
-                  <h4>{{ certification.grade }}</h4>
-                  <h4>
+                  <h4 contenteditable="">{{ certification.grade }}</h4>
+                  <h4 contenteditable="">
                     {{ certification.start_date }} –
                     {{ certification.end_date }}
                   </h4>

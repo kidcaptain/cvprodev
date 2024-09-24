@@ -60,11 +60,11 @@ const reformDateByMonth = (str) => {
   <div class="w-full pt-12 px-12 m-auto bg-white max-w-7xl" id="content">
     <div class="flex items-center justify-between">
       <div>
-        <h1 class="text-3xl font-bold">
+        <h1 class="text-3xl font-bold" contenteditable="">
           <span id="firstname">{{ nom }}</span>
           <span id="lastname">{{ prenom }}</span>
         </h1>
-        <h2 class="text-xl" id="title">{{ title }}</h2>
+        <h2 class="text-xl" id="title" contenteditable="">{{ title }}</h2>
       </div>
       <div>
         <div class="rounded-full size-32 bg-stone-700" id="image_profil"></div>
@@ -79,21 +79,21 @@ const reformDateByMonth = (str) => {
             Professional Summary
           </h2>
           <div v-for="workExperience in workExperiences">
-            <h3 class="my-2">
+            <h3 class="my-2" contenteditable="">
               {{ workExperience.startDate }} - {{ workExperience.endDate }}
             </h3>
             <ul>
-              <li>{{ workExperience.jobTitle }}</li>
+              <li contenteditable="">{{ workExperience.jobTitle }}</li>
             </ul>
 
-            <p
+            <p contenteditable=""
               v-for="task in workExperience.professionalTasksPerformed"
               class="mb-2"
             >
               {{ task }}
             </p>
 
-            <h3 class="my-2">{{ workExperience.company }}</h3>
+            <h3 class="my-2" contenteditable="">{{ workExperience.company }}</h3>
           </div>
         </div>
         <div v-if="educations && educations.length > 0">
@@ -103,20 +103,20 @@ const reformDateByMonth = (str) => {
             Education
           </h2>
           <div v-for="education in educations">
-            <h3 class="my-2">
+            <h3 class="my-2" contenteditable="">
               {{ education.grade }}
             </h3>
-            <h3 class="my-2">
+            <h3 class="my-2" contenteditable="">
               {{ education.start_date }} - {{ education.end_date }}
             </h3>
             <ul>
-              <li>{{ education.title }}</li>
+              <li contenteditable="">{{ education.title }}</li>
             </ul>
 
-            <p v-for="task in education.taskPerformed" class="mb-2">
+            <p contenteditable="" v-for="task in education.taskPerformed" class="mb-2">
               {{ task }}
             </p>
-            <h3 class="my-2">{{ education.company }}</h3>
+            <h3 class="my-2" contenteditable="">{{ education.company }}</h3>
           </div>
         </div>
         <!-- <div>
@@ -133,9 +133,9 @@ const reformDateByMonth = (str) => {
           </h2>
           <div>
             <ul>
-              <li>{{ phone }}</li>
-              <li>{{ email }}</li>
-              <li>{{ website }}</li>
+              <li contenteditable="">{{ phone }}</li>
+              <li contenteditable="">{{ email }}</li>
+              <li contenteditable="">{{ website }}</li>
             </ul>
           </div>
         </div>
@@ -145,7 +145,7 @@ const reformDateByMonth = (str) => {
           >
             About
           </h2>
-          <p>
+          <p contenteditable="">
             {{ resume }}
           </p>
         </div>
@@ -156,7 +156,7 @@ const reformDateByMonth = (str) => {
             Professional skills
           </h2>
           <ul class="pl-5" style="list-style: disc">
-            <li v-for="professionalSkill in professionalSkills">
+            <li contenteditable="" v-for="professionalSkill in professionalSkills">
               {{ professionalSkill.title }}
             </li>
           </ul>
@@ -169,13 +169,13 @@ const reformDateByMonth = (str) => {
           </h2>
           <ul>
             <li v-for="reference in references">
-              <h3 class="my-2 font-bold">{{ reference.title }}</h3>
+              <h3 class="my-2 font-bold" contenteditable="">{{ reference.title }}</h3>
               <ul>
-                <li>
+                <li contenteditable="">
                   {{ reference.references_name }} - {{ reference.position }}
                 </li>
-                <li>{{ reference.references_phone }}</li>
-                <li>{{ reference.email }}</li>
+                <li contenteditable="">{{ reference.references_phone }}</li>
+                <li contenteditable="">{{ reference.email }}</li>
               </ul>
             </li>
           </ul>

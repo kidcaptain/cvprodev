@@ -136,7 +136,7 @@ h3 {
                     ></path>
                   </g>
                 </svg>
-                <span>{{ address }}</span>
+                <span contenteditable="">{{ address }}</span>
               </li>
               <li class="flex items-center gap-2 py-2" v-if="phone">
                 <svg
@@ -160,7 +160,7 @@ h3 {
                     ></path>
                   </g>
                 </svg>
-                <span>{{ phone }}</span>
+                <span contenteditable="">{{ phone }}</span>
               </li>
               <li class="flex items-center gap-2 py-2" v-if="email">
                 <svg
@@ -197,7 +197,7 @@ h3 {
                     ></rect>
                   </g>
                 </svg>
-                <span>{{ email }}</span>
+                <span contenteditable="">{{ email }}</span>
               </li>
               <li class="flex items-center gap-2 py-2" v-if="website">
                 <svg
@@ -226,7 +226,7 @@ h3 {
                   href="julia-dev.com"
                   target="_blank"
                   rel="noopener noreferrer"
-                  >{{ website }}</a
+                  contenteditable="" >{{ website }}</a
                 >
               </li>
             </ul>
@@ -238,9 +238,9 @@ h3 {
             </div>
             <ul class="flex flex-col gap-2 mt-2">
               <li v-for="education in educations">
-                <h3 class="font-semibold">{{ education.grade }}</h3>
-                <h3 class="italic">{{ education.title }}</h3>
-                <span class="italic">
+                <h3 class="font-semibold" contenteditable="">{{ education.grade }}</h3>
+                <h3 class="italic" contenteditable="">{{ education.title }}</h3>
+                <span class="italic" contenteditable="">
                   {{ education.start_date }} - {{ education.end_date }}</span
                 >
               </li>
@@ -254,7 +254,7 @@ h3 {
               <hr style="border-color: #204262; border-width: 3px" />
             </div>
             <ul class="flex flex-col gap-1 px-6 mt-4" style="list-style: disc">
-              <li v-for="professionalSkill in professionalSkills">
+              <li v-for="professionalSkill in professionalSkills" contenteditable="">
                 {{ professionalSkill.title }}
               </li>
             </ul>
@@ -267,7 +267,7 @@ h3 {
               <hr style="border-color: #204262; border-width: 3px" />
             </div>
             <ul class="flex flex-col gap-1 px-6 mt-4" style="list-style: disc">
-              <li v-for="personalSkill in personalSkills">
+              <li v-for="personalSkill in personalSkills" contenteditable="">
                 {{ personalSkill.title }}
               </li>
             </ul>
@@ -280,17 +280,17 @@ h3 {
       <div class="h-full">
         <div class="p-4 mt-4 bg-stone-100">
           <div class="py-2">
-            <h2 class="mt-2 text-xl text-color-steal">
+            <h2 contenteditable="" class="mt-2 text-xl text-color-steal">
               {{ title }}
             </h2>
-            <h1 class="text-2xl font-bold text-color-steal">
+            <h1 contenteditable="" class="text-2xl font-bold text-color-steal">
               {{ nom }} {{ prenom }}
             </h1>
             <div class="w-20 mt-2" style="width: 80px">
               <hr style="border-color: #204262; border-width: 3px" />
             </div>
           </div>
-          <div class="mt-2">
+          <div contenteditable="" class="mt-2">
             {{ resume }}
           </div>
         </div>
@@ -311,18 +311,18 @@ h3 {
                   <div
                     class="flex flex-col w-full before:-left-48 before:w-52 before:text-white before:absolute"
                   >
-                    <span
+                    <span contenteditable=""
                       class="font-bold point before:left-6 before:rounded-full before:size-5 before:absolute"
                       >{{ workExperience.jobTitle }}</span
                     >
-                    <span
+                    <span contenteditable=""
                       >{{ workExperience.company }} /
                       {{ workExperience.startDate }} –
                       {{ workExperience.endDate }}</span
                     >
                   </div>
                   <ul style="list-style: disc" class="pl-6 mt-4">
-                    <li
+                    <li contenteditable=""
                       v-for="task in workExperience.professionalTasksPerformed"
                     >
                       {{ task }}
@@ -343,12 +343,12 @@ h3 {
 
               <ul class="flex flex-col gap-2 mt-4">
                 <li class="flex flex-row items-center justify-between" v-for="language in languages">
-                  <span
+                  <span contenteditable=""
                     class="point before:left-6 before:rounded-full before:size-5 before:absolute"
                     >{{ language.title }}</span
                   >
                 
-                  <span class="text-color-steal text-sm">{{
+                  <span contenteditable="" class="text-color-steal text-sm">{{
                     language.level
                   }}</span>
                 </li>

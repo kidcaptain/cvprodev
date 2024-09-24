@@ -107,7 +107,7 @@ h3 {
         "
       >
         <div>
-          <h1 class="text-3xl font-bold">
+          <h1 class="text-3xl font-bold" contenteditable="">
             <span id="firstname">{{ nom }}</span>
             <span id="lastname">{{ prenom }}</span>
           </h1>
@@ -166,7 +166,7 @@ h3 {
               </svg>
             </div>
             <div>
-              <p id="address" v-if="address">
+              <p id="address" v-if="address" contenteditable="">
                 {{ address }}
               </p>
             </div>
@@ -199,7 +199,7 @@ h3 {
               </svg>
             </div>
             <div>
-              <p id="phone">
+              <p id="phone" contenteditable="">
                 {{ phone }}
               </p>
             </div>
@@ -247,9 +247,9 @@ h3 {
             </div>
             <div>
               <p>
-                <span id="email">{{ email }}</span
+                <span id="email" contenteditable="">{{ email }}</span
                 ><br />
-                <span>{{ website }}</span>
+                <span contenteditable="">{{ website }}</span>
               </p>
             </div>
           </li>
@@ -306,10 +306,10 @@ h3 {
                 style="list-style: none; margin-top: 10px; padding: 0"
               >
                 <li v-for="education in educations">
-                  <h3 class="text-color-steal font-semibold">
+                  <h3 contenteditable="" class="text-color-steal font-semibold">
                     {{ education.grade }}
                   </h3>
-                  <p>
+                  <p contenteditable="">
                     {{ education.title }}<br />
                     {{ education.start_date }} - {{ education.end_date }}<br />
                     {{ education.city }}
@@ -350,8 +350,8 @@ h3 {
               <h2 class="text-color-steal text-xl font-bold">Languages</h2>
               <ul>
                 <li v-for="language in languages">
-                  <h3>{{ language.title }}</h3>
-                  <span class="text-color-steal text-sm">{{
+                  <h3 contenteditable="">{{ language.title }}</h3>
+                  <span contenteditable="" class="text-color-steal text-sm">{{
                     language.level
                   }}</span>
                 </li>
@@ -388,7 +388,7 @@ h3 {
             <div style="margin-top: 10px">
               <h2 class="text-color-steal text-xl font-bold">Hobbies</h2>
               <ul class="pl-5" style="list-style: disc">
-                <li v-for="hobby in hobbies">{{ hobby.title }}</li>
+                <li contenteditable="" v-for="hobby in hobbies">{{ hobby.title }}</li>
               </ul>
             </div>
           </div>
@@ -481,7 +481,7 @@ h3 {
               </h2>
             </div>
             <div style="margin-top: 10px">
-              <p class="mt-2 pl-12">
+              <p contenteditable="" class="mt-2 pl-12">
                 {{ resume }}
               </p>
             </div>
@@ -529,18 +529,18 @@ h3 {
                   class="grid grid-cols-5 gap-2 before:content-[''] point before:left-10 before:translate-y-2 before:rounded-full before:w-8 before:h-1 before:absolute"
                 >
                   <div class="col-span-2">
-                    <h3 class="text-color-steal text-xl font-semibold">
+                    <h3 contenteditable="" class="text-color-steal text-xl font-semibold">
                       {{ workExperience.company }}
                     </h3>
-                    <h4>{{ workExperience.jobTitle }}</h4>
-                    <h4>
+                    <h4 contenteditable="">{{ workExperience.jobTitle }}</h4>
+                    <h4 contenteditable="">
                       {{ workExperience.startDate }} –
                       {{ workExperience.endDate }}
                     </h4>
                   </div>
                   <div class="col-span-3">
                     <ul>
-                      <li
+                      <li contenteditable=""
                         v-for="task in workExperience.professionalTasksPerformed"
                       >
                         {{ task }}
@@ -593,7 +593,7 @@ h3 {
             </div>
             <div style="margin-top: 10px" class="pl-12">
               <ul class="pl-5" style="list-style: disc">
-                <li v-for="professionalSkill in professionalSkills">
+                <li contenteditable="" v-for="professionalSkill in professionalSkills">
                   {{ professionalSkill.title }}
                 </li>
               </ul>
@@ -641,7 +641,7 @@ h3 {
             </div>
             <div style="margin-top: 10px" class="pl-12">
               <ul class="pl-5" style="list-style: disc">
-                <li v-for="personalSkill in personalSkills">
+                <li contenteditable="" v-for="personalSkill in personalSkills">
                   {{ personalSkill.title }}
                 </li>
               </ul>

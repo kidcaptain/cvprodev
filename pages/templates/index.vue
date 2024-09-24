@@ -34,6 +34,8 @@ const { data, pending, error, refresh } = await useAsyncData<any>(
   "cv-templates-list",
   () => $fetch(`${BASE_URL}templates/get/all`)
 );
+localStorage.removeItem('step_1');
+localStorage.removeItem('step_2');
 console.log(data);
 import image1 from 'assets/img/pics/model1.png'
 import image2 from 'assets/img/pics/model2.png'
@@ -339,6 +341,7 @@ const cvs = [
                     </div>
                     <div class="flex justify-end gap-4 mt-3">
                       <nuxt-link
+                      
                         class="flex-1"
                         :to="{
                           name: `app-cv-builder-step-id`,

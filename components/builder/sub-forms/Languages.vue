@@ -42,8 +42,8 @@ const onSubmit = handleSubmit((values) => {
   });
   const titleLanguage = document.getElementById("titleLanguage");
   titleLanguage.value = "";
-  const type = document.getElementById("levelLanguage");
-  type.value = "2";
+  // const type = document.getElementById("levelLanguage");
+  // type.value = "2";
 
   defaultValues.value.title = null;
   defaultValues.value.type = null;

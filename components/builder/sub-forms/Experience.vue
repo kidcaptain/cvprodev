@@ -12,46 +12,53 @@ const onSubmit = (e: Event) => {
     "startDateExperienceEdit"
   );
   const endDateExperience = document.getElementById("endDateExperienceEdit");
-  let date1 = new Date(`${startDateExperience.value}`);
-  let date2 = new Date(`${endDateExperience.value}`);
-  if (date1 < date2) {
-    messageError.value = "";
-    const titleExperience = document.getElementById("titleExperienceEdit");
-    const companyExperience = document.getElementById("companyExperienceEdit");
+  if (startDateExperience && endDateExperience) {
+    let date1 = new Date(`${(startDateExperience as HTMLInputElement).value}`);
+    let date2 = new Date(`${(endDateExperience as HTMLInputElement).value}`);
+    if (date1 < date2) {
+      messageError.value = "";
+      const titleExperience = document.getElementById("titleExperienceEdit");
+      const companyExperience = document.getElementById(
+        "companyExperienceEdit"
+      );
 
-    const experienceExperience = document.getElementById(
-      "experienceExperienceEdit"
-    );
+      const experienceExperience = document.getElementById(
+        "experienceExperienceEdit"
+      );
 
-    if (
-      titleExperience &&
-      companyExperience &&
-      startDateExperience &&
-      endDateExperience &&
-      experienceExperience
-    ) {
-      const jobTitle = (titleExperience as HTMLInputElement).value;
-      const company = (companyExperience as HTMLInputElement).value;
-      const startDate = (startDateExperience as HTMLInputElement).value;
-      const endDate = (endDateExperience as HTMLInputElement).value;
-      const professionalTasksPerformed = tasks.value;
-
-      emit("submit", {
-        jobTitle: jobTitle,
-        company: company,
-        startDate: startDate,
-        endDate: endDate,
-        professionalTasksPerformed: professionalTasksPerformed,
-      });
-      (titleExperience as HTMLInputElement).value = "";
-      (companyExperience as HTMLInputElement).value = "";
-      (startDateExperience as HTMLInputElement).value = "";
-      (endDateExperience as HTMLInputElement).value = "";
-      (experienceExperience as HTMLInputElement).value = "";
+      if (
+        titleExperience &&
+        companyExperience &&
+        startDateExperience &&
+        endDateExperience &&
+        experienceExperience
+      ) {
+        const jobTitle = (titleExperience as HTMLInputElement).value;
+        const company = (companyExperience as HTMLInputElement).value;
+        const startDate = (startDateExperience as HTMLInputElement).value;
+        const endDate = (endDateExperience as HTMLInputElement).value;
+        const professionalTasksPerformed = experienceExperience.innerHTML;
+        emit("submit", {
+          jobTitle: jobTitle,
+          company: company,
+          startDate: startDate,
+          endDate: endDate,
+          professionalTasksPerformed: professionalTasksPerformed,
+        });
+        (titleExperience as HTMLInputElement).value = "";
+        const d = document.getElementById("experienceExperienceEdit");
+        if (d) {
+          d.innerHTML = "";
+        }
+        (companyExperience as HTMLInputElement).value = "";
+        (startDateExperience as HTMLInputElement).value = "";
+        (endDateExperience as HTMLInputElement).value = "";
+        (experienceExperience as HTMLInputElement).value = "";
+      }
+      tasks.value = [];
+    } else {
+      messageError.value = "The start date is greater than the end date";
     }
-    tasks.value = [];
-  } else {
-    messageError.value = "The start date is greater than the end date";
   }
 };
 
@@ -59,7 +66,7 @@ const experience_fields = [
   {
     name: "title",
     label: "Job Title",
-    placeholder: "Accountant",
+    placeholder: "Job title",
     type: "text",
     id: "titleExperience",
     require: true,
@@ -67,7 +74,7 @@ const experience_fields = [
   {
     name: "company",
     label: "Company Name",
-    placeholder: "Exco cmr",
+    placeholder: "Name of company",
     id: "companyExperience",
     require: true,
   },
@@ -122,28 +129,39 @@ const getItem = (item: string, index: number) => {
 const setCommand = (command: string, arg: string | undefined | null) => {
   if (arg === "html") {
     document.execCommand("formatBlock", false, arg);
-  }else{
+  } else {
     document.execCommand(command, false);
   }
 };
 onMounted(() => {
-  var commandButtons = document.querySelectorAll("a.command");
+  var commandButtons = document.querySelectorAll(".editor-commands a");
   for (var i = 0; i < commandButtons.length; i++) {
     commandButtons[i].addEventListener("mousedown", function (e) {
       e.preventDefault();
       var commandName = e.target.getAttribute("data-command");
-      alert(commandButtons[i]);
       if (commandName === "html") {
         var commandArgument = e.target.getAttribute("data-command-argument");
         document.execCommand("formatBlock", false, commandArgument);
       } else {
         document.execCommand(commandName, false);
       }
+      document.querySelector(".editor").focus();
     });
   }
 });
 </script>
-
+<style>
+.editor {
+  min-height: 150px;
+  width: 100%;
+  border: 1px solid black;
+}
+.editor-commands a {
+  background-color: white;
+  border: 1px solid silver;
+  padding: 8px;
+}
+</style>
 <template>
   <form @submit="onSubmit">
     <span class="text-red-500">{{ messageError }}</span>
@@ -211,7 +229,68 @@ onMounted(() => {
           </FormItem>
         </FormField>
         <div class="col-span-2">
-          <BuilderSubFormsTextEditor/>
+          <div class="editor-commands">
+            <ul class="flex gap-5 flex-wrap">
+              <li><a data-command="undo" class="cursor-pointer">Undo</a></li>
+              <li><a data-command="redo" class="cursor-pointer">Redo</a></li>
+              <li>
+                <a data-command="insertHorizontalRule" class="cursor-pointer"
+                  >hr</a
+                >
+              </li>
+              <li><a data-command="bold" class="cursor-pointer">Bold</a></li>
+              <li>
+                <a data-command="italic" class="cursor-pointer">Italic</a>
+              </li>
+              <li>
+                <a data-command="underline" class="cursor-pointer">Underline</a>
+              </li>
+              <li>
+                <a data-command="strikeThrough" class="cursor-pointer"
+                  >strike through</a
+                >
+              </li>
+              <li>
+                <a data-command="justifyLeft" class="cursor-pointer"
+                  >justify left</a
+                >
+              </li>
+              <li>
+                <a data-command="justifyCenter" class="cursor-pointer"
+                  >justify center</a
+                >
+              </li>
+              <li>
+                <a data-command="justifyRight" class="cursor-pointer"
+                  >justify right</a
+                >
+              </li>
+              <li>
+                <a data-command="justifyFull" class="cursor-pointer"
+                  >justify full</a
+                >
+              </li>
+              <li>
+                <a data-command="indent" class="cursor-pointer">indent</a>
+              </li>
+              <li>
+                <a data-command="outdent" class="cursor-pointer">outdent</a>
+              </li>
+              <li>
+                <a data-command="subscript" class="cursor-pointer">subscript</a>
+              </li>
+              <li>
+                <a data-command="superscript" class="cursor-pointer"
+                  >superscript</a
+                >
+              </li>
+            </ul>
+          </div>
+          <div
+            class="editor mt-8 p-2"
+            id="experienceExperienceEdit"
+            contenteditable="true"
+          ></div>
         </div>
         <!-- <div class="col-span-2">
           <div class="editor-commands">
@@ -359,7 +438,7 @@ onMounted(() => {
             contenteditable="true"
           ></div>
         </div> -->
-        <FormField name="experienceExperienceEdit" class="col-span-2">
+        <!-- <FormField name="experienceExperienceEdit" class="col-span-2">
           <FormItem class="col-span-2">
             <FormLabel>Tasks performed</FormLabel>
             <FormControl>
@@ -394,7 +473,7 @@ onMounted(() => {
             </FormControl>
             <FormMessage class="text-xs" />
           </FormItem>
-        </FormField>
+        </FormField> -->
       </div>
       <div>
         <Button type="submit" class="w-fit px-2">

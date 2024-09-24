@@ -67,10 +67,10 @@ const reformDateByMonth = (str) => {
           <h1
             class="text-2xl italic font-semibold"
             style="font-family: 'Kaushan Script', cursive"
-          >
+            contenteditable=""  >
             {{ nom }} {{ prenom }}
           </h1>
-          <h2 class="my-1 uppercase">{{ title }}</h2>
+          <h2 class="my-1 uppercase" contenteditable="">{{ title }}</h2>
         </div>
       </div>
       <div class="grid grid-cols-5 px-8">
@@ -107,7 +107,7 @@ const reformDateByMonth = (str) => {
                     ></path>
                   </g>
                 </svg>
-                <span>{{ address }}</span>
+                <span contenteditable="">{{ address }}</span>
               </li>
               <li
                 class="flex items-center gap-1 py-1 border-b-2 border-stone-400"
@@ -133,7 +133,7 @@ const reformDateByMonth = (str) => {
                     ></path>
                   </g>
                 </svg>
-                <span>{{ phone }}</span>
+                <span contenteditable="">{{ phone }}</span>
               </li>
               <li
                 class="flex items-center gap-1 py-1 border-b-2 border-stone-400"
@@ -172,7 +172,7 @@ const reformDateByMonth = (str) => {
                     ></rect>
                   </g>
                 </svg>
-                <span>{{ email }}</span>
+                <span contenteditable="">{{ email }}</span>
               </li>
               <li
                 class="flex items-center gap-1 py-1 border-b-2 border-stone-400"
@@ -203,7 +203,7 @@ const reformDateByMonth = (str) => {
                   href="julia-dev.com"
                   target="_blank"
                   rel="noopener noreferrer"
-                  >{{ website }}</a
+                  contenteditable="">{{ website }}</a
                 >
               </li>
             </ul>
@@ -216,10 +216,10 @@ const reformDateByMonth = (str) => {
             </h2>
             <ul class="flex flex-col gap-1">
               <li v-for="education in educations">
-                <h3 class="font-semibold">{{ education.grade }}</h3>
-                <h3 class="italic">{{ education.title }}</h3>
+                <h3 class="font-semibold" contenteditable="">{{ education.grade }}</h3>
+                <h3 class="italic" contenteditable="">{{ education.title }}</h3>
                 <span class="italic"
-                  >{{ education.start_date }} - {{ education.end_date }}</span
+                contenteditable="" >{{ education.start_date }} - {{ education.end_date }}</span
                 >
               </li>
             </ul>
@@ -231,7 +231,7 @@ const reformDateByMonth = (str) => {
               Professional skills
             </h2>
             <ul class="flex flex-col gap-1 pl-4" style="list-style: disc">
-              <li v-for="professionalSkill in professionalSkills">
+              <li contenteditable="" v-for="professionalSkill in professionalSkills">
                 {{ professionalSkill.title }}
               </li>
             </ul>
@@ -244,11 +244,11 @@ const reformDateByMonth = (str) => {
             </h2>
             <ul class="flex flex-col gap-3">
               <li>
-                <h3 class="font-semibold">{{ reference.references_name }}</h3>
-                <h3>{{ reference.position }}</h3>
+                <h3 class="font-semibold" contenteditable="">{{ reference.references_name }}</h3>
+                <h3 contenteditable="">{{ reference.position }}</h3>
                 <div class="mt-2">
-                  <h3 class="italic">{{ reference.references_phone }}</h3>
-                  <span class="italic">{{ reference.email }}</span>
+                  <h3 contenteditable="" class="italic">{{ reference.references_phone }}</h3>
+                  <span contenteditable="" class="italic">{{ reference.email }}</span>
                 </div>
               </li>
             </ul>
@@ -261,7 +261,7 @@ const reformDateByMonth = (str) => {
             >
               Profile
             </h2>
-            <p>
+            <p contenteditable="">
               {{ resume }}
             </p>
           </div>
@@ -274,12 +274,12 @@ const reformDateByMonth = (str) => {
             <ul class="flex flex-col gap-3">
               <li v-for="workExperience in workExperiences">
                 <h3 class="font-semibold">{{ workExperience.jobTitle }}</h3>
-                <h3 class="italic">
+                <h3 class="italic" contenteditable="">
                   {{ workExperience.company }} /
                   {{ workExperience.startDate }} - {{ workExperience.endDate }}
                 </h3>
                 <ul class="pl-4 mt-3" style="list-style: disc">
-                  <li v-for="task in workExperience.professionalTasksPerformed">
+                  <li contenteditable="" v-for="task in workExperience.professionalTasksPerformed">
                     {{ task }}
                   </li>
                 </ul>
@@ -294,8 +294,8 @@ const reformDateByMonth = (str) => {
             </h2>
             <div class="grid grid-cols-3">
               <div  v-for="language in languages">
-                <h3 class="font-semibold">{{ language.title }}</h3>
-                <h3 class="italic">{{ language.level }}</h3>
+                <h3 class="font-semibold" contenteditable="">{{ language.title }}</h3>
+                <h3 class="italic" contenteditable="">{{ language.level }}</h3>
               </div>
             </div>
           </div>

@@ -16,13 +16,21 @@ useHead({
     },
   ],
 });
-
-const { data, pending, error, refresh } = await useAsyncData(
-  "cv-templates-list",
-  () => $fetch(BASE_URL + "templates/get/all")
-);
+import image1 from "assets/img/pics/model4.png";
+// const { data, pending, error, refresh } = await useAsyncData(
+//   "cv-templates-list",
+//   () => $fetch(BASE_URL + "templates/get/all")
+// );
 const compteur = ref<number>(5230);
+const getData = ref<any[]>([]);
 
+const data = await $fetch<any>(BASE_URL + "cv/get/all")
+  .then((val) => {
+    getData.value = val.cvs;
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 const sections = [
   {
     title: "Get your CV translated",
@@ -85,7 +93,6 @@ const sections = [
     },
     reverse: true,
   },
-
 ];
 </script>
 
@@ -147,7 +154,9 @@ const sections = [
               <Button class="px-4 w-fit">Create my CV</Button>
             </nuxt-link>
             <nuxt-link class="w-fit" to="/templates">
-              <Button class="px-4 w-fit" variant="outline"> See example </Button>
+              <Button class="px-4 w-fit" variant="outline">
+                See example
+              </Button>
             </nuxt-link>
           </div>
         </div>
@@ -156,7 +165,7 @@ const sections = [
             class="md:aspect-[150/207] w-fit text-right mx-auto max-w-96 rounded-sm"
           >
             <img
-              src="@/assets/img/pics/home/example_template.png"
+              :src="image1"
               class="object-cover h-full shadow-lg w-fit shadow-black/50"
               alt=""
             />
@@ -170,7 +179,7 @@ const sections = [
           Already
         </h1>
         <div class="text-2xl font-bold">
-          <PartsCompteur :number="compteur"></PartsCompteur>
+          <PartsCompteur :number="getData.length"></PartsCompteur>
         </div>
         <div>
           <h1 class="text-2xl italic font-medium text-center text-black">
@@ -192,18 +201,16 @@ const sections = [
           :variant="section.variant"
         />
       </template>
-      <section class=" my-28 md:my-0">
+      <section class="my-28 md:my-0">
         <div class="container items-center gap-24 md:flex">
           <div class="flex-1 px-5 py-12">
-            <h2 class="mb-6 text-4xl font-bold text-primary">
-              Easy Payment
-            </h2>
+            <h2 class="mb-6 text-4xl font-bold text-primary">Easy Payment</h2>
             <div>
               Make your payments via Orange Money and Mtn Mobile Money and
               easily download your CVs in a few clicks. Don't wait any longer,
               start now
             </div>
-            <div class="mt-8" >
+            <div class="mt-8">
               <nuxt-link to="/pricings">
                 <Button class="px-9" variant="outline">
                   Choosing your CV template
@@ -234,7 +241,7 @@ const sections = [
     </section>
     <section class="py-20 bg-background">
       <h3 class="mb-8 text-2xl text-center md:text-lg">
-        <span class="font-bold text-primary ">CV PRO</span> is approved by job
+        <span class="font-bold text-primary">CV PRO</span> is approved by job
         seekers and recruiters
       </h3>
       <PartsTemoignage />

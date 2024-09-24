@@ -97,7 +97,7 @@ const reformDateByMonth = (str) => {
                     ></path>
                   </g>
                 </svg>
-                <span>{{ address }}</span>
+                <span contenteditable="">{{ address }}</span>
               </li>
               <li class="flex items-center gap-2 py-2">
                 <svg
@@ -121,7 +121,7 @@ const reformDateByMonth = (str) => {
                     ></path>
                   </g>
                 </svg>
-                <span>{{ phone }}</span>
+                <span contenteditable="">{{ phone }}</span>
               </li>
               <li class="flex items-center gap-2 py-2">
                 <svg
@@ -158,7 +158,7 @@ const reformDateByMonth = (str) => {
                     ></rect>
                   </g>
                 </svg>
-                <span>{{ email }}</span>
+                <span contenteditable="">{{ email }}</span>
               </li>
               <li class="flex items-center gap-2 py-2">
                 <svg
@@ -187,6 +187,7 @@ const reformDateByMonth = (str) => {
                   href="julia-dev.com"
                   target="_blank"
                   rel="noopener noreferrer"
+                  contenteditable=""
                   >{{ website }}</a
                 >
               </li>
@@ -200,13 +201,14 @@ const reformDateByMonth = (str) => {
             </h2>
             <ul class="flex flex-col gap-2 px-1">
               <li v-for="education in educations">
-                <h3 class="font-semibold">{{ education.grade }}</h3>
-                <h3 class="italic">{{ education.title }}</h3>
-                <span class="italic"
+                <h3 class="font-semibold" contenteditable="">
+                  {{ education.grade }}
+                </h3>
+                <h3 class="italic" contenteditable="">{{ education.title }}</h3>
+                <span class="italic" contenteditable=""
                   >{{ education.start_date }} - {{ education.end_date }}</span
                 >
               </li>
-            
             </ul>
           </li>
           <li v-if="languages && languages.length > 0">
@@ -216,8 +218,8 @@ const reformDateByMonth = (str) => {
               Languages
             </h2>
             <ul class="flex flex-col gap-1 px-6" style="list-style: disc">
-              <li v-for="language in languages">
-                {{ language.title }} <br>
+              <li contenteditable="" v-for="language in languages">
+                {{ language.title }} <br />
                 <span class="text-xs"> {{ language.level }}</span>
               </li>
             </ul>
@@ -229,7 +231,7 @@ const reformDateByMonth = (str) => {
               Personal Skills
             </h2>
             <ul class="flex flex-col gap-1 px-6" style="list-style: disc">
-              <li v-for="personalSkill in personalSkills">
+              <li contenteditable="" v-for="personalSkill in personalSkills">
                 {{ personalSkill.title }}
               </li>
             </ul>
@@ -241,7 +243,10 @@ const reformDateByMonth = (str) => {
               Professional Skills
             </h2>
             <ul class="flex flex-col gap-1 px-6" style="list-style: disc">
-              <li v-for="professionalSkill in professionalSkills">
+              <li
+                contenteditable=""
+                v-for="professionalSkill in professionalSkills"
+              >
                 {{ professionalSkill.title }}
               </li>
             </ul>
@@ -254,10 +259,11 @@ const reformDateByMonth = (str) => {
       <div>
         <div class="py-10">
           <h1 class="text-5xl font-thin">
-            <span class="text-4xl font-bold">{{ nom }}</span> <br />
-            <span>{{ prenom }}</span>
+            <span class="text-4xl font-bold" contenteditable="">{{ nom }}</span>
+            <br />
+            <span contenteditable="">{{ prenom }}</span>
           </h1>
-          <h2 class="uppercase">{{ title }}</h2>
+          <h2 class="uppercase" contenteditable="">{{ title }}</h2>
         </div>
         <ul class="flex flex-col gap-8">
           <li v-if="workExperiences && workExperiences.length > 0">
@@ -271,17 +277,20 @@ const reformDateByMonth = (str) => {
               <ul class="flex flex-col gap-5 mt-4">
                 <li v-for="workExperience in workExperiences">
                   <div class="flex items-center justify-between w-full">
-                    <span> {{ workExperience.company }}</span>
-                    <span
+                    <span contenteditable="">
+                      {{ workExperience.company }}</span
+                    >
+                    <span contenteditable=""
                       >{{ workExperience.startDate }} -
                       {{ workExperience.endDate }}
                     </span>
                   </div>
-                  <h2 class="mt-1 mb-1 font-semibold">
+                  <h2 class="mt-1 mb-1 font-semibold" contenteditable="">
                     {{ workExperience.jobTitle }}
                   </h2>
                   <ul>
                     <li
+                      contenteditable=""
                       v-for="task in workExperience.professionalTasksPerformed"
                     >
                       {{ task }}
@@ -298,14 +307,22 @@ const reformDateByMonth = (str) => {
                 <div class="w-full h-1 bg-black"></div>
               </div>
               <ul class="flex flex-col gap-5 mt-4">
-                <li  v-for="reference in references">
-                  <h2 class="mt-1 mb-1 font-semibold">
+                <li v-for="reference in references">
+                  <h2 class="mt-1 mb-1 font-semibold" contenteditable="">
                     {{ reference.references_name }}
                   </h2>
                   <ul>
-                    <li>{{ reference.position }}</li>
-                    <li>Phone {{ reference.references_phone }}</li>
-                    <li>Email {{ reference.email }}</li>
+                    <li contenteditable="">{{ reference.position }}</li>
+                    <li>
+                      Phone
+                      <span contenteditable="">
+                        {{ reference.references_phone }}</span
+                      >
+                    </li>
+                    <li>
+                      Email
+                      <span contenteditable="">{{ reference.email }}</span>
+                    </li>
                   </ul>
                 </li>
               </ul>

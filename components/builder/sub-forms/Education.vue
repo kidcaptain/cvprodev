@@ -49,7 +49,11 @@ const onSubmit = handleSubmit((values) => {
   const date2 = new Date(values.end_date);
   if (date1 < date2) {
     messageError.value = "";
-
+    const tache = document.getElementById("experienceExperienceEdit");
+    let tasksPerformed = "";
+    if (tache) {
+      tasksPerformed = tache.innerHTML;
+    }
     const title = values.title;
     const grade = values.grade;
     const startDate = values.start_date;
@@ -57,7 +61,7 @@ const onSubmit = handleSubmit((values) => {
     const city = values.city;
     const fieldOfStudy = values.field_of_study;
     const gradeOfObtained = values.grade_obtained;
-    const tasksPerformed = tasks.value;
+
     tasks.value = [];
     emit("submit", {
       title: title,
@@ -75,6 +79,7 @@ const onSubmit = handleSubmit((values) => {
     values.end_date = "";
     values.city = "";
     values.field_of_study = "";
+    document.getElementById("experienceExperienceEdit").innerHTML = "";
     values.grade_obtained = "";
     const titleEducation = document.getElementById("titleEducation");
     const gradeEducation = document.getElementById("gradeEducation");
@@ -184,7 +189,6 @@ const experience_fields = [
     id: "taskPerformedEducation",
     facultative: true,
   },
-
 ];
 const tasks = ref([]);
 const indexToEdited = ref(0);
@@ -209,8 +213,35 @@ const getItem = (item, index) => {
   task.value = item;
   indexToEdited.value = index;
 };
+onMounted(() => {
+  var commandButtons = document.querySelectorAll(".editor-commands a");
+  for (var i = 0; i < commandButtons.length; i++) {
+    commandButtons[i].addEventListener("mousedown", function (e) {
+      e.preventDefault();
+      var commandName = e.target.getAttribute("data-command");
+      if (commandName === "html") {
+        var commandArgument = e.target.getAttribute("data-command-argument");
+        document.execCommand("formatBlock", false, commandArgument);
+      } else {
+        document.execCommand(commandName, false);
+      }
+      document.querySelector(".editor").focus();
+    });
+  }
+});
 </script>
-
+<style>
+.editor {
+  min-height: 150px;
+  width: 100%;
+  border: 1px solid black;
+}
+.editor-commands a {
+  background-color: white;
+  border: 1px solid silver;
+  padding: 8px;
+}
+</style>
 <template>
   <form @submit="onSubmit">
     <span class="text-red-500">{{ messageError }}</span>
@@ -228,34 +259,88 @@ const getItem = (item, index) => {
             <FormLabel>{{ field.label }}</FormLabel>
             <FormControl>
               <div v-if="field.type == 'textarea'">
-                <ul
-                  id="experienceExperienceEdit"
-                  class="w-full h-20 overflow-y-auto col-span-2 min-h-20 bg-gray-50 p-2 border border-black"
-                >
-                  <li
-                    class="cursor-pointer"
-                    v-for="(tache, index) in tasks"
-                    @click="getItem(tache, index)"
-                    :key="index"
-                  >
-                    {{ tache }}
-                  </li>
-                </ul>
-                <Input
-                  placeholder="Add task"
-                  type="text"
-                  v-model="task"
-                  class="my-1"
-                />
-                <Button
-                  @click="addTask"
-                  type="button"
-                  size="sm"
-                  variant="ghost"
-                  class="w-fit border text-xs space-x-3"
-                >
-                  {{ !isedited ? "Add task" : "Edit task" }}
-                </Button>
+                <div class="col-span-2">
+                  <div class="editor-commands">
+                    <ul class="flex gap-5 flex-wrap">
+                      <li>
+                        <a data-command="undo" class="cursor-pointer">Undo</a>
+                      </li>
+                      <li>
+                        <a data-command="redo" class="cursor-pointer">Redo</a>
+                      </li>
+                      <li>
+                        <a
+                          data-command="insertHorizontalRule"
+                          class="cursor-pointer"
+                          >hr</a
+                        >
+                      </li>
+                      <li>
+                        <a data-command="bold" class="cursor-pointer">Bold</a>
+                      </li>
+                      <li>
+                        <a data-command="italic" class="cursor-pointer"
+                          >Italic</a
+                        >
+                      </li>
+                      <li>
+                        <a data-command="underline" class="cursor-pointer"
+                          >Underline</a
+                        >
+                      </li>
+                      <li>
+                        <a data-command="strikeThrough" class="cursor-pointer"
+                          >strike through</a
+                        >
+                      </li>
+                      <li>
+                        <a data-command="justifyLeft" class="cursor-pointer"
+                          >justifyLeft</a
+                        >
+                      </li>
+                      <li>
+                        <a data-command="justifyCenter" class="cursor-pointer"
+                          >justifyCenter</a
+                        >
+                      </li>
+                      <li>
+                        <a data-command="justifyRight" class="cursor-pointer"
+                          >justify right</a
+                        >
+                      </li>
+                      <li>
+                        <a data-command="justifyFull" class="cursor-pointer"
+                          >justify full</a
+                        >
+                      </li>
+                      <li>
+                        <a data-command="indent" class="cursor-pointer"
+                          >indent</a
+                        >
+                      </li>
+                      <li>
+                        <a data-command="outdent" class="cursor-pointer"
+                          >outdent</a
+                        >
+                      </li>
+                      <li>
+                        <a data-command="subscript" class="cursor-pointer"
+                          >subscript</a
+                        >
+                      </li>
+                      <li>
+                        <a data-command="superscript" class="cursor-pointer"
+                          >superscript</a
+                        >
+                      </li>
+                    </ul>
+                  </div>
+                  <div
+                    class="editor mt-8 p-2"
+                    id="experienceExperienceEdit"
+                    contenteditable="true"
+                  ></div>
+                </div>
               </div>
               <Input
                 v-else

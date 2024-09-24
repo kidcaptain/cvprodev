@@ -295,7 +295,7 @@ const maritalStatus = ref();
               type="text"
               id="firstname"
               v-bind="componentField"
-              placeholder="John Doe"
+              placeholder="Enter your firstname"
               required
             />
           </FormControl>
@@ -311,7 +311,7 @@ const maritalStatus = ref();
             <Input
               type="text"
               id="lastname"
-              placeholder="Odin'son"
+              placeholder="Enter your lastname"
               v-bind="componentField"
               required
             />
@@ -328,7 +328,7 @@ const maritalStatus = ref();
             <Input
               id="title"
               type="text"
-              placeholder="Accountant"
+              placeholder="Enter your Title of your last job or current job"
               v-bind="componentField"
             />
           </FormControl>
@@ -345,7 +345,7 @@ const maritalStatus = ref();
               type="number"
               id="yearOfExperience"
               v-bind="componentField"
-              placeholder="5"
+              placeholder="Enter your year of experience of current job"
             />
           </FormControl>
           <FormMessage class="text-xs" />
@@ -360,7 +360,7 @@ const maritalStatus = ref();
                 type="number"
                 id="age"
                 v-bind="componentField"
-                placeholder="Your age"
+                placeholder="Enter your age"
               />
             </FormControl>
             <FormMessage class="text-xs" />
@@ -392,7 +392,7 @@ const maritalStatus = ref();
               <Input
                 id="address"
                 type="text"
-                placeholder="135 Montée Jouvence"
+                placeholder="Enter your address"
                 v-bind="componentField"
               />
             </FormControl>
@@ -435,7 +435,7 @@ const maritalStatus = ref();
                   id="phone"
                   class="w-full"
                   type="tel"
-                  placeholder="600 00 00 00"
+                  placeholder="Enter your phone number"
                   v-bind="componentField"
                 />
               </FormControl>
@@ -448,7 +448,7 @@ const maritalStatus = ref();
         <FormItem>
           <label>Email Address <span class="text-red-500">*</span></label>
           <FormControl>
-            <Input type="text" id="email" v-bind="componentField" />
+            <Input type="text" id="email" placeholder="Enter your email" v-bind="componentField" />
           </FormControl>
           <FormMessage class="text-xs" />
         </FormItem>
@@ -463,7 +463,7 @@ const maritalStatus = ref();
             <Input
               type="text"
               id="website"
-              placeholder="cv-pro.com"
+              placeholder="Enter your website link"
               v-bind="componentField"
             />
           </FormControl>
@@ -478,7 +478,7 @@ const maritalStatus = ref();
               type="text"
               id="linkedinProfile"
               v-bind="componentField"
-              placeholder=""
+              placeholder="Enter your name on LinkedIn"
             />
           </FormControl>
           <FormMessage class="text-xs" />
@@ -491,13 +491,13 @@ const maritalStatus = ref();
         class="col-span-2"
       >
         <FormItem class="col-span-2">
-          <label>Objectif</label>
+          <label>Objective</label>
           <FormControl>
             <Textarea
               id="objectif"
               class="w-full col-span-2"
               v-bind="componentField"
-              placeholder="Objectif"
+              placeholder="Enter your resume or objective"
             />
           </FormControl>
           <FormMessage class="text-xs" />

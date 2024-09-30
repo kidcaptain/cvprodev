@@ -246,6 +246,7 @@ const setCommand = (command: string, arg: string | undefined | null) => {
             <FormMessage class="text-xs" />
           </FormItem>
         </FormField>
+        <FormLabel>Tasks performed</FormLabel>
         <div class="col-span-2">
           <div class="editor-commands">
             <ul class="flex gap-2 flex-wrap">

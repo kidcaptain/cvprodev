@@ -399,7 +399,7 @@ onMounted(() => {
                     </h4>
                     <p
                       
-                      class="capitalize "
+                      class="capitalize text-xs"
                     >
                       {{ step.title }}
                     </p>

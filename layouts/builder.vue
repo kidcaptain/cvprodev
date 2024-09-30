@@ -311,13 +311,13 @@ onMounted(() => {
       <div class="w-full mx-auto max-w-screen-2xl">
         <header class="relative items-center pt-4">
           <ScrollArea
-            class="relative max-w-3xl mx-auto bg-white shadow-lg p-2 px-4 rounded-xl"
+            class="relative max-w-3xl p-2 px-4 mx-auto bg-white shadow-lg rounded-xl"
           >
             <Button
               variant="outline"
               size="sm"
               @click="$router.back()"
-              class=" space-x-2 bg-white rounded-full shadow-sm border-stone-100 shadow-primary/20 hover:text-white hover:bg-primary"
+              class="space-x-2 bg-white rounded-full shadow-sm  border-stone-100 shadow-primary/20 hover:text-white hover:bg-primary"
             >
               <ArrowLeft />
               <!-- <span class="font-thin">Back</span> -->
@@ -334,7 +334,7 @@ onMounted(() => {
                           query: { template_id: template_id },
                         }
                   "
-                  class="flex  w-fit h-fit flex-col items-center group"
+                  class="flex flex-col items-center w-fit h-fit group"
                   :class="`
                                             ${
                                               parseInt(
@@ -353,7 +353,7 @@ onMounted(() => {
                                         `"
                 >
                   <div
-                    class="p-1 w-fit h-fit transition-transform duration-200 border rounded-full md:size-14 size-14 group-hover:scale-105"
+                    class="p-1 transition-transform duration-200 border rounded-full w-fit h-fit md:size-14 size-14 group-hover:scale-105"
                     :class="`
                                             ${
                                               parseInt(
@@ -372,7 +372,7 @@ onMounted(() => {
                                         `"
                   >
                     <div
-                      class="flex justify-center items-center w-full h-full  p-3 border rounded-full "
+                      class="flex items-center justify-center w-full h-full p-3 border rounded-full "
                       :class="`
                                             ${
                                               parseInt(
@@ -394,12 +394,12 @@ onMounted(() => {
                     </div>
                   </div>
                   <div class="mt-2 text-center">
-                    <h4 class=" font-semibold uppercase ">
+                    <h4 class="font-semibold uppercase ">
                       Step {{ step.id }}
                     </h4>
                     <p
-                      style="font-family: 'Times New Roman', Times, serif"
-                      class=" capitalize "
+                      
+                      class="capitalize "
                     >
                       {{ step.title }}
                     </p>

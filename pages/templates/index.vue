@@ -34,9 +34,9 @@ const { data, pending, error, refresh } = await useAsyncData<any>(
   "cv-templates-list",
   () => $fetch(`${BASE_URL}templates/get/all`)
 );
-localStorage.removeItem('step_1');
-localStorage.removeItem('step_2');
-console.log(data);
+
+
+
 import image1 from 'assets/img/pics/model1.png'
 import image2 from 'assets/img/pics/model2.png'
 import image3 from 'assets/img/pics/model3.png'
@@ -140,7 +140,7 @@ const cvs = [
     type: "with"
   },
 
-  
+
 ];
 </script>
 <template>
@@ -303,7 +303,6 @@ const cvs = [
         >
       </div>
       <div
-       
         class="grid gap-10 mt-4 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 md:gap-10"
       >
         <Dialog v-if="checkImage" v-for="template in cvs">
@@ -341,7 +340,6 @@ const cvs = [
                     </div>
                     <div class="flex justify-end gap-4 mt-3">
                       <nuxt-link
-                      
                         class="flex-1"
                         :to="{
                           name: `app-cv-builder-step-id`,
@@ -357,11 +355,7 @@ const cvs = [
                   </div>
                 </div>
               </DialogContent>
-              <img
-                  :src="template.img"
-                style=""
-                class="w-full m-auto"
-              />
+              <img :src="template.img" style="" class="w-full m-auto" />
               <div class="h-full p-6 bg-stone-50">
                 <h2
                   class="mb-2 text-xl font-semibold capitalize text-secondary"
@@ -419,11 +413,7 @@ const cvs = [
                   </div>
                 </div>
               </DialogContent>
-              <img
-                :src="template.img"
-                style=""
-                class="w-full m-auto"
-              />
+              <img :src="template.img" style="" class="w-full m-auto" />
               <div class="h-full p-6 bg-stone-50">
                 <h2
                   class="mb-2 text-xl font-semibold capitalize text-secondary"

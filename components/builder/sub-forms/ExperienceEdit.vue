@@ -5,7 +5,7 @@ import { toTypedSchema } from "@vee-validate/zod";
 import { Textarea } from "@/components/ui/textarea";
 interface ItemExperience {
   jobTitle: string;
-  company: company;
+  company: string;
   startDate: string;
   endDate: string;
 }

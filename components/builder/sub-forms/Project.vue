@@ -548,7 +548,7 @@ onMounted(() => {
                           <span class="hidden">outdent</span>
                         </button>
                       </li>
-                      <li>
+                      <!-- <li>
                         <button
                           class="cursor-pointer"
                           @click="
@@ -579,8 +579,8 @@ onMounted(() => {
                           </svg>
                           <span class="hidden">subscript</span>
                         </button>
-                      </li>
-                      <li>
+                      </li> -->
+                      <!-- <li>
                         <button
                           class="cursor-pointer"
                           @click="
@@ -611,7 +611,7 @@ onMounted(() => {
                           </svg>
                           <span class="hidden">superscript</span>
                         </button>
-                      </li>
+                      </li> -->
                     </ul>
                   </div>
                   <div

@@ -460,7 +460,7 @@ onMounted(() => {
                             <span class="hidden">outdent</span></button
                           >
                         </li>
-                        <li>
+                        <!-- <li>
                           <button class="cursor-pointer "  @click="() => {setState('subscript'); subscript = !subscript}"
                             >
                             <svg fill="#000000" width="20px" height="20px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M19,3V5a1,1,0,0,1-2,0V4H12V16h2a1,1,0,0,1,0,2H8a1,1,0,0,1,0-2h2V4H5V5A1,1,0,0,1,3,5V3A1,1,0,0,1,4,2H18A1,1,0,0,1,19,3Zm1.555,14.832A1,1,0,0,0,21,17V15a1,1,0,0,0-1-1H17a1,1,0,0,0,0,2h2v.465l-2.555,1.7A1,1,0,0,0,16,19v2a1,1,0,0,0,1,1h3a1,1,0,0,0,0-2H18v-.465Z"></path></g></svg>
@@ -472,7 +472,7 @@ onMounted(() => {
                             ><svg fill="#000000" width="20px" height="20px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M1,10V8A1,1,0,0,1,2,7H16a1,1,0,0,1,1,1v2a1,1,0,0,1-2,0V9H10V21h2a1,1,0,0,1,0,2H6a1,1,0,0,1,0-2H8V9H3v1a1,1,0,0,1-2,0ZM22,1H19a1,1,0,0,0,0,2h2v.465l-2.555,1.7A1,1,0,0,0,18,6V8a1,1,0,0,0,1,1h3a1,1,0,0,0,0-2H20V6.535l2.555-1.7A1,1,0,0,0,23,4V2A1,1,0,0,0,22,1Z"></path></g></svg>
                             <span class="hidden">superscript</span></button
                           >
-                        </li>
+                        </li> -->
                       </ul>
                     </div>
                     <div

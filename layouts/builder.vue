@@ -317,7 +317,7 @@ onMounted(() => {
               variant="outline"
               size="sm"
               @click="$router.back()"
-              class="space-x-2 bg-white rounded-full shadow-sm  border-stone-100 shadow-primary/20 hover:text-white hover:bg-primary"
+              class="space-x-2 bg-white rounded-full shadow-sm border-stone-100 shadow-primary/20 hover:text-white hover:bg-primary"
             >
               <ArrowLeft />
               <!-- <span class="font-thin">Back</span> -->
@@ -394,12 +394,12 @@ onMounted(() => {
                     </div>
                   </div>
                   <div class="mt-2 text-center">
-                    <h4 class="font-semibold uppercase ">
+                    <h4 class="font-semibold text-sm sm:text-lg uppercase ">
                       Step {{ step.id }}
                     </h4>
                     <p
                       
-                      class="capitalize text-xs"
+                      class="sm:text-sm text-xs capitalize"
                     >
                       {{ step.title }}
                     </p>

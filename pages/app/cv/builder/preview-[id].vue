@@ -60,7 +60,7 @@ onMounted(() => {
   const elementContent = document.getElementById("content");
   if (elementContent) {
     elementContent.style.fontFamily =
-      "font-family: 'Poppins', sans-serif !important";
+      "font-family: 'Poppins', sans-serif !important";  
   }
   if (step1 && step2) {
     const upload_file = document.getElementById("user_img");
@@ -320,9 +320,7 @@ onMounted(() => {
             e.references_name
           }(<span style="font-size: 12px; opacity: 0.8;">${
             e.position
-          }</span>) ${
-            e.refenreces_phone ?? ""
-          } <br> <span style="font-size: 12px; opacity: 0.8;"> ${
+          }</span>) <br> <span style="font-size: 12px; opacity: 0.8;"> ${
             e.email
           } </span></li>`;
         });
@@ -343,9 +341,7 @@ onMounted(() => {
             e.references_name
           }(<span style="font-size: 12px; opacity: 0.8;">${
             e.position
-          }</span>) ${
-            e.refenreces_phone ?? ""
-          } <br> <span style="font-size: 12px; opacity: 0.8;"> ${
+          }</span>) <br> <span style="font-size: 12px; opacity: 0.8;"> ${
             e.email
           } </span></li>`;
         });

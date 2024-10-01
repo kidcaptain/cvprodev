@@ -246,9 +246,9 @@ const setCommand = (command: string, arg: string | undefined | null) => {
             <FormMessage class="text-xs" />
           </FormItem>
         </FormField>
-        <FormField name="endDateExperienceEdit">
-          <FormItem>
-            <FormLabel>Ending Date</FormLabel>
+        <FormField name="endDateExperienceEdit" class="col-span-2">
+          <FormItem class="col-span-2">
+            <FormLabel>Tasks performed</FormLabel>
             <FormControl>
               <div class="col-span-2">
                 <div class="editor-commands">

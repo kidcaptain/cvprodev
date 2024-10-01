@@ -40,7 +40,6 @@ const resolveComponent = () => {
   if (id == '6') return TemplatesTemplate6;
   if (id == '7') return TemplatesTemplate7;
   if (id == '8') return TemplatesTemplate8;
-  if (id == '9') return TemplatesTemplate9;
   if (id == '12') return TemplatesTemplate12;
   if (id == '13') return TemplatesTemplate13;
   if (id == '14') return TemplatesTemplate14;
@@ -51,17 +50,19 @@ const isRaedy = ref(false);
 // const pdfSection = ref<HTMLElement | null>(null);
 const datasTemplate = ref<any>();
 onMounted(() => {
+  
+})
+onMounted(() => {
   const step1 = window.localStorage.getItem("step_1");
   const step2 = window.localStorage.getItem("step_2");
-  const step3 = window.localStorage.getItem("step_3");
-  const step4 = window.localStorage.getItem("step_4");
 
+  
   const elementContent = document.getElementById("content");
   if (elementContent) {
     elementContent.style.fontFamily =
       "font-family: 'Poppins', sans-serif !important";
   }
-  if (step1 && step2 && step3 && step4) {
+  if (step1 && step2) {
     const upload_file = document.getElementById("user_img");
     var base64 = window.localStorage.getItem("profileimage");
     if (base64) {
@@ -82,7 +83,7 @@ onMounted(() => {
         imageProfile.style.display = "none";
       }
     }
-
+    console.log(step1, step2)
     const etape1: {
       firstname: string;
       lastname: string;
@@ -110,7 +111,7 @@ onMounted(() => {
         professionalTasksPerformed: string;
         end_date: string;
         experience: string;
-        grade: string;
+      
         type: string;
         award: string;
         grade: string;
@@ -125,6 +126,7 @@ onMounted(() => {
         position: string;
       }[];
     }[] = JSON.parse(step2);
+  
     datasTemplate.value = {
       nom: etape1.firstname,
       prenom: etape1.lastname,

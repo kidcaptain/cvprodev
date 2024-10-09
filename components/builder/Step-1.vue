@@ -39,10 +39,8 @@ onMounted(() => {
     (document.getElementById("yearOfExperience") as HTMLInputElement).value =
       etape1.yearOfExperience;
     (document.getElementById("address") as HTMLInputElement).value =
-      etape1.address; 
-    (
-      document.getElementById("phone") as HTMLInputElement
-    ).value = "";
+      etape1.address;
+    (document.getElementById("phone") as HTMLInputElement).value = "";
     (document.getElementById("email") as HTMLInputElement).value = etape1.email;
     (document.getElementById("website") as HTMLInputElement).value =
       etape1.website;
@@ -159,8 +157,10 @@ const noImage = () => {
     isImage.value = true;
   }
 };
+
 const router = useRouter();
 const template = route.query.template_id;
+const type = route.query.type;
 
 const showPreview = () => {
   const firstname = (document.getElementById("firstname") as HTMLInputElement)
@@ -231,59 +231,62 @@ const maritalStatus = ref();
     >
       Preview
     </Button>
-    <div v-if="isImage" class="w-full mx-auto">
-      <label for="avatar" class="mx-auto w-fit">
-        <div
-          id="updload_file"
-          class="grid mx-auto mb-2 overflow-hidden bg-gray-200 border border-gray-500 rounded-full cursor-pointer size-24 place-content-center md:size-36"
-        >
-          <!-- <Camera class="text-white size-16" /> -->
-          <img
-            src="/assets/img/pics/placeholder.png"
-            class="w-full h-full bg-contain"
-            alt=""
-            id="upload_file"
-            srcset=""
-          />
-          <img
-            src="/assets/img/pics/placeholder.png"
-            class="hidden w-full h-full bg-contain"
-            alt=""
-            id="upload_file_2"
-            srcset=""
-          />
+    <div v-if="type && type == 'with'" >
+      <div v-if="isImage" class="w-full mx-auto">
+        <label for="avatar" class="mx-auto w-fit">
+          <div
+            id="updload_file"
+            class="grid mx-auto mb-2 overflow-hidden bg-gray-200 border border-gray-500 rounded-full cursor-pointer size-24 place-content-center md:size-36"
+          >
+            <!-- <Camera class="text-white size-16" /> -->
+            <img
+              src="/assets/img/pics/placeholder.png"
+              class="w-full h-full bg-contain"
+              alt=""
+              id="upload_file"
+              srcset=""
+            />
+            <img
+              src="/assets/img/pics/placeholder.png"
+              class="hidden w-full h-full bg-contain"
+              alt=""
+              id="upload_file_2"
+              srcset=""
+            />
+          </div>
+        </label>
+        <Input
+          accept="image/png, image/jpeg, image/jpg"
+          id="avatar"
+          name="profile"
+          type="file"
+          class="m-auto text-xs md:text-lg w-fit"
+          @change="uploadImage"
+        />
+        <div v-if="imageSelected" class="flex justify-center">
+          <button
+            type="button"
+            @click="destroyImage"
+            class="p-2 m-auto font-semibold text-red-600 w-fit"
+          >
+            <Trash></Trash>
+          </button>
         </div>
-      </label>
-      <Input
-        accept="image/png, image/jpeg, image/jpg"
-        id="avatar"
-        name="profile"
-        type="file"
-        class="m-auto text-xs md:text-lg w-fit"
-        @change="uploadImage"
-      />
-      <div v-if="imageSelected" class="flex justify-center">
-        <button
-          type="button"
-          @click="destroyImage"
-          class="p-2 m-auto font-semibold text-red-600 w-fit"
-        >
-          <Trash></Trash>
-        </button>
+      </div>
+      <div class="gap-2 flex justify-center items-center w-full">
+        <label>No image</label>
+        <Input
+          accept="image/png, image/jpeg, image/jpg"
+          id="avatar"
+          name="profile"
+          type="checkbox"
+          :checked="!isImage"
+          class="text-xs p-4 md:text-lg w-fit"
+          @change="isImage = !isImage"
+        />
       </div>
     </div>
-    <div class="gap-2 flex justify-center items-center w-full">
-      <label>No image</label>
-      <Input
-        accept="image/png, image/jpeg, image/jpg"
-        id="avatar"
-        name="profile"
-        type="checkbox"
-        :checked="!isImage"
-        class="text-xs p-4 md:text-lg w-fit"
-        @change="isImage = !isImage"
-      />
-    </div>
+    <div v-else class="mt-8 w-full h-14"></div> 
     <div class="my-6 space-y-6 md:grid md:grid-cols-2 md:gap-6 md:space-y-0">
       <FormField v-slot="{ componentField }" name="firstname">
         <FormItem>
@@ -448,7 +451,12 @@ const maritalStatus = ref();
         <FormItem>
           <label>Email Address <span class="text-red-500">*</span></label>
           <FormControl>
-            <Input type="text" id="email" placeholder="Enter your email" v-bind="componentField" />
+            <Input
+              type="text"
+              id="email"
+              placeholder="Enter your email"
+              v-bind="componentField"
+            />
           </FormControl>
           <FormMessage class="text-xs" />
         </FormItem>

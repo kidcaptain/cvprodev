@@ -344,7 +344,7 @@ const cvs = [
                         :to="{
                           name: `app-cv-builder-step-id`,
                           params: { id: 1 },
-                          query: { template_id: template.id },
+                          query: { template_id: template.id, type: template.type },
                         }"
                       >
                         <Button type="submit" class="w-full">

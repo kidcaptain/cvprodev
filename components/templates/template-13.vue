@@ -11,6 +11,7 @@ export default {
     maritalStatus: String,
     website: String,
     resume: String,
+    image: String,
     experience: String,
     educations: Array,
     personalSkills: Array,
@@ -88,7 +89,7 @@ h3 {
 }
 </style>
 <template>
-  <div class="bg-white" id="content">
+  <div class="container_template min-h-screen bg-white m-auto relative" id="content">
     <div
       class="top_Side_template"
       style="
@@ -118,11 +119,13 @@ h3 {
         <div
           class="photo_template size-24"
           id="image_profil"
-          style="
-            background-color: #4b9ab0;
+           v-if="image != null" :style="
+           ` background-image: url('${image}');
+           background-color: #4b9ab0;
             border-radius: 8%;
-            background-size: cover;
-          "
+            background-size: cover;`"
+          
+          
         >
           <!-- <img style="width: 100%;" src="" alt="" srcset=""> -->
         </div>
@@ -141,6 +144,7 @@ h3 {
             class="flex gap-2 items-center border-b-8 border-b-blue-400 pb-6"
             style="border-bottom: 4px #4b9ab0 solid"
             id="address_cadre"
+            v-if="address"
           >
             <div>
               <svg
@@ -166,7 +170,7 @@ h3 {
               </svg>
             </div>
             <div>
-              <p id="address" v-if="address" contenteditable="">
+              <p id="address"  contenteditable="">
                 {{ address }}
               </p>
             </div>
@@ -175,6 +179,7 @@ h3 {
             class="flex gap-2 items-center border-b-8 border-b-blue-400 pb-6"
             style="border-bottom: 4px #4b9ab0 solid"
             id="phone_cadre"
+            v-if="phone"
           >
             <div>
               <svg
@@ -204,7 +209,7 @@ h3 {
               </p>
             </div>
           </li>
-          <li
+          <li v-if="email || website"
             class="flex gap-2 items-center border-b-8 border-b-blue-400 pb-6"
             style="border-bottom: 4px #4b9ab0 solid"
             id="email_cadre"
@@ -262,7 +267,7 @@ h3 {
           class="flex flex-col col-span-3 gap-2 px-10"
           id="work_experience_cadre"
         >
-          <div>
+          <div v-if="educations && educations.length > 0">
             <svg
               width="32px"
               height="32px"
@@ -318,7 +323,7 @@ h3 {
               </ul>
             </div>
           </div>
-          <div>
+          <div v-if="languages && languages.length > 0">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="32px"
@@ -346,7 +351,7 @@ h3 {
                 <path d="M14 18h6"></path>
               </g>
             </svg>
-            <div style="margin-top: 10px">
+            <div  style="margin-top: 10px">
               <h2 class="text-color-steal text-xl font-bold">Languages</h2>
               <ul>
                 <li v-for="language in languages">
@@ -486,7 +491,7 @@ h3 {
               </p>
             </div>
           </div>
-          <div>
+          <div >
             <div>
               <div
                 class="flex items-center gap-2"
@@ -551,7 +556,7 @@ h3 {
               </div>
             </div>
           </div>
-          <div>
+          <div v-if="professionalSkill">
             <div class="flex items-center gap-2">
               <svg
                 width="32px"
@@ -599,7 +604,7 @@ h3 {
               </ul>
             </div>
           </div>
-          <div>
+          <div v-if="personalSkill">
             <div class="flex items-center gap-2">
               <svg
                 width="32px"

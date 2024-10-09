@@ -11,6 +11,7 @@ export default {
     maritalStatus: String,
     website: String,
     resume: String,
+    image: String,
     experience: String,
     educations: Array,
     personalSkills: Array,
@@ -84,7 +85,7 @@ h1 span {
 }
 </style>
 <template>
-  <div class="bg-white" id="content">
+  <div class=" container_template min-h-screen bg-white m-auto relative" id="content">
     <div
       class="top_Side_template"
       style="
@@ -113,12 +114,12 @@ h1 span {
         </div>
         <div
           class="photo_template size-24"
-          id="image_profil"
-          style="
+          id="image_profil"  v-if="image != null" :style="
+           ` background-image: url('${image}');
             background-color: #642a37;
             border-radius: 8%;
-            background-size: cover;
-          "
+            background-size: cover;`"
+         
         >
           <!-- <img style="width: 100%;" src="" alt="" srcset=""> -->
         </div>

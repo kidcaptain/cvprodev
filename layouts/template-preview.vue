@@ -54,7 +54,7 @@ onMounted(() => {
 }
 </style>
 <template>
-  <header class="top-0 z-40 shadow-md header">
+  <header class="top-0 z-50 shadow-md header">
     <div class="container mx-auto max-w-screen-2xl xl:p-0">
       <header class="flex items-center justify-between py-3">
         <div class="flex items-center flex-1 gap-6">
@@ -124,12 +124,12 @@ onMounted(() => {
                       <span>My CV</span>
                     </nuxt-link>
                   </DropdownMenuItem>
-                  <DropdownMenuItem>
+                  <!-- <DropdownMenuItem>
                     <nuxt-link to="/" class="flex items-center">
                       <Settings class="w-4 h-4 mr-2" />
                       <span>Support</span>
                     </nuxt-link>
-                  </DropdownMenuItem>
+                  </DropdownMenuItem> -->
                 </DropdownMenuGroup>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem class="cursor-pointer" @click="signOut">
@@ -194,11 +194,11 @@ onMounted(() => {
                     >
 
                     /*
-                    <NuxtLink to="/pricing"
+                    <!-- <NuxtLink to="/pricing"
                       ><Button class="w-full border-none bg-primary/90"
                         >Pricing</Button
                       ></NuxtLink
-                    >
+                    > -->
                     */
 
                     <NuxtLink to="/about-us"

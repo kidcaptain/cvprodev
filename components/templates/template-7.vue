@@ -56,7 +56,7 @@ const reformDateByMonth = (str) => {
 <template>
   <div
     id="content"
-    class="grid w-full min-h-screen grid-cols-10 bg-white max-w-7xl"
+    class="grid w-full container_template min-h-screen bg-white m-auto relative grid-cols-10 max-w-7xl"
   >
     <section
       style="background-color: #009381"

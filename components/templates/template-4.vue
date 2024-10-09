@@ -54,7 +54,7 @@ const reformDateByMonth = (str) => {
 </script>
 <style scoped></style>
 <template>
-  <section class="relative min-h-screen " id="content">
+  <section class="container_template min-h-screen bg-white m-auto relative" id="content">
     <div
       class="absolute top-0 left-0 z-0 grid w-full h-full  grid-cols-5"
     >

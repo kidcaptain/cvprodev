@@ -229,12 +229,7 @@ const translateDocument = async () => {
         });
         break;
     }
-    // const res = await fetch("https://libretranslate.com/translate", {
-    //   method: "POST",
-    //   body: JSON.stringify(option),
-    //   headers: { "Content-Type": "application/json" },
-    // });
-    // console.log(await res.json());
+  
   }
 };
 const submitCV = async () => {
@@ -261,6 +256,11 @@ const submitCV = async () => {
     const etape2: {
       title: string;
       data: {
+        email: any;
+        references_name: any;
+        position: any;
+        award: any;
+        tasks: string;
         title: string;
         company: string;
         start_date: string;
@@ -330,7 +330,7 @@ const submitCV = async () => {
         institutionName: e.title,
         referenceFunction: e.position,
         referenceName: e.references_name,
-        referenceNumber: e.references_phone,
+        referenceNumber: e.references_name,
         referenceEmail: e.email,
       });
     });
@@ -550,7 +550,7 @@ const optionBackgroundPosition = ref<string>("");
 const optionBackgroundNoRepeat = ref<string>("");
 const optionBackgroundSize = ref<string>("");
 const optionBackgroundColor = ref<string>("");
-const optionBackgroundRadius = ref<string>("");
+// const optionBackgroundRadius = ref<string>("");
 
 const backgroundOptionPosition = () => {
   const image_profil = document.getElementById("image_profil");

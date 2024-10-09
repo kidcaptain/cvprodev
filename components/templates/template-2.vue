@@ -12,6 +12,7 @@ export default {
     website: String,
     resume: String,
     experience: String,
+    image: String,
     educations: Array,
     personalSkills: Array,
     professionalSkills: Array,
@@ -66,7 +67,7 @@ h1 span {
 }
 
 .container_template {
-  z-index: -1;
+  /* z-index: -1; */
   position: relative;
   width: fit-content;
   min-height: 1054.4889px;
@@ -85,9 +86,21 @@ h1 span {
 .point::before {
   background-color: #4b9ab0;
 }
+@media screen and (max-width: 500px)
+{
+  .container_template {
+    /* transform: scale(0.4) translateX(0); */
+    position: relative;
+    left: 0;
+    z-index: -1;
+    top: 0;
+  }
+}
+
 </style>
 <template>
-  <div id="content" class="bg-white">
+
+  <div id="content"  class="bg-white min-h-screen m-auto container_template relative ">
     <div
       class="top_Side_template"
       style="
@@ -114,13 +127,15 @@ h1 span {
             {{ title }}
           </p>
         </div>
-        <div
+        
+        <div v-if="image != null"
           class="photo_template size-24"
           id="image_profil"
-          style="
+          :style="
+           ` background-image: url('${image}');
             background-color: #4b9ab0;
             border-radius: 8%;
-            background-size: cover;
+            background-size: cover;`
           "
         >
           <!-- <img style="width: 100%;" src="" alt="" srcset=""> -->

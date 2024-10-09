@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import { SelectItem } from "radix-vue";
-
-import { useForm } from "vee-validate";
+import * as htmlToImage from "html-to-image";
+import { toPng, toJpeg, toBlob, toPixelData, toSvg } from "html-to-image";
 // import type TemplateToPdf from "~/components/builder/preview/Template-to-pdf.vue";
 import TemplatesTemplate1 from "@/components/templates/template-1.vue";
 import TemplatesTemplate2 from "@/components/templates/template-2.vue";
@@ -16,6 +15,7 @@ import TemplatesTemplate8 from "@/components/templates/template-8.vue";
 import TemplatesTemplate12 from "@/components/templates/template-12.vue";
 import TemplatesTemplate13 from "@/components/templates/template-13.vue";
 import TemplatesTemplate14 from "@/components/templates/template-14.vue";
+import Button from "~/components/ui/button/Button.vue";
 
 definePageMeta({
   layout: "template-preview",
@@ -25,47 +25,60 @@ const route = useRoute();
 useHead({
   title: "Preview CV - CV PRO",
 });
-
+const imagePreview = ref(false);
 // const { data, error } = await useFetch<any>(
 //   "/api/templates/templateById?id=" + route.params.id
 // );
 const id = route.params.id;
 
 const resolveComponent = () => {
-  if (id == '1') return TemplatesTemplate2;
+  if (id == "1") return TemplatesTemplate2;
   if (id == "2") return TemplatesTemplate1;
-  if (id == '3') return TemplatesTemplate3;
-  if (id == '4') return TemplatesTemplate4;
-  if (id == '5') return TemplatesTemplate5;
-  if (id == '6') return TemplatesTemplate6;
-  if (id == '7') return TemplatesTemplate7;
-  if (id == '8') return TemplatesTemplate8;
-  if (id == '12') return TemplatesTemplate12;
-  if (id == '13') return TemplatesTemplate13;
-  if (id == '14') return TemplatesTemplate14;
+  if (id == "3") return TemplatesTemplate3;
+  if (id == "4") return TemplatesTemplate4;
+  if (id == "5") return TemplatesTemplate5;
+  if (id == "6") return TemplatesTemplate6;
+  if (id == "7") return TemplatesTemplate7;
+  if (id == "8") return TemplatesTemplate8;
+  if (id == "12") return TemplatesTemplate12;
+  if (id == "13") return TemplatesTemplate13;
+  if (id == "14") return TemplatesTemplate14;
 };
 
 const isRaedy = ref(false);
-
+const scale = ref(0.4);
 // const pdfSection = ref<HTMLElement | null>(null);
 const datasTemplate = ref<any>();
-onMounted(() => {
-  
-})
+
 onMounted(() => {
   const step1 = window.localStorage.getItem("step_1");
   const step2 = window.localStorage.getItem("step_2");
 
-  
   const elementContent = document.getElementById("content");
+  const htmlToImageContent = document.getElementById("htmlToImage");
   if (elementContent) {
     elementContent.style.fontFamily =
-      "font-family: 'Poppins', sans-serif !important";  
+      "font-family: 'Poppins', sans-serif !important";
+    htmlToImage
+      .toJpeg(elementContent)
+      .then(function (dataUrl) {
+        var img = new Image();
+        img.src = dataUrl;
+        document.getElementById("previewImage")?.appendChild(img);
+        var windowWidth = window.innerWidth;
+        if (windowWidth < 1000) {
+          imagePreview.value = true;
+        }
+      })
+      .catch(function (error) {
+        console.error("oops, something went wrong!", error);
+      });
   }
+
   if (step1 && step2) {
     const upload_file = document.getElementById("user_img");
     var base64 = window.localStorage.getItem("profileimage");
-    if (base64) {
+    if (base64 != null) {
       if (upload_file) {
         (upload_file as HTMLImageElement).src = base64;
       }
@@ -75,6 +88,7 @@ onMounted(() => {
         // imageProfile.style.margin = "auto";
       }
     } else {
+     
       if (upload_file) {
         upload_file.style.display = "none";
       }
@@ -83,7 +97,7 @@ onMounted(() => {
         imageProfile.style.display = "none";
       }
     }
-    console.log(step1, step2)
+    
     const etape1: {
       firstname: string;
       lastname: string;
@@ -111,7 +125,7 @@ onMounted(() => {
         professionalTasksPerformed: string;
         end_date: string;
         experience: string;
-      
+
         type: string;
         award: string;
         grade: string;
@@ -126,7 +140,7 @@ onMounted(() => {
         position: string;
       }[];
     }[] = JSON.parse(step2);
-  
+
     datasTemplate.value = {
       nom: etape1.firstname,
       prenom: etape1.lastname,
@@ -140,6 +154,7 @@ onMounted(() => {
       website: etape1.website,
       resume: etape1.objective,
       educations: etape2[1].data,
+      image: base64,
       personalSkills: etape2[2].data,
       professionalSkills: etape2[3].data,
       languages: etape2[4].data,
@@ -150,9 +165,6 @@ onMounted(() => {
       certifications: etape2[6].data,
       projects: etape2[9].data,
     };
-
-    console.log(datasTemplate.value);
-
     const firstname = document.getElementById("firstname");
     if (firstname) {
       if (!etape1.firstname || !etape1.name) {
@@ -316,13 +328,7 @@ onMounted(() => {
       var text = "";
       if (etape2[8].data.length > 0) {
         etape2[8].data.forEach((e) => {
-          text += `<li class="point2_template">${
-            e.references_name
-          }(<span style="font-size: 12px; opacity: 0.8;">${
-            e.position
-          }</span>) <br> <span style="font-size: 12px; opacity: 0.8;"> ${
-            e.email
-          } </span></li>`;
+          text += `<li class="point2_template">${e.references_name}(<span style="font-size: 12px; opacity: 0.8;">${e.position}</span>) <br> <span style="font-size: 12px; opacity: 0.8;"> ${e.email} </span></li>`;
         });
         references.innerHTML = text;
       } else {
@@ -337,13 +343,7 @@ onMounted(() => {
       var text = "";
       if (etape2[8].data.length > 0) {
         etape2[8].data.forEach((e) => {
-          text += `<li class="point2_template">${
-            e.references_name
-          }(<span style="font-size: 12px; opacity: 0.8;">${
-            e.position
-          }</span>) <br> <span style="font-size: 12px; opacity: 0.8;"> ${
-            e.email
-          } </span></li>`;
+          text += `<li class="point2_template">${e.references_name}(<span style="font-size: 12px; opacity: 0.8;">${e.position}</span>) <br> <span style="font-size: 12px; opacity: 0.8;"> ${e.email} </span></li>`;
         });
         referencesLeftRight.innerHTML = text;
       } else {
@@ -567,7 +567,7 @@ const reloadPage = () => {
   <!-- <Button @click="submitCV">Save</Button> -->
 
   <section
-    class="container grid min-h-screen grid-cols-4 gap-8 p-10 translate-x-1 max-sm:flex max-xl:flex-col"
+    class="container overflow-hidden z-10 grid sm:min-h-screen grid-cols-4 gap-8 p-10 translate-x-1 max-sm:flex max-xl:flex-col"
   >
     <div class="col-span-1">
       <BuilderPreviewTools
@@ -575,34 +575,25 @@ const reloadPage = () => {
         :isEditedPage="false"
       />
     </div>
-    <section
-      id="preview"
-      class="relative min-h-screen col-span-3 p-4 overflow-auto bg-white printme"
-    >
-    <!-- v-if="data" -->
-      <div  class="min-h-screen" >
-        <!-- <TemplateToPdf v-html="data.html"></TemplateToPdf> -->
-        <button id="download-pdf" hidden>Download PDF</button>
-       <component :is="resolveComponent()" v-bind="datasTemplate"></component> 
-          <!-- <TemplatesTemplate14  v-bind="datasTemplate" c></TemplatesTemplate14> -->
+    <div class="col-span-3  overflow-hidden relative">
+      <!-- <div class="my-1"><Button @click="imagePreview = false" size="sm">Preview pdf</Button> <Button @click="imagePreview = true" size="sm" variant="outline">Preview Image</Button></div> -->
+      <!-- <div v-if="imagePreview" id="previewImage" class="w-fit m-auto border"></div> -->
+      <div>
+        <div id="previewImage" class="w-fit m-auto sm:hidden border"></div>
+        <component
+          v-if="!imagePreview"
+          :is="resolveComponent()"
+          v-bind="datasTemplate"
+        ></component>
       </div>
-      <!-- <div v-else-if="error" class="font-semibold text-center">
-        <h3>Not find Template</h3>
-        <h4>
-          Check Your Network And
-          <Button variant="ghost" class="text-primary" @click="reloadPage"
-            >Reload</Button
-          >
-          a Page
-        </h4>
-      </div> -->
-      <!-- <div v-else>
-        <div class="w-full min-h-screen transition-all card is-loading">
-          <div class="content"></div>
-        </div>
-      </div> -->
-    </section>
+    
+    </div>
   </section>
+  <div v-if="!isRaedy" class=" flex z-40 justify-center items-center fixed top-0 left-0 w-full bg-primary h-full">
+      <div class="animate-bounce text-white font-medium">
+        Please wait...
+      </div>
+  </div>
 </template>
 <style scoped>
 .container_template {
@@ -611,4 +602,15 @@ const reloadPage = () => {
   min-width: 816.3px;
   max-width: 1000.3px;
 }
-</style> 
+@media screen and (max-width: 500px)
+{
+  .container_template {
+    /* transform: scale(0.4) translateX(0); */
+    position: relative;
+    left: 0;
+    z-index: -1;
+    top: 0;
+  }
+}
+
+</style>

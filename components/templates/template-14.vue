@@ -10,6 +10,7 @@ export default {
     linkedIn: String,
     maritalStatus: String,
     website: String,
+    image: String,
     resume: String,
     experience: String,
     educations: Array,
@@ -87,7 +88,7 @@ h3 {
 <template>
   <div
     id="content"
-    class="grid w-full min-h-screen grid-cols-10 bg-white max-w-7xl"
+    class="grid w-full  grid-cols-10 container_template min-h-screen bg-white m-auto relative max-w-7xl"
   >
     <div class="col-span-1">
       <div
@@ -101,7 +102,8 @@ h3 {
     >
       <div class="h-full">
         <div class="py-10 pb-20">
-          <div class="m-auto rounded-full size-32 " style="background-color: #204262;"  id="image_profil"></div>
+          <div class="m-auto rounded-full size-32 "  v-if="image != null" :style="
+           ` background-image: url('${image}'); background-color: #204262;`" id="image_profil"></div>
         </div>
         <ul class="flex flex-col w-full gap-4 px-4">
           <li>

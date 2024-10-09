@@ -10,6 +10,7 @@ export default {
     linkedIn: String,
     maritalStatus: String,
     website: String,
+    image: String,
     resume: String,
     experience: String,
     educations: Array,
@@ -57,8 +58,8 @@ const reformDateByMonth = (str) => {
 </script>
 
 <template>
-  <main id="content" class="container_template">
-    <div class="w-full py-4 m-auto bg-white max-w-7xl">
+  <main id="content" class="container_template min-h-screen bg-white m-auto relative">
+    <div class="w-full p-4 m-auto  bg-white max-w-7xl">
       <div class="flex items-center justify-between">
         <div>
           <h1 class="text-4xl" contenteditable="">
@@ -75,7 +76,8 @@ const reformDateByMonth = (str) => {
           </ul>
         </div>
         <div>
-          <div
+          <div  v-if="image != null" :style="
+           ` background-image: url('${image}');`"
             id="image_profil"
             class="bg-cover rounded-full photo_template size-24 bg-stone-800"
           ></div>

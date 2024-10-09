@@ -11,6 +11,7 @@ export default {
     maritalStatus: String,
     website: String,
     resume: String,
+    image: String,
     experience: String,
     educations: Array,
     personalSkills: Array,
@@ -57,7 +58,7 @@ const reformDateByMonth = (str) => {
 </script>
 <style scoped></style>
 <template>
-  <div class="w-full pt-12 px-12 m-auto bg-white max-w-7xl" id="content">
+  <div class="w-full pt-12 px-12 m-auto bg-white max-w-7xl min-h-screen container_template relative" id="content">
     <div class="flex items-center justify-between">
       <div>
         <h1 class="text-3xl font-bold" contenteditable="">
@@ -67,7 +68,8 @@ const reformDateByMonth = (str) => {
         <h2 class="text-xl" id="title" contenteditable="">{{ title }}</h2>
       </div>
       <div>
-        <div class="rounded-full size-32 bg-stone-700" id="image_profil"></div>
+        <div class="rounded-full size-32 bg-stone-700" id="image_profil"  v-if="image != null" :style="
+           ` background-image: url('${image}');`"></div>
       </div>
     </div>
     <div class="grid grid-cols-10 mt-5">

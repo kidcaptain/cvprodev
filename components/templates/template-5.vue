@@ -11,6 +11,7 @@ export default {
     maritalStatus: String,
     website: String,
     resume: String,
+    image: String,
     experience: String,
     educations: Array,
     personalSkills: Array,
@@ -55,14 +56,15 @@ const reformDateByMonth = (str) => {
 <style scoped></style>
 <template>
   <div
-    class="grid w-full min-h-screen grid-cols-10 bg-white max-w-7xl"
+    class="grid container_template  m-auto relative w-full min-h-screen grid-cols-10  bg-white max-w-7xl"
     id="content"
   >
     <section class="h-full col-span-4 px-8 p-4 bg-stone-200">
       <div class="h-full">
         <div class="py-10">
           <div
-            id="image_profil"
+            id="image_profil"  v-if="image != null" :style="
+           ` background-image: url('${image}');`"
             class="m-auto rounded-full size-32 bg-stone-800"
           ></div>
         </div>

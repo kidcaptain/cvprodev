@@ -109,6 +109,9 @@ onMounted(() => {
   left: 0;
   border-radius: 20px;
 }
+.black-text{
+  color: black;
+}
 </style>
 <template>
   <header class="top-0 z-50 shadow-md header">
@@ -247,8 +250,9 @@ onMounted(() => {
                       v-for="link in HeaderLink"
                       :to="link.to"
                       :key="link.text"
-                      active-class="font-bold bg-white text-primary"
-                      class="w-full p-2 border-none rounded-lg bg-primary/90"
+                       class="w-full p-2 border-none rounded-lg py-4 text-white bg-primary/90"
+                      active-class="font-bold bg-white black-text"
+                     
                     >
                       {{ link.text }}
                     </nuxt-link>

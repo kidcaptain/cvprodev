@@ -47,10 +47,10 @@ export const HeaderLink = [
     text: "Templates",
     to: "/templates",
   },
-  {
-    text: "Pricings",
-    to: "/pricing",
-  },
+  // {
+  //   text: "Pricings",
+  //   to: "/pricing",
+  // },
   {
     text: "About Us",
     to: "/about-us",

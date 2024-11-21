@@ -30,10 +30,10 @@ const sumbitAggrement = () => {
   setPrivaciesAggrement(aggred.value);
 };
 const checkImage = ref(true);
-const { data, pending, error, refresh } = await useAsyncData<any>(
-  "cv-templates-list",
-  () => $fetch(`${BASE_URL}templates/get/all`)
-);
+// const { data, pending, error, refresh } = await useAsyncData<any>(
+//   "cv-templates-list",
+//   () => $fetch(`${BASE_URL}templates/get/all`)
+// );
 
 
 

@@ -61,11 +61,11 @@ const reformDateByMonth = (str) => {
   <div class="w-full pt-12 px-12 m-auto bg-white max-w-7xl min-h-screen container_template relative" id="content">
     <div class="flex items-center justify-between">
       <div>
-        <h1 class="text-3xl font-bold" contenteditable="">
-          <span id="firstname">{{ nom }}</span>
-          <span id="lastname">{{ prenom }}</span>
+        <h1 class="text-3xl font-bold uppercase flex gap-2" contenteditable="">
+          <span id="firstname" >{{ nom }} </span>
+          <span id="lastname" >{{ prenom }}</span>
         </h1>
-        <h2 class="text-xl" id="title" contenteditable="">{{ title }}</h2>
+        <h2 class="text-xl uppercase" id="title" contenteditable="">{{ title }}</h2>
       </div>
       <div>
         <div class="rounded-full size-32 bg-stone-700" id="image_profil"  v-if="image != null" :style="
@@ -88,12 +88,11 @@ const reformDateByMonth = (str) => {
               <li contenteditable="">{{ workExperience.jobTitle }}</li>
             </ul>
 
-            <p contenteditable=""
-              v-for="task in workExperience.professionalTasksPerformed"
+            <div contenteditable="" v-html="workExperience.professionalTasksPerformed"
               class="mb-2"
             >
-              {{ task }}
-            </p>
+           
+          </div>
 
             <h3 class="my-2" contenteditable="">{{ workExperience.company }}</h3>
           </div>

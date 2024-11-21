@@ -100,7 +100,7 @@ h1 span {
 </style>
 <template>
 
-  <div id="content"  class="bg-white min-h-screen m-auto container_template relative ">
+  <div id="content"  class="bg-white min-h-screen h-full m-auto container_template relative ">
     <div
       class="top_Side_template"
       style="
@@ -119,11 +119,11 @@ h1 span {
         "
       >
         <div>
-          <h1 class="text-3xl font-bold" contenteditable="">
+          <h1 class="text-4xl font-bold italic flex gap-2" contenteditable="">
             <span id="firstname">{{ nom }} </span> 
-            <span id="lastname">{{ prenom }}</span>
+            <span id="lastname"> {{ prenom }}</span>
           </h1>
-          <p id="title" contenteditable="" style="color: #4b9ab0; font-size: 18px">
+          <p id="title" contenteditable="" style="color: #4b9ab0; font-weight: 400;  font-size: 18px">
             {{ title }}
           </p>
         </div>
@@ -447,10 +447,10 @@ h1 span {
             </div>
           </div>
         </div>
-        <div
+        <div v-if="resume || workExperiences || professionalSkills || personalSkills || projects  || certifications"
           class="col-span-7 before:content-[''] before:left-14 before:-translate-x-0 before:h-full before:absolute before:w-1 relative point flex flex-col gap-2 px-10"
         >
-          <div v-if="resume != ''">
+          <div v-if="resume">
             <div class="flex items-center gap-2">
               <svg
                 width="32px"
@@ -484,7 +484,7 @@ h1 span {
               </h2>
             </div>
             <div style="margin-top: 10px">
-              <p class="mt-2 pl-12">
+              <p class="mt-2 pl-12" contenteditable="">
                 {{ resume }}
               </p>
             </div>
@@ -499,8 +499,9 @@ h1 span {
                   width="32px"
                   height="32px"
                   viewBox="0 0 24 24"
-                  class="size-10 p-1 rounded-full color-steal z-10"
+                  class="size-10 relative p-1 rounded-full color-steal z-10"
                   fill="none"
+                  
                   xmlns="http://www.w3.org/2000/svg"
                 >
                   <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
@@ -541,14 +542,7 @@ h1 span {
                       {{ workExperience.endDate }}
                     </h4>
                   </div>
-                  <div class="col-span-3">
-                    <ul>
-                      <li contenteditable=""
-                        v-for="task in workExperience.professionalTasksPerformed"
-                      >
-                        {{ task }}
-                      </li>
-                    </ul>
+                  <div class="col-span-3" v-html="workExperience.professionalTasksPerformed" contenteditable="">
                   </div>
                 </div>
               </div>
@@ -559,7 +553,7 @@ h1 span {
               <svg
                 width="32px"
                 height="32px"
-                class="size-10 p-1 rounded-full color-steal z-10"
+                class="size-10 p-1 relative rounded-full color-steal z-10"
                 viewBox="0 0 24 24"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
@@ -759,6 +753,7 @@ h1 span {
             </div>
           </div>
         </div>
+       
       </div>
     </div>
   </div>

@@ -58,16 +58,16 @@ const reformDateByMonth = (str) => {
 </script>
 
 <template>
-  <main id="content" class="container_template min-h-screen bg-white m-auto relative">
+  <main id="content" class="container_template min-h-screen p-6 bg-white m-auto relative">
     <div class="w-full p-4 m-auto  bg-white max-w-7xl">
       <div class="flex items-center justify-between">
         <div>
-          <h1 class="text-4xl" contenteditable="">
-            <span id="firstname">{{ nom }}</span>
+          <h1 class="text-4xl uppercase flex gap-2" contenteditable="">
+            <span id="firstname">{{ nom }} </span> 
             <span id="lastname">{{ prenom }}</span>
           </h1>
 
-          <h2 class="text-2xl" id="title" contenteditable="">{{ title }}</h2>
+          <h2 class="text-xl uppercase" id="title" contenteditable="">{{ title }}</h2>
           <ul class="flex gap-4 mt-2" contenteditable="">
             <li>{{ address }}</li>
             <li v-if="phone">{{ phone }}</li>
@@ -88,7 +88,7 @@ const reformDateByMonth = (str) => {
           <div class="flex flex-col gap-6">
             <div v-if="resume">
               <h2
-                class="mb-3 text-2xl font-semibold uppercase border-b-4 border-b-stone-400"
+                class="mb-3 text-xl font-semibold uppercase border-b-2 border-b-stone-400"
               >
                 Professional Summary
               </h2>
@@ -98,7 +98,7 @@ const reformDateByMonth = (str) => {
             </div>
             <div v-if="educations && educations.length > 0">
               <h2
-                class="mb-3 text-2xl font-semibold uppercase border-b-4 border-b-stone-400"
+                class="mb-3 text-xl font-semibold uppercase border-b-2 border-b-stone-400"
               >
                 Education
               </h2>
@@ -115,7 +115,7 @@ const reformDateByMonth = (str) => {
                       <h3 contenteditable="">{{ education.city }}</h3>
                     </div>
                     <div
-                      class="flex flex-col col-span-3 gap-5 px-4 border-l-4 border-l-stone-400"
+                      class="flex flex-col col-span-3 gap-5 px-4 border-l-2 border-l-stone-400"
                     >
                       <div>
                         <h2 class="text-xl font-bold" contenteditable="">
@@ -134,7 +134,7 @@ const reformDateByMonth = (str) => {
         <div class="flex flex-col col-span-3 gap-4">
           <div v-if="personalSkills && personalSkills.length > 0">
             <h2
-              class="mb-3 text-2xl font-semibold uppercase border-b-4 border-b-stone-400"
+              class="mb-3 text-xl font-semibold uppercase border-b-2 border-b-stone-400"
             >
               Personal skills
             </h2>
@@ -148,7 +148,7 @@ const reformDateByMonth = (str) => {
           </div>
           <div v-if="professionalSkills && professionalSkills.length > 0">
             <h2
-              class="mb-3 text-2xl font-semibold uppercase border-b-4 border-b-stone-400"
+              class="mb-3 text-xl font-semibold uppercase border-b-2 border-b-stone-400"
             >
               Professional skills
             </h2>
@@ -160,7 +160,7 @@ const reformDateByMonth = (str) => {
           </div>
           <div v-if="languages && languages.length > 0">
             <h2
-              class="mb-3 text-2xl font-semibold uppercase border-b-4 border-b-stone-400"
+              class="mb-3 text-xl font-semibold uppercase border-b-2 border-b-stone-400"
             >
               Language
             </h2>
@@ -178,7 +178,7 @@ const reformDateByMonth = (str) => {
       </div>
       <div class="mt-4" v-if="workExperiences && workExperiences.length > 0">
         <h2
-          class="mb-3 text-2xl font-semibold uppercase border-b-4 border-b-stone-400"
+          class="mb-3 text-xl font-semibold uppercase border-b-2 border-b-stone-400"
         >
           Professional Experience
         </h2>
@@ -193,7 +193,7 @@ const reformDateByMonth = (str) => {
                 </h3>
               </div>
               <div
-                class="flex flex-col col-span-3 gap-5 px-4 py-4 border-l-4 border-l-stone-400"
+                class="flex flex-col col-span-3 gap-5 px-4 py-4 border-l-2 border-l-stone-400"
               >
                 <div>
                   <h2 class="text-xl font-bold" contenteditable="">
@@ -208,7 +208,7 @@ const reformDateByMonth = (str) => {
       </div>
       <div class="mt-4" v-if="awards && awards.length > 0">
         <h2
-          class="mb-3 text-2xl font-semibold uppercase border-b-4 border-b-stone-400"
+          class="mb-3 text-xl font-semibold uppercase border-b-2 border-b-stone-400"
         >
           Awards and Distinctions
         </h2>
@@ -229,7 +229,7 @@ const reformDateByMonth = (str) => {
       </div>
       <div class="mt-4" v-if="projects && projects.length > 0">
         <h2
-          class="mb-3 text-2xl font-semibold uppercase border-b-4 border-b-stone-400"
+          class="mb-3 text-xl font-semibold uppercase border-b-2 border-b-stone-400"
         >
           Projects
         </h2>

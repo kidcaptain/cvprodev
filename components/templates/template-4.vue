@@ -278,11 +278,10 @@ const reformDateByMonth = (str) => {
                   {{ workExperience.company }} /
                   {{ workExperience.startDate }} - {{ workExperience.endDate }}
                 </h3>
-                <ul class="pl-4 mt-3" style="list-style: disc">
-                  <li contenteditable="" v-for="task in workExperience.professionalTasksPerformed">
-                    {{ task }}
-                  </li>
-                </ul>
+                <div class="pl-4 mt-3" v-html="workExperience.professionalTasksPerformed">
+
+                </div>
+               
               </li>
             </ul>
           </div>

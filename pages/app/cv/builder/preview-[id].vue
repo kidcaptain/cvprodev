@@ -54,27 +54,6 @@ onMounted(() => {
   const step1 = window.localStorage.getItem("step_1");
   const step2 = window.localStorage.getItem("step_2");
 
-  const elementContent = document.getElementById("content");
-  const htmlToImageContent = document.getElementById("htmlToImage");
-  if (elementContent) {
-    elementContent.style.fontFamily =
-      "font-family: 'Poppins', sans-serif !important";
-    htmlToImage
-      .toJpeg(elementContent)
-      .then(function (dataUrl) {
-        var img = new Image();
-        img.src = dataUrl;
-        document.getElementById("previewImage")?.appendChild(img);
-        var windowWidth = window.innerWidth;
-        if (windowWidth < 1000) {
-          imagePreview.value = true;
-        }
-      })
-      .catch(function (error) {
-        console.error("oops, something went wrong!", error);
-      });
-  }
-
   if (step1 && step2) {
     const upload_file = document.getElementById("user_img");
     var base64 = window.localStorage.getItem("profileimage");
@@ -88,7 +67,6 @@ onMounted(() => {
         // imageProfile.style.margin = "auto";
       }
     } else {
-     
       if (upload_file) {
         upload_file.style.display = "none";
       }
@@ -97,7 +75,7 @@ onMounted(() => {
         imageProfile.style.display = "none";
       }
     }
-    
+
     const etape1: {
       firstname: string;
       lastname: string;
@@ -125,7 +103,6 @@ onMounted(() => {
         professionalTasksPerformed: string;
         end_date: string;
         experience: string;
-
         type: string;
         award: string;
         grade: string;
@@ -506,30 +483,59 @@ onMounted(() => {
 
     const element = document.getElementById("content");
     const preview = document.getElementById("preview");
-    // if (element && preview) {
-    //   element.style.width = "827px";
-    //   element.style.height = `${
-    //     Math.ceil(element.getBoundingClientRect().height / 1170.4889) *
-    //     1170.4889
-    //   }px`;
-    //   if (Math.ceil(element.getBoundingClientRect().height / 800) > 1) {
-    //     const hr = document.createElement("div");
-    //     hr.style.position = "absolute";
-    //     hr.style.transform = "translateY(-50%)";
-    //     hr.style.top = "50%";
-    //     hr.style.backgroundColor = "#faf4f4";
-    //     hr.style.padding = "5px 0";
-    //     hr.style.width = "100%";
-    //     hr.style.textAlign = "center";
-    //     hr.style.minWidth = "816.3px";
-    //     hr.style.fontSize = "14px";
+    const elementContent = document.getElementById("content");
+   
+    if (elementContent) {
+     console.log(
+      elementContent?.offsetHeight,
+      elementContent?.clientHeight,
+      elementContent?.scrollHeight,
+      elementContent?.getBoundingClientRect().height,
+      elementContent?.style.height
+    );
+      elementContent.style.fontFamily =
+        "font-family: 'Poppins', sans-serif !important";
 
-    //     hr.innerText =
-    //       "Page " +
-    //       Math.ceil(element.getBoundingClientRect().height / 1170.4889);
-    //     preview.append(hr);
-    //   }
-    // }
+      htmlToImage
+        .toPng(elementContent)
+        .then(function (dataUrl) {
+          var img = new Image();
+          img.height = elementContent.offsetHeight;
+          img.src = dataUrl;
+          document.getElementById("previewImage")?.appendChild(img);
+          var windowWidth = window.innerWidth;
+          if (windowWidth < 1000) {
+            imagePreview.value = true;
+          }
+        })
+        .catch(function (error) {
+          console.error("oops, something went wrong!", error);
+        });
+    }
+    if (element && preview) {
+      element.style.width = "827px";
+      element.style.height = `${
+        Math.ceil(element.getBoundingClientRect().height / 1170.4889) *
+        1170.4889
+      }px`;
+      if (Math.ceil(element.getBoundingClientRect().height / 800) > 1) {
+        const hr = document.createElement("div");
+        hr.style.position = "absolute";
+        hr.style.transform = "translateY(-50%)";
+        hr.style.top = "50%";
+        hr.style.backgroundColor = "#faf4f4";
+        hr.style.padding = "5px 0";
+        hr.style.width = "100%";
+        hr.style.textAlign = "center";
+        hr.style.minWidth = "816.3px";
+        hr.style.fontSize = "14px";
+
+        hr.innerText =
+          "Page " +
+          Math.ceil(element.getBoundingClientRect().height / 1170.4889);
+        preview.append(hr);
+      }
+    }
   }
 
   isRaedy.value = true;
@@ -561,9 +567,18 @@ const reformDateByMonth = (str: string) => {
 const reloadPage = () => {
   window.location.reload();
 };
+const elementRef = ref(null);
+
+watch(elementRef, (el: any) => {
+  if (el) {
+    const height = el.offsetHeight;
+    const width = el.offsetWidth;
+    console.log('Hauteur:', height, 'Largeur:', width);
+  }
+});
 </script>
 
-<template :ref="pdfSection">
+<template >
   <!-- <Button @click="submitCV">Save</Button> -->
 
   <section
@@ -575,24 +590,29 @@ const reloadPage = () => {
         :isEditedPage="false"
       />
     </div>
-    <div class="col-span-3  overflow-hidden relative">
+    <div class="col-span-3 overflow-hidden relative">
       <!-- <div class="my-1"><Button @click="imagePreview = false" size="sm">Preview pdf</Button> <Button @click="imagePreview = true" size="sm" variant="outline">Preview Image</Button></div> -->
       <!-- <div v-if="imagePreview" id="previewImage" class="w-fit m-auto border"></div> -->
       <div>
-        <div id="previewImage" class="w-fit m-auto sm:hidden border"></div>
+        <div
+          ref="elementRef"
+          id="previewImage"
+          class="w-fit m-auto sm:hidden border"
+        ></div>
+        <button id="download-pdf" hidden>Download PDF</button>
         <component
           v-if="!imagePreview"
           :is="resolveComponent()"
           v-bind="datasTemplate"
         ></component>
       </div>
-    
     </div>
   </section>
-  <div v-if="!isRaedy" class=" flex z-40 justify-center items-center fixed top-0 left-0 w-full bg-primary h-full">
-      <div class="animate-bounce text-white font-medium">
-        Please wait...
-      </div>
+  <div
+    v-if="!isRaedy"
+    class="flex z-40 justify-center items-center fixed top-0 left-0 w-full bg-primary h-full"
+  >
+    <div class="animate-bounce text-white font-medium">Please wait...</div>
   </div>
 </template>
 <style scoped>
@@ -602,8 +622,7 @@ const reloadPage = () => {
   min-width: 816.3px;
   max-width: 1000.3px;
 }
-@media screen and (max-width: 500px)
-{
+@media screen and (max-width: 500px) {
   .container_template {
     /* transform: scale(0.4) translateX(0); */
     position: relative;
@@ -612,5 +631,4 @@ const reloadPage = () => {
     top: 0;
   }
 }
-
 </style>

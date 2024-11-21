@@ -61,7 +61,7 @@ const reformDateByMonth = (str) => {
   >
     <section class="h-full col-span-4 px-8 p-4 bg-stone-200">
       <div class="h-full">
-        <div class="py-10">
+        <div class="py-6">
           <div
             id="image_profil"  v-if="image != null" :style="
            ` background-image: url('${image}');`"
@@ -76,7 +76,7 @@ const reformDateByMonth = (str) => {
               Contact
             </h2>
             <ul class="px-1">
-              <li class="flex items-center gap-2 py-2 text-center">
+              <li class="flex items-center gap-2 py-2 text-left text-sm">
                 <svg
                   fill="#111111"
                   width="32px"
@@ -101,7 +101,7 @@ const reformDateByMonth = (str) => {
                 </svg>
                 <span contenteditable="">{{ address }}</span>
               </li>
-              <li class="flex items-center gap-2 py-2">
+              <li class="flex items-center gap-2 py-2 text-sm">
                 <svg
                   fill="#111111"
                   width="32px"
@@ -125,7 +125,7 @@ const reformDateByMonth = (str) => {
                 </svg>
                 <span contenteditable="">{{ phone }}</span>
               </li>
-              <li class="flex items-center gap-2 py-2">
+              <li class="flex items-center gap-2 py-2 text-sm">
                 <svg
                   width="32px"
                   height="32px"
@@ -162,7 +162,7 @@ const reformDateByMonth = (str) => {
                 </svg>
                 <span contenteditable="">{{ email }}</span>
               </li>
-              <li class="flex items-center gap-2 py-2">
+              <li class="flex items-center gap-2 py-2 text-sm">
                 <svg
                   width="32px"
                   height="32px"
@@ -226,7 +226,8 @@ const reformDateByMonth = (str) => {
               </li>
             </ul>
           </li>
-          <li v-if="personalSkill && personalSkill.length > 0">
+       
+          <li v-if="personalSkills && personalSkills.length > 0">
             <h2
               class="w-full p-2 mb-3 font-semibold text-center text-white uppercase rounded-full bg-stone-900"
             >
@@ -238,7 +239,7 @@ const reformDateByMonth = (str) => {
               </li>
             </ul>
           </li>
-          <li v-if="professionalSkill && professionalSkill.length > 0">
+          <li v-if="professionalSkills && professionalSkills.length > 0">
             <h2
               class="w-full p-2 mb-3 font-semibold text-center text-white uppercase rounded-full bg-stone-900"
             >
@@ -257,21 +258,21 @@ const reformDateByMonth = (str) => {
         <div></div>
       </div>
     </section>
-    <section class="relative h-full col-span-6 p-4 px-8 overflow-hidden">
+    <section class="relative h-full col-span-6 py-4 pl-4 pr-12 overflow-hidden">
       <div>
-        <div class="py-10">
+        <div class="py-6">
           <h1 class="text-5xl font-thin">
-            <span class="text-4xl font-bold" contenteditable="">{{ nom }}</span>
-            <br />
-            <span contenteditable="">{{ prenom }}</span>
+            <span class="text-4xl  font-bold" contenteditable="">{{ nom }}</span>
+            <br>
+            <span contenteditable="" class="">{{ prenom }}</span>
           </h1>
-          <h2 class="uppercase" contenteditable="">{{ title }}</h2>
+          <h2 class="uppercase font-semibold" contenteditable="">{{ title }}</h2>
         </div>
         <ul class="flex flex-col gap-8">
           <li v-if="workExperiences && workExperiences.length > 0">
             <div>
               <div class="flex gap-2 items-center">
-                <h2 class="uppercase w-96 relative font-bold text-xl">
+                <h2 class="uppercase w-96 relative font-bold text-lg">
                   Work experience
                 </h2>
                 <div class="w-full h-1 bg-black"></div>
@@ -282,7 +283,7 @@ const reformDateByMonth = (str) => {
                     <span contenteditable="">
                       {{ workExperience.company }}</span
                     >
-                    <span contenteditable=""
+                    <span contenteditable="" class="text-sm"
                       >{{ workExperience.startDate }} -
                       {{ workExperience.endDate }}
                     </span>
@@ -290,14 +291,10 @@ const reformDateByMonth = (str) => {
                   <h2 class="mt-1 mb-1 font-semibold" contenteditable="">
                     {{ workExperience.jobTitle }}
                   </h2>
-                  <ul>
-                    <li
-                      contenteditable=""
-                      v-for="task in workExperience.professionalTasksPerformed"
-                    >
-                      {{ task }}
-                    </li>
-                  </ul>
+                  <div v-html="workExperience.professionalTasksPerformed">
+                     
+                  </div>
+                 
                 </li>
               </ul>
             </div>
@@ -305,7 +302,7 @@ const reformDateByMonth = (str) => {
           <li v-if="references && references.length > 0">
             <div>
               <div class="flex gap-2 items-center">
-                <h2 class="uppercase relative font-bold text-xl">Reference</h2>
+                <h2 class="uppercase relative font-bold text-lg">Reference</h2>
                 <div class="w-full h-1 bg-black"></div>
               </div>
               <ul class="flex flex-col gap-5 mt-4">

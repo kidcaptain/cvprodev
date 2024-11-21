@@ -108,7 +108,7 @@ h1 span {
             <span id="firstname">{{ nom }}</span>
             <span id="lastname">{{ prenom }}</span>
           </h1>
-          <p contenteditable="" id="title" style="color: #642a37; font-size: 18px">
+          <p contenteditable="" class="font-semibold" id="title" style="color: #642a37; font-size: 18px">
             {{ title }}
           </p>
         </div>
@@ -535,14 +535,8 @@ h1 span {
                       {{ workExperience.endDate }}
                     </h4>
                   </div>
-                  <div class="col-span-3">
-                    <ul>
-                      <li contenteditable=""
-                        v-for="task in workExperience.professionalTasksPerformed"
-                      >
-                        {{ task }}
-                      </li>
-                    </ul>
+                  <div contenteditable="" class="col-span-3" v-html="workExperience.professionalTasksPerformed">
+                 
                   </div>
                 </div>
               </div>
@@ -553,7 +547,7 @@ h1 span {
               <svg
                 width="32px"
                 height="32px"
-                class="size-10 p-1 rounded-full color-steal z-10"
+                class="size-10 p-1 relative rounded-full color-steal z-10"
                 viewBox="0 0 24 24"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
@@ -590,7 +584,7 @@ h1 span {
             </div>
             <div style="margin-top: 10px" class="pl-12">
               <ul class="pl-5" style="list-style: disc">
-                <li v-for="professionalSkill in professionalSkills" contenteditable="">
+                <li contenteditable="" v-for="professionalSkill in professionalSkills" >
                   {{ professionalSkill.title }}
                 </li>
               </ul>
@@ -601,7 +595,7 @@ h1 span {
               <svg
                 width="32px"
                 height="32px"
-                class="size-10 p-1 rounded-full color-steal z-10"
+                class="size-10 p-1 relative rounded-full color-steal z-10"
                 viewBox="0 0 24 24"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
@@ -638,7 +632,7 @@ h1 span {
             </div>
             <div style="margin-top: 10px" class="pl-12">
               <ul class="pl-5" style="list-style: disc">
-                <li v-for="personalSkill in personalSkills" contenteditable="">
+                <li contenteditable="" v-for="personalSkill in personalSkills" >
                   {{ personalSkill.title }}
                 </li>
               </ul>

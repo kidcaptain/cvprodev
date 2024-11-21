@@ -215,7 +215,7 @@ const reformDateByMonth = (str) => {
           {{ resume }}
         </div>
         <ul
-          class="flex flex-col mt-8 gap-5 pl-20 before:content-[''] before:left-8 before:-translate-x-0 before:h-full before:absolute before:w-1 before:bg-stone-400 relative"
+          class="flex flex-col mt-8 gap-5 pl-20 before:content-[''] before:left-9 before:-translate-x-0 before:h-full before:absolute before:w-0.5 before:bg-stone-400 relative"
         >
           <li v-if="workExperiences && workExperiences.length > 0">
             <div>
@@ -264,7 +264,7 @@ const reformDateByMonth = (str) => {
                   </g>
                 </svg>
               </div>
-              <ul class="flex flex-col gap-5 mt-4">
+              <ul class="flex flex-col gap-5 mt-5">
                 <li v-for="workExperience in workExperiences">
                   <div
                     class="flex flex-col w-full before:content-['Jan&nbsp;2020&nbsp;-&nbsp;Feb&nbsp;2023'] before:-left-48 before:w-52 before:text-white before:absolute"
@@ -276,20 +276,16 @@ const reformDateByMonth = (str) => {
                       {{ workExperience.endDate }}
                     </span>
                     <span
-                      class="before:content-[''] font-bold point before:left-6 before:rounded-full before:size-5 before:absolute"
+                      class="before:content-[''] font-bold point before:left-7 before:rounded-full before:size-5 before:absolute"
                       contenteditable="" >{{ workExperience.jobTitle }}</span
                     >
                     <span contenteditable="">{{ workExperience.company }}</span>
                   </div>
                   <h2 class="my-1 font-bold">Key Achievements</h2>
+                  <div contenteditable=""  class="pl-6" v-html="workExperience.professionalTasksPerformed"
 
-                  <ul style="list-style: disc" class="pl-6">
-                    <li
-                      v-for="task in workExperience.professionalTasksPerformed"
-                      contenteditable="" >
-                      {{ task }}
-                    </li>
-                  </ul>
+                  </div>
+                 
                 </li>
               </ul>
             </div>
@@ -341,7 +337,7 @@ const reformDateByMonth = (str) => {
                   </g>
                 </svg>
               </div>
-              <ul class="flex flex-col gap-5 mt-4">
+              <ul class="flex flex-col gap-5 mt-5">
                 <li v-for="education in educations">
                   <div
                     class="flex flex-col w-full before:content-['Jan&nbsp;2020&nbsp;-&nbsp;Feb&nbsp;2023'] before:-left-48 before:w-52 before:text-white before:absolute"
@@ -353,15 +349,14 @@ const reformDateByMonth = (str) => {
                       {{ education.end_date }}
                     </span>
                     <span
-                      class="before:content-[''] font-bold point before:left-6 before:rounded-full before:size-5 before:absolute"
+                      class="before:content-[''] font-bold point before:left-7 before:rounded-full before:size-5 before:absolute"
                       contenteditable="" >{{ education.title }}, {{ education.city }}</span
                     >
                     <h2 class="my-1 font-bold">{{ education.grade }}</h2>
-                    <ul style="list-style: disc" class="pl-6">
-                      <li v-for="task in education.tasks_performed" contenteditable="">
-                        {{ task }}
-                      </li>
-                    </ul>
+                    <div v-html="education.tasks_performed" class="pl-6" >
+
+                    </div>
+               
                   </div>
                 </li>
               </ul>
@@ -414,13 +409,13 @@ const reformDateByMonth = (str) => {
                   </g>
                 </svg>
               </div>
-              <ul class="flex flex-col gap-2 mt-4">
+              <ul class="flex flex-col gap-2 mt-5">
                 <li
                   class="flex flex-row items-center justify-between"
                   v-for="language in languages"
                 >
                   <span contenteditable=""
-                    class="before:content-[''] point before:left-6 before:rounded-full before:size-5 before:absolute"
+                    class="before:content-[''] point before:left-7 before:rounded-full before:size-5 before:absolute"
                     >{{ language.title }}</span
                   >
                   <div v-if="language.level == 'Elementary level'">
@@ -454,7 +449,7 @@ const reformDateByMonth = (str) => {
               </ul>
             </div>
           </li>
-          <li v-if="personalSkill && personalSkill.length > 0">
+          <li v-if="personalSkills && personalSkills.length > 0">
             <div>
               <h2
                 class="text-xl mb-2 font-semibold w-full before:content-[''] point before:left-4 before:rounded-full before:size-10 before:absolute"
@@ -501,13 +496,13 @@ const reformDateByMonth = (str) => {
                   </g>
                 </svg>
               </div>
-              <ul class="flex flex-col gap-5 mt-4">
+              <ul class="flex flex-col gap-5 mt-5">
                 <li
                   v-for="personalSkill in personalSkills"
                   class="flex flex-row items-center justify-between"
                 >
                   <span
-                    class="before:content-[''] point before:left-6 before:rounded-full before:size-5 before:absolute"
+                    class="before:content-[''] point before:left-7 before:rounded-full before:size-5 before:absolute"
                     contenteditable="" >
                     {{ personalSkill.title }}</span
                   >
@@ -569,13 +564,13 @@ const reformDateByMonth = (str) => {
                   </g>
                 </svg>
               </div>
-              <ul class="flex flex-col gap-5 mt-4">
+              <ul class="flex flex-col gap-5 mt-5">
                 <li
                   v-for="professionalSkill in professionalSkills"
                   class="flex flex-row items-center justify-between"
                 >
                   <span
-                    class="before:content-[''] point before:left-6 before:rounded-full before:size-5 before:absolute"
+                    class="before:content-[''] point before:left-7 before:rounded-full before:size-5 before:absolute"
                     contenteditable="" >
                     {{ professionalSkill.title }}</span
                   >

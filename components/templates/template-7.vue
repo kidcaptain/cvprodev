@@ -52,7 +52,11 @@ const reformDateByMonth = (str) => {
 // }>(),
 // console.log(props.data.address)
 </script>
-<style scoped></style>
+<style scoped>
+  .tiles{
+    background-color: #016459
+  }
+</style>
 <template>
   <div
     id="content"
@@ -63,13 +67,13 @@ const reformDateByMonth = (str) => {
       class="h-full col-span-3 text-white"
     >
       <div class="h-full">
-        <div class="p-4 py-10 pb-20">
+        <div class="p-4 py-10 pb-10">
           <h1 class="text-3xl font-bold" contenteditable="">{{ nom }} {{ prenom }}</h1>
           <h2 class="uppercase" contenteditable="">{{ title }}</h2>
         </div>
         <ul class="flex flex-col w-full gap-6">
           <li v-if="phone || email || website || address">
-            <h2 class="w-full p-2 px-4 mb-2 text-xl font-semibold color-steal">
+            <h2 class="w-full tiles p-2 px-4 mb-2 text-xl font-semibold color-steal">
               Contact
             </h2>
             <ul class="pl-4">
@@ -91,16 +95,29 @@ const reformDateByMonth = (str) => {
               </li>
             </ul>
           </li>
-          <li v-if="personalSkill && personalSkill.length > 0">
-            <h2 class="w-full p-2 px-4 mb-2 text-xl font-semibold color-steal">
+          <li v-if="personalSkills && personalSkills.length > 0">
+            <h2 class="w-full tiles p-2 px-4 mb-2 text-xl font-semibold color-steal">
               Personal Skills
             </h2>
             <ul class="flex flex-col gap-2 px-4">
               <li v-for="personalSkill in personalSkills" contenteditable="">
-                {{ personalSkill.title }}
+                <span>  {{ personalSkill.title }}</span>
+                <div class="w-full h-2 my-1 color-steal">
+                  <div class="w-full h-2 my-1 bg-white"></div>
+                </div>
+                <div class="text-right">
+                  <span class="text-xs"> Excellent </span>
+                </div>
               </li>
-              <li>
-                <span> People Skills </span>
+            </ul>
+          </li>
+          <li v-if="professionalSkills && professionalSkills.length > 0">
+            <h2 class="w-full tiles p-2 px-4 mb-2 text-xl font-semibold color-steal">
+              Professional Skills
+            </h2>
+            <ul class="flex flex-col gap-2 px-4">
+              <li v-for="professionalSkill in professionalSkills" contenteditable="">
+                <span>  {{ professionalSkill.title }}</span>
                 <div class="w-full h-2 my-1 color-steal">
                   <div class="w-full h-2 my-1 bg-white"></div>
                 </div>
@@ -111,7 +128,7 @@ const reformDateByMonth = (str) => {
             </ul>
           </li>
           <li v-if="languages && languages.length > 0">
-            <h2 class="w-full p-2 px-4 mb-2 text-xl font-semibold color-steal">
+            <h2 class="w-full tiles p-2 px-4 mb-2 text-xl font-semibold color-steal">
               Language
             </h2>
             <ul class="flex flex-col gap-2 px-4">
@@ -141,7 +158,7 @@ const reformDateByMonth = (str) => {
         <div></div>
       </div>
     </section>
-    <section class="relative h-full col-span-7 p-4 overflow-hidden">
+    <section class="relative h-full col-span-7 p-4 pr-8 overflow-hidden">
       <div>
         <div class="py-10 pb-16">
           <p contenteditable="">
@@ -151,8 +168,8 @@ const reformDateByMonth = (str) => {
         <ul class="flex flex-col gap-8">
           <li v-if="workExperiences && workExperiences.length > 0">
             <div>
-              <h2
-                class="w-full py-2 mb-2 text-xl font-semibold text-color-steal border-y-4 border-y-stone-200"
+              <h2 style="color: #009381"
+                class="w-full py-2 mb-2 text-xl font-bold text-color-steal border-y-2 border-y-stone-200"
               >
                 Experience
               </h2>
@@ -175,26 +192,12 @@ const reformDateByMonth = (str) => {
                       <div class="flex flex-col">
                         <span contenteditable="">{{ workExperience.company }}</span>
                       </div>
-                      <h2 class="my-1 font-bold">{{ workExperience.jobTitle }}</h2>
+                      <h2 contenteditable="" class="my-1 font-bold">{{ workExperience.jobTitle }}</h2>
                       <h2 class="my-1 font-bold">Key Achievements</h2>
-                      <ul style="list-style: disc" class="pl-5">
-                        <li
-                          v-for="task in workExperience.professionalTasksPerformed"
-                          contenteditable="">
-                          {{ task }}
-                        </li>
-                      </ul>
-                      <!-- <h2 class="my-1 font-bold">Key Achievements</h2>
-                      <ul style="list-style: disc" class="pl-5">
-                        <li>
-                          Lorem ipsum dolor sit amet, consectetur adipisicing
-                          elit.
-                        </li>
-                        <li>
-                          Lorem ipsum dolor sit amet, consectetur adipisicing
-                          elit.
-                        </li>
-                      </ul> -->
+                      <div class="pl-5" contenteditable="" v-html="workExperience.professionalTasksPerformed">
+
+                      </div>
+                    
                     </div>
                   </div>
                 </li>
@@ -203,8 +206,8 @@ const reformDateByMonth = (str) => {
           </li>
           <li v-if="educations && educations.length > 0">
             <div>
-              <h2
-                class="w-full py-2 mb-2 text-xl font-semibold text-color-steal border-y-4 border-y-stone-200"
+              <h2 style="color: #009381"
+                class="w-full py-2 mb-2 text-xl font-semibold text-color-steal border-y-2 border-y-stone-200"
               >
                 Education
               </h2>
@@ -213,7 +216,7 @@ const reformDateByMonth = (str) => {
                   <div
                     :class="`flex relative flex-row w-full before:w-24 before:content-['${ education.end_date }&nbsp;&nbsp;-'] before:mr-8`"
                   >
-                  <span class="absolute left-0 w-20" contenteditable="">
+                  <span class="absolute left-0 w-20 font-semibold" contenteditable="">
                     {{ education.start_date }} - {{ education.end_date }}
                   </span>
                     
@@ -229,7 +232,7 @@ const reformDateByMonth = (str) => {
                   >
                     <div class="w-full">
                       <div class="flex flex-col">
-                        <span class=" text-stone-200">Field</span>
+                        <span class=" text-stone-800 font-semibold">Field</span>
                       </div>
                       <h2 class="my-1" contenteditable="">{{ education.grade }}</h2>
                     </div>

@@ -490,7 +490,7 @@ const submitCV = async () => {
 };
 
 const print = async () => {
-  if (session.value != null) {
+  // if (session.value != null) {
   console.log(defaultValues)
   const download = document.getElementById("download-pdf");
   if (download) {
@@ -515,11 +515,11 @@ const print = async () => {
     download.click();
   } else {
   }
-  } else {
-    if (confirm("Log in to use this feature")) {
-      router.push("/auth/login");
-    }
-  }
+  // } else {
+  //   if (confirm("Log in to use this feature")) {
+  //     router.push("/auth/login");
+  //   }
+  // }
 };
 // const props = defineProps<{ html: string; disabled: boolean }>();
 const divAction = ref();
